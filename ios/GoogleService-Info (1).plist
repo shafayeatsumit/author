@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>132145726382-ul78nn2mr74cm1j01olouh6r9rqnk6t1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.132145726382-ul78nn2mr74cm1j01olouh6r9rqnk6t1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDBg_pbQ5VJ7ZencsddRWVodtDmq7ySa-w</string>
+	<key>GCM_SENDER_ID</key>
+	<string>132145726382</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.threethought.author</string>
+	<key>PROJECT_ID</key>
+	<string>author-f314a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>author-f314a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:132145726382:ios:82b20189ace616be4b7e3f</string>
+</dict>
+</plist>
