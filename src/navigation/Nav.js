@@ -5,6 +5,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import HomeScreen from '../screens/home/Home';
 import LoadingScreen from '../screens/loading/Loading';
+import NoteScreen from '../screens/note/Note';
+
 const Stack = createStackNavigator();
 
 class Nav extends Component {
@@ -44,6 +46,8 @@ class Nav extends Component {
           }}>
           <Stack.Screen name="Loading" component={LoadingScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
+
+          <Stack.Screen name="Note" component={NoteScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

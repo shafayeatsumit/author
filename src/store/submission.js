@@ -3,6 +3,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let submissionStore = set => ({
   submission: [],
+  setSubmission: content =>
+    set(state => ({submission: [...state.submission, content]})),
+  updateSubmission: (contentId, content) =>
+    set(state => ({
+      submission: [
+        state.submission.filter(item => item.id !== contentId),
+        content,
+      ],
+    })),
 });
 
 submissionStore = persist(submissionStore, {

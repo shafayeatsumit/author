@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useContentStore} from '../../store';
 
-const Loading = () => {
+const Loading = ({navigation}) => {
   const {contents, initialize} = useContentStore();
   let contentsLenght = useRef(null);
 
@@ -10,6 +10,7 @@ const Loading = () => {
     if (!contentsLenght.current) {
       initialize();
     }
+    navigation.navigate('Home');
   };
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const Loading = () => {
   useEffect(() => {
     // let the AsyncStorage hydrate zustand state;
     // give 3 secs break;
-    setTimeout(loadContents, 3000);
+    setTimeout(loadContents, 1000);
   }, []);
 
   return (

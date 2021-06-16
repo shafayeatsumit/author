@@ -1,18 +1,38 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {View, Text, StyleSheet} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  FlatList,
+  Text,
+  StyleSheet,
+} from 'react-native';
+import Logo from '../../components/Logo';
+import ActiveContent from './ActiveContent';
+import Submissions from './Submissions';
 
-const Home = props => (
-  <View style={styles.container}>
-    <Text>Home</Text>
-  </View>
-);
+const Home = ({navigation}) => {
+  return (
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView>
+          <Logo />
+          <ActiveContent navigation={navigation} />
+          <Submissions />
+        </ScrollView>
+      </SafeAreaView>
+    </View>
+  );
+};
 export default Home;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#E5E5E5',
   },
 });
