@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  Image,
-  FlatList,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import {View, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import Logo from '../../components/Logo';
 import ActiveContent from './ActiveContent';
 import Submissions from './Submissions';
