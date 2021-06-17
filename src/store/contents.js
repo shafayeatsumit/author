@@ -14,6 +14,15 @@ let contentStore = set => ({
         contents: update,
       };
     }),
+  moveFirstTwo: () =>
+    set(state => {
+      const firstHalfArray = state.contents.slice(0, 2);
+      const secondHalfArray = state.contents.slice(2);
+      const update = [...firstHalfArray, ...secondHalfArray];
+      return {
+        content: update,
+      };
+    }),
 });
 
 contentStore = persist(contentStore, {

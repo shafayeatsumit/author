@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {useSubmissionStore} from '../../store';
 import NoteCard from '../../components/NoteCard';
 

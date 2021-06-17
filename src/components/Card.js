@@ -1,8 +1,9 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-const Card = ({title, handlePress}) => (
+const Card = ({title, isLocked, handlePress}) => (
   <TouchableOpacity style={styles.container} onPress={handlePress}>
+    {isLocked && <Text style={styles.unlock}>Unlocked in 12 hrs</Text>}
     <Text style={styles.title}>{title}</Text>
   </TouchableOpacity>
 );
@@ -31,5 +32,13 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'center',
     fontWeight: '600',
+  },
+  unlock: {
+    position: 'absolute',
+    top: 10,
+    alignSelf: 'center',
+    fontSize: 12,
+    textAlign: 'center',
+    color: '#65B354',
   },
 });

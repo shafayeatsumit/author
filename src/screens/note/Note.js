@@ -8,10 +8,11 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import {useSubmissionStore, useContentStore} from '../../store';
+import {useSubmissionStore, useUserStore, useContentStore} from '../../store';
 import uuid from 'react-native-uuid';
 
 const Note = ({navigation, route}) => {
+  const {setLastSubmit} = useUserStore();
   const {setSubmission} = useSubmissionStore();
   const {moveFirst} = useContentStore();
   const {content} = route.params;
@@ -33,6 +34,7 @@ const Note = ({navigation, route}) => {
     submitAnswer();
     moveFirst();
     goBack();
+    setLastSubmit();
   };
 
   return (
