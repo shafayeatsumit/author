@@ -45,6 +45,36 @@ const contents = [
     text: "What's going to happen this week that will still matter to my story next year?",
     pairId: 1,
   },
+  {
+    id: 11,
+    text: 'If today was a page in the story of your life, what would the summary be?',
+    pairId: 0,
+  },
+  {
+    id: 12,
+    text: "What's going well in your story right now?",
+    pairId: 1,
+  },
+  {
+    id: 13,
+    text: "Imagine today was included in the story of your life, what would today's title be?",
+    pairId: 0,
+  },
+  {
+    id: 14,
+    text: 'What can you do today that will matter a year from now?',
+    pairId: 1,
+  },
+  {
+    id: 15,
+    text: 'If today was a page in the story of your life, what would the summary be?',
+    pairId: 0,
+  },
+  {
+    id: 16,
+    text: "What's happened earlier this week that will still matter to my story next year?",
+    pairId: 1,
+  },
 ];
 
 export default contents;
