@@ -11,7 +11,7 @@ const Home = ({navigation}) => {
         <ScrollView>
           <Logo />
           <ActiveContent navigation={navigation} />
-          <Submissions />
+          <Submissions navigation={navigation} />
         </ScrollView>
       </SafeAreaView>
     </View>

@@ -13,28 +13,38 @@ import uuid from 'react-native-uuid';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
-  const {setSubmission} = useSubmissionStore();
+  const {setSubmission, updateSubmission} = useSubmissionStore();
   const {moveFirst} = useContentStore();
-  const {content} = route.params;
-  const [text, onChangeText] = React.useState('');
+  const {content, isEdit} = route.params;
+  const defaultText = content.answer ? content.answer : '';
+  const [text, onChangeText] = React.useState(defaultText);
 
   const submitAnswer = () => {
     setSubmission({
       uid: uuid.v4(),
-      question: content.text,
+      question: content.question,
       answer: text,
       id: content.id,
       date: moment(),
     });
   };
 
+  const editAnswer = () => {
+    updateSubmission(content.id, text);
+  };
+
   const goBack = () => navigation.goBack();
 
-  const handlePress = () => {
+  const handleSubmit = () => {
     submitAnswer();
     moveFirst();
     goBack();
     setLastSubmit();
+  };
+
+  const handleEdit = () => {
+    editAnswer();
+    goBack();
   };
 
   return (
@@ -44,7 +54,7 @@ const Note = ({navigation, route}) => {
       </TouchableOpacity>
 
       <View style={styles.questionContainer}>
-        <Text style={styles.question}>{content.text}</Text>
+        <Text style={styles.question}>{content.question}</Text>
       </View>
       <TextInput
         multiline
@@ -57,7 +67,9 @@ const Note = ({navigation, route}) => {
       />
       <View style={styles.buttonContainer}>
         <Text style={styles.length}> {text.length} / 35</Text>
-        <TouchableOpacity onPress={handlePress} style={styles.button}>
+        <TouchableOpacity
+          onPress={isEdit ? handleEdit : handleSubmit}
+          style={styles.button}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>

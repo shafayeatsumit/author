@@ -1,4 +1,4 @@
-import {persist} from 'zustand/middleware';
+import {persist, devtools} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let submissionStore = set => ({
@@ -7,10 +7,15 @@ let submissionStore = set => ({
     set(state => ({submission: [content, ...state.submission]})),
   updateSubmission: (contentId, content) =>
     set(state => ({
-      submission: [
-        state.submission.filter(item => item.id !== contentId),
-        content,
-      ],
+      submission: state.submission.map(item => {
+        if (item.id === contentId) {
+          return {
+            ...item,
+            answer: content,
+          };
+        }
+        return item;
+      }),
     })),
 });
 

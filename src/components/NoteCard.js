@@ -1,24 +1,33 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 import {formatDate} from '../helpers/date';
 
 const NoteCard = ({content, handlePress}) => {
   const dateString = formatDate(content.date);
   return (
-    <TouchableOpacity style={styles.container} onPress={handlePress}>
-      <Text style={styles.dateText}>{dateString}</Text>
-      <Text style={styles.questionText}>{content.question}</Text>
-      <Text style={styles.answerText}>{content.answer}</Text>
-    </TouchableOpacity>
+    <>
+      <View style={styles.line} />
+      <TouchableOpacity style={styles.container} onPress={handlePress}>
+        <Text style={styles.dateText}>{dateString}</Text>
+        <Text style={styles.questionText}>{content.question}</Text>
+        <Text style={styles.answerText}>{content.answer}</Text>
+      </TouchableOpacity>
+    </>
   );
 };
 export default NoteCard;
 
 const styles = StyleSheet.create({
+  line: {
+    width: 1,
+    alignSelf: 'center',
+    backgroundColor: '#81C174',
+    height: 45,
+  },
   container: {
-    height: 250,
+    height: 230,
     width: '85%',
-    marginVertical: 20,
+    // marginVertical: 20,
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',

@@ -1,27 +1,35 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {View, Text, AppState, StyleSheet} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {View, Text, AppState, StyleSheet, LogBox} from 'react-native';
 import {useContentStore, useUserStore} from '../../store';
 import {checkIfToday} from '../../helpers/date';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const appState = useRef(AppState.currentState);
 
   const {contents, initialize, moveFirst, moveFirstTwo} = useContentStore();
-  const activeContent = contents[0];
+
   const {lastVisit, setLastVisit} = useUserStore();
 
-  let contentsLenght = useRef(null);
+  let contentsRef = useRef(null);
+  let lastVisitRef = useRef(null);
 
   const loadContents = () => {
-    if (!contentsLenght.current) {
+    if (!contentsRef.current.length) {
       initialize();
     }
     navigation.navigate('Home');
   };
 
   useEffect(() => {
-    contentsLenght.current = contents.length;
+    contentsRef.current = contents;
   }, [contents]);
+
+  useEffect(() => {
+    lastVisitRef.current = lastVisit;
+  }, [lastVisit]);
 
   const _handleAppStateChange = nextAppState => {
     if (
@@ -36,6 +44,7 @@ const Loading = ({navigation}) => {
   };
 
   const reorderContent = () => {
+    const activeContent = contentsRef.current[0];
     if (activeContent.pairId) {
       moveFirst();
     } else {
@@ -44,22 +53,28 @@ const Loading = ({navigation}) => {
   };
 
   const checkVisitInfo = () => {
-    if (lastVisit === null) {
+    const lastVisitDate = lastVisitRef.current;
+    if (lastVisitDate === null) {
       setLastVisit();
       return;
     }
-    const isVisitedToday = checkIfToday(lastVisit);
+    const isVisitedToday = checkIfToday(lastVisitDate);
+
     if (!isVisitedToday) {
       reorderContent();
       setLastVisit();
     }
   };
 
+  const startApp = () => {
+    loadContents();
+    checkVisitInfo();
+  };
+
   useEffect(() => {
     // let the AsyncStorage hydrate zustand state;
-    setTimeout(loadContents, 1000);
+    setTimeout(startApp, 1000);
     AppState.addEventListener('change', _handleAppStateChange);
-    checkVisitInfo();
     return () => {
       AppState.removeEventListener('change', _handleAppStateChange);
     };

@@ -1,8 +1,11 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 const Card = ({title, isLocked, handlePress}) => (
-  <TouchableOpacity style={styles.container} onPress={handlePress}>
+  <TouchableOpacity
+    disabled={isLocked}
+    style={styles.container}
+    onPress={handlePress}>
     {isLocked && <Text style={styles.unlock}>Unlocked in 12 hrs</Text>}
     <Text style={styles.title}>{title}</Text>
   </TouchableOpacity>
@@ -25,7 +28,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 30,
     borderRadius: 20,
-    marginVertical: 20,
+    marginTop: 25,
+    // marginVertical: 20,
   },
   title: {
     fontSize: 25,

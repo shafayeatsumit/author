@@ -16,7 +16,7 @@ const ActiveContent = ({navigation}) => {
     <View style={styles.container}>
       <Card
         isLocked={isLocked}
-        title={activeContent.text}
+        title={activeContent.question}
         handlePress={goNote}
       />
     </View>
