@@ -1,4 +1,4 @@
-import {persist, devtools} from 'zustand/middleware';
+import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let submissionStore = set => ({

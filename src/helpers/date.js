@@ -19,7 +19,14 @@ export const checkIfThisWeek = d => {
   return _.inRange(fromToday, 0, 8);
 };
 
-export const formatDate = date => {
+export const checkIfLastWeek = d => {
+  const fourteenDaysAgo = moment().subtract(14, 'days');
+  const date = moment(d);
+  const fromToday = date.diff(fourteenDaysAgo, 'days');
+  return _.inRange(fromToday, 8, 15);
+};
+
+const formatDay = date => {
   const isToday = checkIfToday(date);
   if (isToday) {
     return 'Today';
@@ -33,4 +40,38 @@ export const formatDate = date => {
     return moment(date).format('dddd');
   }
   return moment(date).format('dddd MM/DD');
+};
+
+const formatWeek = date => {
+  const isThisWeek = checkIfThisWeek(date);
+  if (isThisWeek) {
+    return 'This Week';
+  }
+
+  const isLastWeek = checkIfLastWeek(date);
+  if (isLastWeek) {
+    return 'Last Week';
+  }
+
+  return moment(date).format('MM/DD');
+};
+
+const formatMonth = date => {
+  const thisMonth = moment(date).isSame(new Date(), 'month');
+  if (thisMonth) {
+    return 'This Month';
+  }
+  return moment().format('MMMM');
+};
+
+export const formatDate = (date, type) => {
+  if (type === 'week') {
+    // week;
+    return formatWeek(date);
+  } else if (type === 'month') {
+    // month;
+    return formatMonth(date);
+  }
+  // day;
+  return formatDay(date);
 };

@@ -1,5 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, Dimensions, StyleSheet} from 'react-native';
+const {height: ScreenHeight} = Dimensions.get('window');
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const Card = ({title, isLocked, handlePress}) => (
   <TouchableOpacity
@@ -14,7 +16,8 @@ export default Card;
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
+    // height:,
+    paddingVertical: 55,
     width: '85%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
@@ -32,10 +35,10 @@ const styles = StyleSheet.create({
     // marginVertical: 20,
   },
   title: {
-    fontSize: 25,
-    fontStyle: 'italic',
+    fontSize: RFValue(26),
+    fontFamily: 'georgia',
     textAlign: 'center',
-    fontWeight: '600',
+    color: 'rgba(0,0,0,0.7)',
   },
   unlock: {
     position: 'absolute',

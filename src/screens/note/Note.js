@@ -6,10 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Dimensions,
   StyleSheet,
 } from 'react-native';
 import {useSubmissionStore, useUserStore, useContentStore} from '../../store';
 import uuid from 'react-native-uuid';
+const {height: ScreenHeight} = Dimensions.get('window');
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
@@ -25,6 +28,7 @@ const Note = ({navigation, route}) => {
       question: content.question,
       answer: text,
       id: content.id,
+      type: content.type,
       date: moment(),
     });
   };
@@ -87,17 +91,19 @@ const styles = StyleSheet.create({
     marginTop: 90,
   },
   question: {
-    fontSize: 20,
-    fontWeight: '300',
+    fontFamily: 'georgia',
+    fontSize: RFValue(23),
+    color: 'rgba(0,0,0,0.7)',
   },
   input: {
-    height: 110,
+    paddingVertical: 30,
+    paddingHorizontal: 5,
     width: '85%',
     alignSelf: 'center',
     margin: 12,
     borderWidth: 0.6,
-    fontSize: 24,
-    color: 'black',
+    fontSize: RFValue(30),
+    fontFamily: 'Montserrat-Bold',
   },
   buttonContainer: {
     flexDirection: 'row',

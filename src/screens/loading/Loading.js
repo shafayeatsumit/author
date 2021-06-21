@@ -1,10 +1,10 @@
 import React, {useEffect, useRef} from 'react';
-import {View, Text, AppState, StyleSheet, LogBox} from 'react-native';
+import {View, Text, AppState, StyleSheet} from 'react-native';
 import {useContentStore, useUserStore} from '../../store';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const appState = useRef(AppState.currentState);
