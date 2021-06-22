@@ -58,8 +58,9 @@ const Loading = ({navigation}) => {
       setLastVisit();
       return;
     }
-    const isVisitedToday = checkIfToday(lastVisitDate);
 
+    const isVisitedToday = checkIfToday(lastVisitDate);
+    console.log('last visit date', lastVisitDate, isVisitedToday);
     if (!isVisitedToday) {
       reorderContent();
       setLastVisit();

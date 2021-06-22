@@ -17,11 +17,11 @@ export default Card;
 const styles = StyleSheet.create({
   container: {
     // height:,
-    paddingVertical: 55,
+    minHeight: 200,
+    paddingVertical: 35,
     width: '85%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
-
     shadowColor: '#000',
     shadowOffset: {width: 0.3, height: 0.5},
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: RFValue(26),
     fontFamily: 'georgia',
-    textAlign: 'center',
+    textAlign: 'left',
     color: 'rgba(0,0,0,0.7)',
   },
   unlock: {

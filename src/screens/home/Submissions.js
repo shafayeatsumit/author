@@ -17,7 +17,7 @@ const Submissions = ({navigation}) => {
     <View style={styles.container}>
       <FlatList
         data={submission}
-        style={styles.flatlist}
+        contentContainerStyle={styles.flatlist}
         renderItem={renderItem}
         keyExtractor={item => item.uid}
       />

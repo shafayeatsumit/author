@@ -10,7 +10,10 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {formatDate} from '../helpers/date';
 const {height: ScreenHeight} = Dimensions.get('window');
 
-const getAnswerStyle = type => {
+const getAnswerStyle = (type, pairId) => {
+  if (pairId) {
+    return 'georgia';
+  }
   if (type === 'week') {
     return 'georgia';
   } else if (type === 'month') {
@@ -22,7 +25,7 @@ const getAnswerStyle = type => {
 
 const NoteCard = ({content, handlePress}) => {
   const dateString = formatDate(content.date, content.type);
-  const fontType = getAnswerStyle(content.type);
+  const fontType = getAnswerStyle(content.type, content.pairId);
   return (
     <>
       <View style={styles.lineStart} />
@@ -52,13 +55,11 @@ const styles = StyleSheet.create({
     width: 1.5,
     alignSelf: 'center',
     backgroundColor: '#81C174',
-    height: ScreenHeight / 10,
+    height: ScreenHeight / 8,
   },
   container: {
-    // height: ScreenHeight / 2.7,
-    paddingVertical: 55,
+    paddingVertical: 40,
     width: '87%',
-    // marginVertical: 20,
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 5,
     justifyContent: 'center',
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
     borderRadius: 20,
   },
   questionText: {

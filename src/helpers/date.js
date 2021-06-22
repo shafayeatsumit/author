@@ -5,7 +5,8 @@ const today = moment();
 const yesterday = moment().add(-1, 'days');
 
 export const checkIfToday = date => {
-  return moment(date).isSame(today, 'day');
+  console.log(`is today  ${today} ${date}`);
+  return moment(date).isSame(moment(), 'day');
 };
 
 export const checkIfYesterday = date => {

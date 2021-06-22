@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     padding: 30,
+    paddingTop: 20,
+    paddingBottom: 15,
     marginTop: 90,
   },
   question: {
@@ -96,13 +98,14 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.7)',
   },
   input: {
-    paddingVertical: 30,
+    height: 100,
     paddingHorizontal: 5,
     width: '85%',
     alignSelf: 'center',
     margin: 12,
     borderWidth: 0.6,
-    fontSize: RFValue(30),
+    fontSize: RFValue(27),
+    color: 'black',
     fontFamily: 'Montserrat-Bold',
   },
   buttonContainer: {
@@ -112,11 +115,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
   },
   button: {
-    height: 50,
+    height: 45,
     width: 100,
     backgroundColor: '#65B354',
     borderRadius: 5,
-    marginTop: 20,
+    marginTop: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -132,8 +135,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   xout: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
+    // backgroundColor: 'red',
     alignItems: 'center',
     position: 'absolute',
     right: 20,
