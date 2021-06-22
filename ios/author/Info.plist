@@ -56,5 +56,18 @@
 		<string>Montserrat-Bold.ttf</string>
 		<string>Montserrat-SemiBold.ttf</string>
 	</array>
+  <key>CFBundleURLTypes</key>
+  <array>
+    <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>fb492997541925127</string>
+    </array>
+    </dict>
+  </array>
+  <key>FacebookAppID</key>
+  <string>492997541925127</string>
+  <key>FacebookDisplayName</key>
+  <string>author</string>
 </dict>
 </plist>

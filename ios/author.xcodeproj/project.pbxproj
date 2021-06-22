@@ -13,6 +13,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1B70AF87F9D495DECBFBB27D /* libPods-author.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F5E4D702DD8F214B72E0FC /* libPods-author.a */; };
 		314187CF267217C300826F40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 314187CE267217C300826F40 /* GoogleService-Info.plist */; };
+		3172DE3426821F5B00B68666 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3172DE3326821F5B00B68666 /* File.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		95FF9568FAD947C78B28C293 /* georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3E9C5DBFD2AD4ACAB4B82A13 /* georgia.ttf */; };
 		A1C7E98560B840719D294421 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C0C21F9214101A25979F4 /* Montserrat-Regular.ttf */; };
@@ -43,14 +44,16 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = author/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = author/main.m; sourceTree = "<group>"; };
 		2D10E991769EFF4BE3401905 /* Pods-author.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-author.debug.xcconfig"; path = "Target Support Files/Pods-author/Pods-author.debug.xcconfig"; sourceTree = "<group>"; };
-		2D9C0C21F9214101A25979F4 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		2D9C0C21F9214101A25979F4 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		314187CE267217C300826F40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3172DE3226821F5B00B68666 /* author-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "author-Bridging-Header.h"; sourceTree = "<group>"; };
+		3172DE3326821F5B00B68666 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		331585CE0BE02DC0BC0E64C0 /* Pods-author-authorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-author-authorTests.debug.xcconfig"; path = "Target Support Files/Pods-author-authorTests/Pods-author-authorTests.debug.xcconfig"; sourceTree = "<group>"; };
-		3E9C5DBFD2AD4ACAB4B82A13 /* georgia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = georgia.ttf; path = ../assets/fonts/georgia.ttf; sourceTree = "<group>"; };
-		7933B657FADA4E3BA3A6D555 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		3E9C5DBFD2AD4ACAB4B82A13 /* georgia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = georgia.ttf; path = ../assets/fonts/georgia.ttf; sourceTree = "<group>"; };
+		7933B657FADA4E3BA3A6D555 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = author/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BE92921549DC4BDA8404080 /* Pods-author-authorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-author-authorTests.release.xcconfig"; path = "Target Support Files/Pods-author-authorTests/Pods-author-authorTests.release.xcconfig"; sourceTree = "<group>"; };
-		8E671C589BD54CB78DA01FB6 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		8E671C589BD54CB78DA01FB6 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		ED1B0F46CCB0804475F98013 /* Pods-author.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-author.release.xcconfig"; path = "Target Support Files/Pods-author/Pods-author.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FB12C7E23907912514F91D0F /* libPods-author-authorTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-author-authorTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +140,6 @@
 				7933B657FADA4E3BA3A6D555 /* Montserrat-SemiBold.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -150,6 +152,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3172DE3326821F5B00B68666 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* author */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* authorTests */,
@@ -157,6 +160,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				02EB28F966A0841274326F2D /* Pods */,
 				620974B184664A59A005F7C3 /* Resources */,
+				3172DE3226821F5B00B68666 /* author-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -232,7 +236,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1220;
 					};
 				};
 			};
@@ -454,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				3172DE3426821F5B00B68666 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +478,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 331585CE0BE02DC0BC0E64C0 /* Pods-author-authorTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -500,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8BE92921549DC4BDA8404080 /* Pods-author-authorTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = authorTests/Info.plist;
@@ -541,6 +548,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.threethought.author;
 				PRODUCT_NAME = author;
+				SWIFT_OBJC_BRIDGING_HEADER = "author-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -567,6 +575,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.threethought.author;
 				PRODUCT_NAME = author;
+				SWIFT_OBJC_BRIDGING_HEADER = "author-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
