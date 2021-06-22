@@ -13,6 +13,7 @@ import {useSubmissionStore, useUserStore, useContentStore} from '../../store';
 import uuid from 'react-native-uuid';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
+import analytics from '@react-native-firebase/analytics';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
@@ -21,6 +22,13 @@ const Note = ({navigation, route}) => {
   const {content, isEdit} = route.params;
   const defaultText = content.answer ? content.answer : '';
   const [text, onChangeText] = React.useState(defaultText);
+
+  const logEvent = eventType => {
+    analytics().logEvent(eventType, {
+      q: `${content.question}`,
+      a: `${text}`,
+    });
+  };
 
   const submitAnswer = () => {
     setSubmission({
@@ -31,13 +39,20 @@ const Note = ({navigation, route}) => {
       type: content.type,
       date: moment(),
     });
+    logEvent('submit');
   };
 
   const editAnswer = () => {
     updateSubmission(content.id, text);
+    logEvent('edit');
   };
 
-  const goBack = () => navigation.goBack();
+  const goBack = () => {
+    navigation.goBack();
+    analytics().logEvent('button_push', {
+      name: 'exit',
+    });
+  };
 
   const handleSubmit = () => {
     submitAnswer();
