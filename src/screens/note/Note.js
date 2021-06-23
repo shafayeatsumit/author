@@ -22,7 +22,7 @@ const Note = ({navigation, route}) => {
   const {content, isEdit} = route.params;
   const defaultText = content.answer ? content.answer : '';
   const [text, onChangeText] = React.useState(defaultText);
-
+  const charMaxLength = content.type === 'month' ? 20 : 25;
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
       q: `${content.question}`,
@@ -38,6 +38,7 @@ const Note = ({navigation, route}) => {
       id: content.id,
       type: content.type,
       date: moment(),
+      isExtra: content.pairId ? true : false,
     });
     logEvent('submit');
   };
@@ -82,10 +83,13 @@ const Note = ({navigation, route}) => {
         value={text}
         spellCheck={false}
         textAlignVertical="top"
-        maxLength={35}
+        maxLength={charMaxLength}
       />
       <View style={styles.buttonContainer}>
-        <Text style={styles.length}> {text.length} / 35</Text>
+        <Text style={styles.length}>
+          {' '}
+          {text.length} / {charMaxLength}
+        </Text>
         <TouchableOpacity
           onPress={isEdit ? handleEdit : handleSubmit}
           style={styles.button}>

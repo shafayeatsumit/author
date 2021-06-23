@@ -11,35 +11,33 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {formatDate} from '../helpers/date';
 const {height: ScreenHeight} = Dimensions.get('window');
 
-const getAnswerStyle = (type, pairId) => {
-  if (pairId) {
-    return 'georgia';
+const getAnswerStyle = (type, isExtra) => {
+  if (isExtra) {
+    return {fontSize: RFValue(25), fontFamily: 'georgia'};
   }
   if (type === 'week') {
-    return 'georgia';
+    return {fontSize: RFValue(32), fontFamily: 'georgia'};
   } else if (type === 'month') {
-    return 'Montserrat-Bold';
+    return {fontSize: RFValue(30), fontFamily: 'Montserrat-SemiBold'};
   } else {
-    return 'Montserrat-Regular';
+    return {fontSize: RFValue(30), fontFamily: 'Montserrat-Regular'};
   }
 };
 
 const NoteCard = ({content, handlePress}) => {
   const dateString = formatDate(content.date, content.type);
-  const fontType = getAnswerStyle(content.type, content.pairId);
+  const fontType = getAnswerStyle(content.type, content.isExtra);
   return (
     <>
       <View style={styles.lineStart} />
       <View style={styles.line} />
       <TouchableOpacity style={styles.container} onPress={handlePress}>
         <Text style={styles.dateText}>{dateString}</Text>
-        {content.pairId && (
+        {content.isExtra && (
           <Text style={styles.questionText}>{content.question}</Text>
         )}
 
-        <Text style={[styles.answerText, {fontFamily: fontType}]}>
-          {content.answer}
-        </Text>
+        <Text style={[styles.answerText, fontType]}>{content.answer}</Text>
       </TouchableOpacity>
     </>
   );
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
         shadowColor: 'rgba(101, 179, 84, 0.20)',
       },
       android: {
-        shadowColor: 'rgba(101, 179, 84, 0.5)',
+        shadowColor: 'rgba(101, 179, 84, 0.7)',
       },
     }),
     shadowOffset: {width: 1, height: 5},
@@ -84,7 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   questionText: {
-    fontSize: RFValue(19),
+    fontSize: RFValue(16),
     color: 'rgba(0,0,0,0.7)',
     textAlign: 'left',
     fontFamily: 'georgia',
@@ -92,7 +90,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   answerText: {
-    fontSize: RFValue(29),
     textAlign: 'left',
   },
   dateText: {

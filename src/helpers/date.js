@@ -1,14 +1,13 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-const today = moment();
-const yesterday = moment().add(-1, 'days');
-
 export const checkIfToday = date => {
+  const today = moment();
   return moment(date).isSame(today, 'day');
 };
 
 export const checkIfYesterday = date => {
+  const yesterday = moment().add(-1, 'days');
   return moment(date).isSame(yesterday, 'day');
 };
 

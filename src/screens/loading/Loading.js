@@ -4,7 +4,7 @@ import {useContentStore, useUserStore} from '../../store';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const appState = useRef(AppState.currentState);
@@ -60,7 +60,6 @@ const Loading = ({navigation}) => {
     }
 
     const isVisitedToday = checkIfToday(lastVisitDate);
-    console.log('last visit date', lastVisitDate, isVisitedToday);
     if (!isVisitedToday) {
       reorderContent();
       setLastVisit();

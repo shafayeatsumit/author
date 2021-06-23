@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  Platform,
-  Text,
-  Dimensions,
-  StyleSheet,
-} from 'react-native';
-const {height: ScreenHeight} = Dimensions.get('window');
+import {TouchableOpacity, Platform, Text, StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 const Card = ({title, isLocked, handlePress}) => (
