@@ -32,7 +32,10 @@ const NoteCard = ({content, handlePress}) => {
       <View style={styles.line} />
       <TouchableOpacity style={styles.container} onPress={handlePress}>
         <Text style={styles.dateText}>{dateString}</Text>
-        <Text style={styles.questionText}>{content.question}</Text>
+        {content.pairId && (
+          <Text style={styles.questionText}>{content.question}</Text>
+        )}
+
         <Text style={[styles.answerText, {fontFamily: fontType}]}>
           {content.answer}
         </Text>
@@ -59,10 +62,11 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingVertical: 40,
+    minHeight: 220,
     width: '87%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
+    shadowColor: 'rgba(101, 179, 84, 0.15)',
     shadowOffset: {width: 0.3, height: 0.5},
     shadowOpacity: 0.8,
     shadowRadius: 1,

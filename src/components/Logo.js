@@ -1,6 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Dimensions} from 'react-native';
-const {height: ScreenHeight} = Dimensions.get('window');
+import {Image, StyleSheet} from 'react-native';
 
 const Logo = () => {
   return (
@@ -13,10 +12,8 @@ export default Logo;
 const styles = StyleSheet.create({
   logo: {
     alignSelf: 'center',
-    marginBottom: 20,
-
-    // height: ScreenHeight / 15,
-    // width: ScreenHeight / 15,
-    // resizeMode: 'contain',
+    height: 70,
+    width: 138,
+    resizeMode: 'contain',
   },
 });
