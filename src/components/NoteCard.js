@@ -4,6 +4,7 @@ import {
   Dimensions,
   View,
   Text,
+  Platform,
   StyleSheet,
 } from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -66,10 +67,17 @@ const styles = StyleSheet.create({
     width: '87%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
-    shadowColor: 'rgba(101, 179, 84, 0.15)',
-    shadowOffset: {width: 0.3, height: 0.5},
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(101, 179, 84, 0.20)',
+      },
+      android: {
+        shadowColor: 'rgba(101, 179, 84, 0.5)',
+      },
+    }),
+    shadowOffset: {width: 1, height: 5},
+    shadowOpacity: 1,
+    shadowRadius: 10,
     elevation: 5,
     justifyContent: 'center',
     paddingHorizontal: 25,

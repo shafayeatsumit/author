@@ -1,5 +1,11 @@
 import React from 'react';
-import {TouchableOpacity, Text, Dimensions, StyleSheet} from 'react-native';
+import {
+  TouchableOpacity,
+  Platform,
+  Text,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 
@@ -16,23 +22,28 @@ export default Card;
 
 const styles = StyleSheet.create({
   container: {
-    // height:,
-    minHeight: 200,
+    minHeight: 220,
     paddingVertical: 35,
     width: '85%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
-    shadowColor: 'rgba(101, 179, 84, 0.25)',
+    ...Platform.select({
+      ios: {
+        shadowColor: 'rgba(101, 179, 84, 0.20)',
+      },
+      android: {
+        shadowColor: 'rgba(101, 179, 84, 0.5)',
+      },
+    }),
     shadowOffset: {width: 1, height: 5},
-
-    shadowOpacity: 0.8,
+    shadowOpacity: 1,
     shadowRadius: 10,
-    elevation: 5,
+
+    elevation: 15,
     justifyContent: 'center',
     paddingHorizontal: 30,
     borderRadius: 20,
     marginTop: 25,
-    // marginVertical: 20,
   },
   title: {
     fontSize: RFValue(26),
