@@ -27,13 +27,10 @@ const getAnswerStyle = (type, isExtra) => {
 const NoteCard = ({content, handlePress}) => {
   const dateString = formatDate(content.date, content.type);
   const fontType = getAnswerStyle(content.type, content.isExtra);
-  const showDate = !content.isExtra;
   return (
     <>
-      <View style={styles.lineStart} />
-      <View style={styles.line} />
       <TouchableOpacity style={styles.container} onPress={handlePress}>
-        {showDate && <Text style={styles.dateText}>{dateString}</Text>}
+        <Text style={styles.dateText}>{dateString}</Text>
         {content.isExtra && (
           <Text style={styles.questionText}>{content.question}</Text>
         )}
@@ -46,38 +43,12 @@ const NoteCard = ({content, handlePress}) => {
 export default NoteCard;
 
 const styles = StyleSheet.create({
-  lineStart: {
-    height: 10,
-    width: 10,
-    borderRadius: 5,
-    borderColor: '#81C174',
-    alignSelf: 'center',
-    borderWidth: 1,
-  },
-  line: {
-    width: 1.5,
-    alignSelf: 'center',
-    backgroundColor: '#81C174',
-    height: ScreenHeight / 8,
-  },
   container: {
     paddingVertical: 40,
     minHeight: 220,
     width: '87%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
-    ...Platform.select({
-      ios: {
-        shadowColor: 'rgba(101, 179, 84, 0.20)',
-      },
-      android: {
-        shadowColor: 'rgba(101, 179, 84, 0.7)',
-      },
-    }),
-    shadowOffset: {width: 1, height: 5},
-    shadowOpacity: 1,
-    shadowRadius: 10,
-    elevation: 5,
     justifyContent: 'center',
     paddingHorizontal: 25,
     borderRadius: 20,

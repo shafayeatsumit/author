@@ -22,7 +22,7 @@ const Note = ({navigation, route}) => {
   const {content, isEdit} = route.params;
   const defaultText = content.answer ? content.answer : '';
   const [text, onChangeText] = React.useState(defaultText);
-  const charMaxLength = content.type === 'month' ? 20 : 25;
+  const charMaxLength = 35;
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
       q: `${content.question}`,
@@ -83,7 +83,7 @@ const Note = ({navigation, route}) => {
         value={text}
         spellCheck={false}
         textAlignVertical="top"
-        maxLength={charMaxLength}
+        maxLength={35}
       />
       <View style={styles.buttonContainer}>
         <Text style={styles.length}>
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
   xout: {
     height: 50,
     width: 50,
-    // backgroundColor: 'red',
     alignItems: 'center',
     position: 'absolute',
     right: 20,
