@@ -3,10 +3,12 @@ import {View, FlatList, StyleSheet} from 'react-native';
 import {useSubmissionStore} from '../../store';
 import NoteCard from '../../components/NoteCard';
 import analytics from '@react-native-firebase/analytics';
+import {checkIfToday} from '../../helpers/date';
 
 const Submissions = ({navigation}) => {
-  const {submission} = useSubmissionStore();
-
+  const {submission, lastSubmit} = useSubmissionStore();
+  const isLastSubmitToday = checkIfToday(lastSubmit);
+  const submissionList = isLastSubmitToday ? submission.slice(1) : submission;
   const goNote = content => {
     navigation.navigate('Note', {content, isEdit: true});
     analytics().logEvent('tap', {
@@ -20,7 +22,7 @@ const Submissions = ({navigation}) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={submission}
+        data={submissionList}
         contentContainerStyle={styles.flatlist}
         renderItem={renderItem}
         keyExtractor={item => item.uid}
