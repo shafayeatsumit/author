@@ -27,12 +27,13 @@ const getAnswerStyle = (type, isExtra) => {
 const NoteCard = ({content, handlePress}) => {
   const dateString = formatDate(content.date, content.type);
   const fontType = getAnswerStyle(content.type, content.isExtra);
+  const showDate = !content.isExtra;
   return (
     <>
       <View style={styles.lineStart} />
       <View style={styles.line} />
       <TouchableOpacity style={styles.container} onPress={handlePress}>
-        <Text style={styles.dateText}>{dateString}</Text>
+        {showDate && <Text style={styles.dateText}>{dateString}</Text>}
         {content.isExtra && (
           <Text style={styles.questionText}>{content.question}</Text>
         )}

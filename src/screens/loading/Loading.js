@@ -11,7 +11,7 @@ const Loading = ({navigation}) => {
 
   const {contents, initialize, moveFirst, moveFirstTwo} = useContentStore();
 
-  const {lastVisit, setLastVisit} = useUserStore();
+  const {lastVisit, setLastVisit, setFirstVisit} = useUserStore();
 
   let contentsRef = useRef(null);
   let lastVisitRef = useRef(null);
@@ -19,6 +19,7 @@ const Loading = ({navigation}) => {
   const loadContents = () => {
     if (!contentsRef.current.length) {
       initialize();
+      setFirstVisit();
     }
     navigation.navigate('Home');
   };

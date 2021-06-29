@@ -3,15 +3,16 @@ import {View, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import Logo from '../../components/Logo';
 import ActiveContent from './ActiveContent';
 import Submissions from './Submissions';
+import Start from './Start';
 
 const Home = ({navigation}) => {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
-          <Logo />
           <ActiveContent navigation={navigation} />
           <Submissions navigation={navigation} />
+          <Start />
         </ScrollView>
       </SafeAreaView>
     </View>
