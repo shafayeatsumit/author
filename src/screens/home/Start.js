@@ -1,17 +1,19 @@
 import React from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useUserStore} from '../../store';
-const {height: ScreenHeight} = Dimensions.get('window');
-import {dateFromNow} from '../../helpers/date';
+import {RFValue} from 'react-native-responsive-fontsize';
+import moment from 'moment';
 
 const Start = () => {
   const {firstVisit} = useUserStore();
   console.log('first visit', firstVisit);
-  const firstVisitDate = dateFromNow(firstVisit);
+  const date = moment(firstVisit).format('MMMM DD, YYYY');
+  const time = moment(firstVisit).format('h:mm a');
+
   return (
     <View>
-      <Text style={styles.text}>{firstVisitDate}</Text>
-      <Text style={styles.started}>Started</Text>
+      <Text style={styles.started}>Story starts</Text>
+      <Text style={styles.text}>{date}</Text>
     </View>
   );
 };
@@ -19,16 +21,17 @@ export default Start;
 
 const styles = StyleSheet.create({
   text: {
-    paddingTop: 20,
-    fontSize: 12,
-    fontFamily: 'Montserrat-Regular',
-    color: 'black',
+    fontSize: RFValue(16),
+    fontFamily: 'georgia',
+    color: 'rgba(0,0,0,0.5)',
     textAlign: 'center',
+    // paddingVertical: 15,
+    paddingTop: 10,
   },
   started: {
-    fontSize: 45,
-    fontFamily: 'georgia',
-    color: '#65B354',
+    fontSize: RFValue(28),
+    fontFamily: 'Montserrat-Bold',
+    color: 'black',
     textAlign: 'center',
   },
 });
