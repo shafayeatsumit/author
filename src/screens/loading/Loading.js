@@ -45,12 +45,7 @@ const Loading = ({navigation}) => {
   };
 
   const reorderContent = () => {
-    const activeContent = contentsRef.current[0];
-    if (activeContent.pairId) {
-      moveFirst();
-    } else {
-      moveFirstTwo();
-    }
+    moveFirst();
   };
 
   const checkVisitInfo = () => {

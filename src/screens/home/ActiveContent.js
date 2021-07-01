@@ -10,13 +10,19 @@ const ActiveContent = ({navigation}) => {
   const {lastSubmit} = useUserStore();
   const {submission} = useSubmissionStore();
   const isLastSubmitToday = checkIfToday(lastSubmit);
-  const activeContent = isLastSubmitToday ? submission[0] : contents[0];
+  // TODO:
+  // const activeContent = isLastSubmitToday ? submission[0] : contents[0];
+  const activeContent = contents[0];
 
   const dateString = formatDate(activeContent.date, activeContent.type);
   console.log('dateString', dateString);
-  const title = isLastSubmitToday
-    ? activeContent.answer
-    : activeContent.question;
+  //TODO:
+  // const title = isLastSubmitToday
+  //   ? activeContent.answer
+  //   : activeContent.question;
+
+  const title = activeContent.question;
+
   const goNote = () => {
     navigation.navigate('Note', {content: activeContent});
     analytics().logEvent('tap', {

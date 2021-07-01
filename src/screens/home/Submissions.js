@@ -8,7 +8,9 @@ import {checkIfToday} from '../../helpers/date';
 const Submissions = ({navigation}) => {
   const {submission, lastSubmit} = useSubmissionStore();
   const isLastSubmitToday = checkIfToday(lastSubmit);
-  const submissionList = isLastSubmitToday ? submission.slice(1) : submission;
+  // TODO:
+  // const submissionList = isLastSubmitToday ? submission.slice(1) : submission;
+  const submissionList = submission;
   const goNote = content => {
     navigation.navigate('Note', {content, isEdit: true});
     analytics().logEvent('tap', {

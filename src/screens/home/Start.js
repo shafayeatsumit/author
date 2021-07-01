@@ -11,7 +11,7 @@ const Start = () => {
   const time = moment(firstVisit).format('h:mm a');
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.started}>Story starts</Text>
       <Text style={styles.text}>{date}</Text>
     </View>
@@ -20,6 +20,9 @@ const Start = () => {
 export default Start;
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 20,
+  },
   text: {
     fontSize: RFValue(16),
     fontFamily: 'georgia',

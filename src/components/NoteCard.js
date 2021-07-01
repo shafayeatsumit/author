@@ -45,13 +45,13 @@ export default NoteCard;
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 40,
-    minHeight: 220,
+    minHeight: 190,
     width: '87%',
     alignSelf: 'center',
     backgroundColor: '#FFFFFF',
+    marginBottom: 20,
     justifyContent: 'center',
     paddingHorizontal: 25,
-    borderRadius: 20,
   },
   questionText: {
     fontSize: RFValue(16),

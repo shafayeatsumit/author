@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
   const {setSubmission, updateSubmission} = useSubmissionStore();
   const {moveFirst} = useContentStore();
+  const inputRef = useRef();
   const {content, isEdit} = route.params;
   const defaultText = content.answer ? content.answer : '';
   const [text, onChangeText] = React.useState(defaultText);
@@ -30,6 +31,9 @@ const Note = ({navigation, route}) => {
     });
   };
 
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   const submitAnswer = () => {
     setSubmission({
       uid: uuid.v4(),
@@ -57,9 +61,10 @@ const Note = ({navigation, route}) => {
 
   const handleSubmit = () => {
     submitAnswer();
-    moveFirst();
     goBack();
     setLastSubmit();
+    // TODO: change this later
+    moveFirst();
   };
 
   const handleEdit = () => {
@@ -84,6 +89,7 @@ const Note = ({navigation, route}) => {
         spellCheck={false}
         textAlignVertical="top"
         maxLength={35}
+        ref={inputRef}
       />
       <View style={styles.buttonContainer}>
         <Text style={styles.length}>
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     width: '85%',
     alignSelf: 'center',
     margin: 12,
-    borderWidth: 0.6,
+    borderWidth: 0,
     fontSize: RFValue(27),
     color: 'black',
     fontFamily: 'Montserrat-Bold',
