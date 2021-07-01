@@ -9,7 +9,7 @@ AsyncStorage.clear();
 const Loading = ({navigation}) => {
   const appState = useRef(AppState.currentState);
 
-  const {contents, initialize, moveFirst, moveFirstTwo} = useContentStore();
+  const {contents, initialize, moveFirst} = useContentStore();
 
   const {lastVisit, setLastVisit, setFirstVisit} = useUserStore();
 
@@ -21,7 +21,7 @@ const Loading = ({navigation}) => {
       initialize();
       setFirstVisit();
     }
-    navigation.navigate('Home');
+    navigation.replace('Home');
   };
 
   useEffect(() => {
