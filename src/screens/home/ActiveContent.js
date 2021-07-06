@@ -31,13 +31,13 @@ const ActiveContent = ({navigation}) => {
     });
   };
 
-  useEffect(() => {
-    PushNotification.localNotification({
-      channelId: 'channel-id',
-      title: 'My Notification Title', // (optional)
-      message: 'My Notification Message', // (required)
-    });
-  }, []);
+  // useEffect(() => {
+  //   PushNotification.localNotification({
+  //     channelId: 'channel-id',
+  //     title: 'My Notification Title', // (optional)
+  //     message: 'My Notification Message', // (required)
+  //   });
+  // }, []);
 
   return (
     <View style={styles.container}>

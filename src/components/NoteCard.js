@@ -1,28 +1,8 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  Dimensions,
-  View,
-  Text,
-  Platform,
-  StyleSheet,
-} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {formatDate} from '../helpers/date';
-const {height: ScreenHeight} = Dimensions.get('window');
-
-const getAnswerStyle = (type, isExtra) => {
-  if (isExtra) {
-    return {fontSize: RFValue(25), fontFamily: 'georgia'};
-  }
-  if (type === 'week') {
-    return {fontSize: RFValue(32), fontFamily: 'georgia'};
-  } else if (type === 'month') {
-    return {fontSize: RFValue(30), fontFamily: 'Montserrat-SemiBold'};
-  } else {
-    return {fontSize: RFValue(30), fontFamily: 'Montserrat-Regular'};
-  }
-};
+import {getAnswerStyle} from '../helpers/styling';
 
 const NoteCard = ({content, handlePress}) => {
   const dateString = formatDate(content.date, content.type);

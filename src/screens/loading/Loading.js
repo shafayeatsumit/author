@@ -3,6 +3,7 @@ import {View, Text, AppState, StyleSheet} from 'react-native';
 import {useContentStore, useUserStore} from '../../store';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
 
 AsyncStorage.clear();
 

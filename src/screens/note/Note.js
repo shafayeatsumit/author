@@ -4,8 +4,10 @@ import {
   View,
   Text,
   TextInput,
+  KeyboardAvoidingView,
   TouchableOpacity,
   Image,
+  Platform,
   Dimensions,
   StyleSheet,
 } from 'react-native';
@@ -14,6 +16,8 @@ import uuid from 'react-native-uuid';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
+import {getAnswerStyle} from '../../helpers/styling';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
@@ -30,7 +34,7 @@ const Note = ({navigation, route}) => {
       a: `${text}`,
     });
   };
-
+  const fontType = getAnswerStyle(content.type, content.isExtra);
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -60,6 +64,9 @@ const Note = ({navigation, route}) => {
   };
 
   const handleSubmit = () => {
+    if (!text) {
+      return;
+    }
     submitAnswer();
     goBack();
     setLastSubmit();
@@ -73,7 +80,9 @@ const Note = ({navigation, route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
       <TouchableOpacity style={styles.xout} onPress={goBack}>
         <Image source={require('../../../assets/xout.png')} />
       </TouchableOpacity>
@@ -83,7 +92,8 @@ const Note = ({navigation, route}) => {
       </View>
       <TextInput
         multiline
-        style={styles.input}
+        onSubmitEditing={handleSubmit}
+        style={[styles.input, fontType]}
         onChangeText={onChangeText}
         value={text}
         spellCheck={false}
@@ -102,7 +112,7 @@ const Note = ({navigation, route}) => {
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 export default Note;
@@ -123,11 +133,11 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.7)',
   },
   input: {
-    height: 100,
+    height: ScreenHeight / 4,
     paddingHorizontal: 5,
     width: '85%',
     alignSelf: 'center',
-    margin: 12,
+    // margin: 12,
     borderWidth: 0,
     fontSize: RFValue(27),
     color: 'black',
@@ -140,18 +150,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
   },
   button: {
-    height: 45,
+    height: 50,
     width: 100,
     backgroundColor: '#65B354',
     borderRadius: 5,
-    marginTop: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },
   length: {
+    paddingTop: 20,
     paddingRight: 20,
-    fontSize: 18,
-    paddingTop: 35,
+    fontSize: RFValue(18),
     color: 'gray',
   },
   buttonText: {

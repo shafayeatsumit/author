@@ -4,10 +4,18 @@ import Logo from '../../components/Logo';
 import ActiveContent from './ActiveContent';
 import Submissions from './Submissions';
 import Start from './Start';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Home = ({navigation}) => {
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#343D4C', '#131E25']}
+      start={{x: 0, y: 0}}
+      end={{x: 0, y: 1}}
+      useAngle={true}
+      angle={360}
+      angleCenter={{x: 0.5, y: 0.5}}
+      style={{height: '100%', width: '100%'}}>
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
           <ActiveContent navigation={navigation} />
@@ -15,7 +23,7 @@ const Home = ({navigation}) => {
           <Start />
         </ScrollView>
       </SafeAreaView>
-    </View>
+    </LinearGradient>
   );
 };
 export default Home;
@@ -26,6 +34,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
 });

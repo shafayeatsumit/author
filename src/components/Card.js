@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     justifyContent: 'center',
     alignSelf: 'center',
-    backgroundColor: '#FFFFFF',
+    // backgroundColor: '#FFFFFF',
     paddingHorizontal: 30,
     marginTop: -30,
   },
