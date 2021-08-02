@@ -1,20 +1,32 @@
 import React from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
 import moment from 'moment';
 import {RFValue} from 'react-native-responsive-fontsize';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
-const Page = ({content}) => {
+const Page = ({content, navigation}) => {
   const todayString = moment().format('dddd MMMM Do');
+  const handlePress = () => {
+    navigation.navigate('Note', {content, isEdit: true});
+  };
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={handlePress}
+      activeOpacity={0.3}
+      style={styles.container}>
       <View style={styles.questionContainer}>
         <Text style={styles.dateText}>{todayString}</Text>
-        <Text style={styles.titleText}>Today's Title</Text>
+        <Text style={styles.titleText}>{content.type}</Text>
         <Text style={styles.question}>{content.question}</Text>
       </View>
       <Text style={styles.title}>{content.answer}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 export default Page;

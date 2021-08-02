@@ -21,7 +21,7 @@ const Home = ({navigation}) => {
   const {contents, initialize} = useContentStore();
   const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
-
+  console.log('contents', contents);
   useEffect(() => {
     initialize();
   }, []);
@@ -49,7 +49,7 @@ const Home = ({navigation}) => {
       );
     }
     return (
-      <InfiniteScroll
+      <FlatList
         data={contents}
         renderItem={renderPropmpts}
         keyExtractor={i => i.id}
@@ -61,7 +61,7 @@ const Home = ({navigation}) => {
 
   const renderPage = ({item}) => {
     if (item.answer) {
-      return <Page content={item} />;
+      return <Page content={item} navigation={navigation} />;
     }
     return <RenderPromtList />;
   };
@@ -94,6 +94,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: -30,
   },
   item: {
     backgroundColor: '#f9c2ff',
@@ -108,13 +109,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 35,
-    textAlign: 'left',
-    paddingLeft: 35,
+    textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
   },
   text: {
     fontSize: 32,
-    textAlign: 'left',
+    textAlign: 'center',
     fontFamily: 'georgia',
     paddingTop: 30,
     paddingHorizontal: 30,

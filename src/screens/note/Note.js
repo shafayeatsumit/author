@@ -74,7 +74,7 @@ const Note = ({navigation, route}) => {
     editAnswer();
     goBack();
   };
-
+  const contentQuestion = content.question.replace('______', '');
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -85,20 +85,20 @@ const Note = ({navigation, route}) => {
 
       <View style={styles.questionContainer}>
         <Text style={styles.dateText}>{todayString}</Text>
-        <Text style={styles.titleText}>Today's Title</Text>
-        <Text style={styles.question}>{content.question}</Text>
+        <Text style={styles.titleText}>{content.type}</Text>
+        <Text style={styles.question}>{contentQuestion}</Text>
+        <TextInput
+          onSubmitEditing={handleSubmit}
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+          spellCheck={false}
+          textAlignVertical="top"
+          maxLength={35}
+          ref={inputRef}
+        />
       </View>
-      <TextInput
-        multiline
-        onSubmitEditing={handleSubmit}
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-        spellCheck={false}
-        textAlignVertical="top"
-        maxLength={35}
-        ref={inputRef}
-      />
+
       <View style={styles.buttonContainer}>
         <Text style={styles.length}>
           {' '}
@@ -148,11 +148,11 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.7)',
   },
   input: {
-    height: ScreenHeight / 5,
+    height: 80,
     paddingHorizontal: 5,
-    width: '85%',
+    width: '100%',
     alignSelf: 'center',
-    // margin: 12,
+    margin: 12,
     borderWidth: 0,
     fontSize: RFValue(27),
     color: 'black',

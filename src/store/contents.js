@@ -1,10 +1,14 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CONTENTS from '../helpers/contentsData';
+import {getRandomContent} from '../helpers/contentsData';
 
 let contentStore = set => ({
   contents: [],
-  initialize: () => set(() => ({contents: [...CONTENTS]})),
+  initialize: () =>
+    set(() => {
+      const randomContents = getRandomContent();
+      return {contents: [...randomContents]};
+    }),
   removeContent: contentId =>
     set(state => ({
       contents: state.contents.filter(item => item.id !== contentId),
