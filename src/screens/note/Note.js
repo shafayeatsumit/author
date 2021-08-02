@@ -25,7 +25,7 @@ const Note = ({navigation, route}) => {
   const {content, isEdit} = route.params;
   const defaultText = content.answer ? content.answer : '';
   const [text, onChangeText] = React.useState(defaultText);
-  const charMaxLength = 35;
+  const charMaxLength = 10;
   const todayString = moment().format('MMMM Do');
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
@@ -94,7 +94,8 @@ const Note = ({navigation, route}) => {
           value={text}
           spellCheck={false}
           textAlignVertical="top"
-          maxLength={35}
+          maxLength={charMaxLength}
+          selectionColor={'white'}
           ref={inputRef}
         />
       </View>
@@ -134,7 +135,6 @@ const styles = StyleSheet.create({
   titleText: {
     fontFamily: 'Montserrat-Bold',
     fontSize: RFValue(23),
-    color: 'rgba(0,0,0,0.7)',
     paddingBottom: 10,
     color: 'white',
   },
@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 0,
     fontSize: RFValue(27),
-    color: 'black',
+    color: 'white',
+
     fontFamily: 'Montserrat-Bold',
   },
   buttonContainer: {
