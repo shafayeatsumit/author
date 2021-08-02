@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 let submissionStore = set => ({
   submission: [],
   setSubmission: content =>
-    set(state => ({submission: [content, ...state.submission]})),
+    set(state => ({submission: [...state.submission, content]})),
   updateSubmission: (contentId, content) =>
     set(state => ({
       submission: state.submission.map(item => {
@@ -19,9 +19,9 @@ let submissionStore = set => ({
     })),
 });
 
-submissionStore = persist(submissionStore, {
-  name: 'submission_storage',
-  getStorage: () => AsyncStorage,
-});
+// submissionStore = persist(submissionStore, {
+//   name: 'submission_storage',
+//   getStorage: () => AsyncStorage,
+// });
 
 export default submissionStore;

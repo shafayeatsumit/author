@@ -16,25 +16,23 @@ import uuid from 'react-native-uuid';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
-import {getAnswerStyle} from '../../helpers/styling';
-import LinearGradient from 'react-native-linear-gradient';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
   const {setSubmission, updateSubmission} = useSubmissionStore();
-  const {moveFirst} = useContentStore();
+  const {removeContent} = useContentStore();
   const inputRef = useRef();
   const {content, isEdit} = route.params;
   const defaultText = content.answer ? content.answer : '';
   const [text, onChangeText] = React.useState(defaultText);
   const charMaxLength = 35;
+  const todayString = moment().format('MMMM Do');
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
       q: `${content.question}`,
       a: `${text}`,
     });
   };
-  const fontType = getAnswerStyle(content.type, content.isExtra);
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -46,7 +44,6 @@ const Note = ({navigation, route}) => {
       id: content.id,
       type: content.type,
       date: moment(),
-      isExtra: content.pairId ? true : false,
     });
     logEvent('submit');
   };
@@ -70,8 +67,7 @@ const Note = ({navigation, route}) => {
     submitAnswer();
     goBack();
     setLastSubmit();
-    // TODO: change this later
-    moveFirst();
+    removeContent(content.id);
   };
 
   const handleEdit = () => {
@@ -88,12 +84,14 @@ const Note = ({navigation, route}) => {
       </TouchableOpacity>
 
       <View style={styles.questionContainer}>
+        <Text style={styles.dateText}>{todayString}</Text>
+        <Text style={styles.titleText}>Today's Title</Text>
         <Text style={styles.question}>{content.question}</Text>
       </View>
       <TextInput
         multiline
         onSubmitEditing={handleSubmit}
-        style={[styles.input, fontType]}
+        style={styles.input}
         onChangeText={onChangeText}
         value={text}
         spellCheck={false}
@@ -120,6 +118,23 @@ export default Note;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFF1F1',
+  },
+  dateContainer: {
+    height: 100,
+    width: 100,
+    backgroundColor: 'red',
+  },
+  dateText: {
+    fontFamily: 'Montserrat-Regular',
+    fontSize: RFValue(16),
+    paddingBottom: 10,
+  },
+  titleText: {
+    fontFamily: 'Montserrat-Bold',
+    fontSize: RFValue(23),
+    color: 'rgba(0,0,0,0.7)',
+    paddingBottom: 10,
   },
   questionContainer: {
     padding: 30,
@@ -129,11 +144,11 @@ const styles = StyleSheet.create({
   },
   question: {
     fontFamily: 'georgia',
-    fontSize: RFValue(23),
+    fontSize: RFValue(18),
     color: 'rgba(0,0,0,0.7)',
   },
   input: {
-    height: ScreenHeight / 4,
+    height: ScreenHeight / 5,
     paddingHorizontal: 5,
     width: '85%',
     alignSelf: 'center',

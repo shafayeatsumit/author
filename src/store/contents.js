@@ -5,29 +5,15 @@ import CONTENTS from '../helpers/contentsData';
 let contentStore = set => ({
   contents: [],
   initialize: () => set(() => ({contents: [...CONTENTS]})),
-  moveFirst: () =>
-    set(state => {
-      const firstHalfArray = state.contents.slice(0, 1);
-      const secondHalfArray = state.contents.slice(1);
-      const update = [...secondHalfArray, ...firstHalfArray];
-      return {
-        contents: update,
-      };
-    }),
-  moveFirstTwo: () =>
-    set(state => {
-      const firstHalfArray = state.contents.slice(0, 2);
-      const secondHalfArray = state.contents.slice(2);
-      const update = [...firstHalfArray, ...secondHalfArray];
-      return {
-        content: update,
-      };
-    }),
+  removeContent: contentId =>
+    set(state => ({
+      contents: state.contents.filter(item => item.id !== contentId),
+    })),
 });
 
-contentStore = persist(contentStore, {
-  name: 'content_storage',
-  getStorage: () => AsyncStorage,
-});
+// contentStore = persist(contentStore, {
+//   name: 'content_storage',
+//   getStorage: () => AsyncStorage,
+// });
 
 export default contentStore;
