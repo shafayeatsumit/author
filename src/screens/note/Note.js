@@ -118,23 +118,25 @@ export default Note;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF1F1',
+    backgroundColor: '#303B49',
   },
   dateContainer: {
     height: 100,
     width: 100,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
     fontSize: RFValue(16),
     paddingBottom: 10,
+    color: 'white',
   },
   titleText: {
     fontFamily: 'Montserrat-Bold',
     fontSize: RFValue(23),
     color: 'rgba(0,0,0,0.7)',
     paddingBottom: 10,
+    color: 'white',
   },
   questionContainer: {
     padding: 30,
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
   question: {
     fontFamily: 'georgia',
     fontSize: RFValue(18),
-    color: 'rgba(0,0,0,0.7)',
+    color: 'rgba(255,255,255,0.7)',
   },
   input: {
     height: 80,
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     width: 100,
-    backgroundColor: '#65B354',
+    backgroundColor: '#3470E1',
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',

@@ -72,10 +72,7 @@ const Home = ({navigation}) => {
       horizontal
       style={styles.container}
       ref={scrollViewRef}
-      showsHorizontalScrollIndicator={false}
-      onContentSizeChange={(contentWidth, contentHeight) => {
-        scrollViewRef.current.scrollToEnd({animated: false});
-      }}>
+      showsHorizontalScrollIndicator={false}>
       <FlatList
         data={submission}
         renderItem={renderPage}
@@ -94,26 +91,27 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: -30,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#303B49',
     height: ScreenHeight,
     width: ScreenWidth,
   },
   itemPrompt: {
-    backgroundColor: '#FFF1F1',
+    backgroundColor: '#303B49',
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',
   },
   title: {
     fontSize: 35,
+    color: 'white',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
   },
   text: {
     fontSize: 32,
+    color: '#BBBFC2',
     textAlign: 'center',
     fontFamily: 'georgia',
     paddingTop: 30,
