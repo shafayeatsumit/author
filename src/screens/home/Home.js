@@ -21,7 +21,6 @@ const Home = ({navigation}) => {
   const {contents, initialize} = useContentStore();
   const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
-  console.log('contents', contents);
   useEffect(() => {
     initialize();
   }, []);
@@ -29,6 +28,7 @@ const Home = ({navigation}) => {
   const PromptItem = ({item}) => {
     return (
       <TouchableOpacity
+        activeOpacity={1}
         style={styles.itemPrompt}
         onPress={() => navigation.navigate('Note', {content: item})}>
         <Text style={styles.title}>{item.type}</Text>

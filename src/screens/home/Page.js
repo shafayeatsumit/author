@@ -19,7 +19,7 @@ const Page = ({content, navigation}) => {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      activeOpacity={0.3}
+      activeOpacity={1}
       style={styles.container}>
       <View style={styles.spacer} />
       <View style={styles.questionContainer}>
