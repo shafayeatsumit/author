@@ -39,8 +39,8 @@ export const CONTENTS = [
   },
   {
     id: '8',
-    type: 'Temptation',
-    question: "If I avoid ______, today's story will be better",
+    type: 'Mandate',
+    question: 'Today, I am unwilling to accept ______',
   },
   {
     id: '9',
@@ -67,6 +67,11 @@ export const CONTENTS = [
     id: '13',
     type: 'Triumph',
     question: 'I can celebrate ______',
+  },
+  {
+    id: '14',
+    type: 'Mindset',
+    question: 'The thoughts that I need today are ______',
   },
 ];
 

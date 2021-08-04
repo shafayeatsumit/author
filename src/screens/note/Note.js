@@ -25,8 +25,18 @@ const Note = ({navigation, route}) => {
   const inputRef = useRef();
   const {content, isEdit} = route.params;
   const contentQuestion = content.question.replace('______', '');
-  const defaultText = content.answer ? content.answer : '';
-  const [text, onChangeText] = React.useState(contentQuestion);
+  const contentAnswer = content.answer;
+  const getAnswer = () => {
+    const firstHalf = sharedStart([contentQuestion, contentAnswer]);
+    const secondHalf = contentAnswer.replace(firstHalf, '');
+    return secondHalf;
+  };
+
+  const answerPart = isEdit ? getAnswer() : '';
+
+  const defaultText = contentQuestion + answerPart;
+
+  const [text, onChangeText] = React.useState(defaultText);
 
   const todayString = moment().format('MMMM Do');
 
@@ -36,9 +46,7 @@ const Note = ({navigation, route}) => {
       a: `${text}`,
     });
   };
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+
   const submitAnswer = () => {
     setSubmission({
       uid: uuid.v4(),
@@ -82,6 +90,9 @@ const Note = ({navigation, route}) => {
 
   const unsharedInputValue = text.replace(sharedInputValue, '');
   console.log('shared input value', unsharedInputValue);
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -162,6 +173,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
     margin: 12,
+    lineHeight: 30,
     borderWidth: 0,
     fontSize: RFValue(19),
     color: 'rgba(255,255,255,0.6)',

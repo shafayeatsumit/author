@@ -49,10 +49,10 @@ const Home = ({navigation}) => {
       );
     }
     return (
-      <FlatList
+      <InfiniteScroll
         data={contents}
         renderItem={renderPropmpts}
-        keyExtractor={i => i.id}
+        // keyExtractor={i => i.id}
         pagingEnabled
         showsVerticalScrollIndicator={false}
       />
@@ -91,6 +91,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#303B49',
   },
   item: {
     backgroundColor: '#303B49',
