@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {useSubmissionStore, useUserStore, useContentStore} from '../../store';
 import uuid from 'react-native-uuid';
+import {sharedStart} from '../../helpers/utils';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
@@ -23,10 +24,12 @@ const Note = ({navigation, route}) => {
   const {removeContent} = useContentStore();
   const inputRef = useRef();
   const {content, isEdit} = route.params;
+  const contentQuestion = content.question.replace('______', '');
   const defaultText = content.answer ? content.answer : '';
-  const [text, onChangeText] = React.useState(defaultText);
-  const charMaxLength = 10;
+  const [text, onChangeText] = React.useState(contentQuestion);
+
   const todayString = moment().format('MMMM Do');
+
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
       q: `${content.question}`,
@@ -74,7 +77,11 @@ const Note = ({navigation, route}) => {
     editAnswer();
     goBack();
   };
-  const contentQuestion = content.question.replace('______', '');
+
+  const sharedInputValue = sharedStart([contentQuestion, text]);
+
+  const unsharedInputValue = text.replace(sharedInputValue, '');
+  console.log('shared input value', unsharedInputValue);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -84,27 +91,27 @@ const Note = ({navigation, route}) => {
       </TouchableOpacity>
 
       <View style={styles.questionContainer}>
-        <Text style={styles.dateText}>{todayString}</Text>
         <Text style={styles.titleText}>{content.type}</Text>
-        <Text style={styles.question}>{contentQuestion}</Text>
+        <Text style={styles.dateText}>{todayString}</Text>
+
         <TextInput
           onSubmitEditing={handleSubmit}
           style={styles.input}
+          multiline={true}
           onChangeText={onChangeText}
-          value={text}
           spellCheck={false}
           textAlignVertical="top"
-          maxLength={charMaxLength}
           selectionColor={'white'}
-          ref={inputRef}
-        />
+          ref={inputRef}>
+          <Text>
+            {sharedInputValue}
+
+            <Text style={styles.boldInput}>{unsharedInputValue}</Text>
+          </Text>
+        </TextInput>
       </View>
 
       <View style={styles.buttonContainer}>
-        <Text style={styles.length}>
-          {' '}
-          {text.length} / {charMaxLength}
-        </Text>
         <TouchableOpacity
           onPress={isEdit ? handleEdit : handleSubmit}
           style={styles.button}>
@@ -128,7 +135,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
-    fontSize: RFValue(16),
+    fontSize: RFValue(14),
     paddingBottom: 10,
     color: 'white',
   },
@@ -150,15 +157,19 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.7)',
   },
   input: {
-    height: 80,
+    height: ScreenHeight / 8,
     paddingHorizontal: 5,
     width: '100%',
     alignSelf: 'center',
     margin: 12,
     borderWidth: 0,
-    fontSize: RFValue(27),
+    fontSize: RFValue(19),
+    color: 'rgba(255,255,255,0.6)',
+    fontFamily: 'georgia',
+  },
+  boldInput: {
+    fontSize: RFValue(22),
     color: 'white',
-
     fontFamily: 'Montserrat-Bold',
   },
   buttonContainer: {

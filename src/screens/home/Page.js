@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {sharedStart} from '../../helpers/utils';
+
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Page = ({content, navigation}) => {
@@ -16,6 +18,10 @@ const Page = ({content, navigation}) => {
     navigation.navigate('Note', {content, isEdit: true});
   };
   const question = content.question.replace('______', '');
+  const contentAnswer = content.answer;
+  const sharedInputValue = sharedStart([question, contentAnswer]);
+  const unsharedInputValue = contentAnswer.replace(sharedInputValue, '');
+
   return (
     <TouchableOpacity
       onPress={handlePress}
@@ -26,10 +32,10 @@ const Page = ({content, navigation}) => {
         <Text style={styles.titleText}>{content.type}</Text>
         <Text style={styles.dateText}>{todayString}</Text>
         <Text style={styles.question}>
-          {question}
+          {sharedInputValue}
           <Text style={[styles.question, styles.answer]}>
             {' '}
-            {content.answer}
+            {unsharedInputValue}
           </Text>
         </Text>
       </View>
@@ -75,14 +81,14 @@ const styles = StyleSheet.create({
   },
   question: {
     fontFamily: 'georgia',
-    fontSize: RFValue(26),
-    color: 'rgba(255,255,255,0.8)',
+    fontSize: RFValue(19),
+    color: 'rgba(255,255,255,0.6)',
     paddingTop: 20,
-    lineHeight: 45,
+    lineHeight: 35,
   },
   answer: {
-    fontFamily: 'Montserrat-SemiBold',
-    fontSize: RFValue(30),
-    color: 'rgba(255,255,255,0.8)',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: RFValue(22),
+    color: 'rgba(255,255,255,1)',
   },
 });
