@@ -17,6 +17,7 @@ import {sharedStart} from '../../helpers/utils';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
+TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
@@ -87,12 +88,35 @@ const Note = ({navigation, route}) => {
   };
 
   const sharedInputValue = sharedStart([contentQuestion, text]);
-
   const unsharedInputValue = text.replace(sharedInputValue, '');
-  console.log('shared input value', unsharedInputValue);
-  useEffect(() => {
+
+  const resetCursor = () => {
+    inputRef.current.setNativeProps({
+      selection: {
+        start: undefined,
+        end: undefined,
+      },
+    });
+  };
+
+  const setCursor = () => {
     inputRef.current.focus();
+    inputRef.current.setNativeProps({
+      selection: {
+        start: text.length,
+        end: text.length,
+      },
+    });
+    if (Platform.OS === 'android') {
+      setTimeout(resetCursor, 100);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(setCursor, 600);
   }, []);
+
+  console.log('text value', text, text.length);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -168,7 +192,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.7)',
   },
   input: {
-    height: ScreenHeight / 8,
+    height: ScreenHeight / 4.5,
     paddingHorizontal: 5,
     width: '100%',
     alignSelf: 'center',

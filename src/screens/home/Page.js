@@ -34,7 +34,6 @@ const Page = ({content, navigation}) => {
         <Text style={styles.question}>
           {sharedInputValue}
           <Text style={[styles.question, styles.answer]}>
-            {' '}
             {unsharedInputValue}
           </Text>
         </Text>
@@ -84,7 +83,6 @@ const styles = StyleSheet.create({
     fontSize: RFValue(19),
     color: 'rgba(255,255,255,0.6)',
     paddingTop: 20,
-    lineHeight: 35,
   },
   answer: {
     fontFamily: 'Montserrat-Bold',

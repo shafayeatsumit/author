@@ -18,11 +18,6 @@ export const CONTENTS = [
     question: "An investment I'll make in the future of my story is ______",
   },
   {
-    id: '4',
-    type: 'Cameo',
-    question: "I'll play a supporting role in ______'s story",
-  },
-  {
     id: '5',
     type: 'Advice',
     question: "Future me's advice for today would be ______",
