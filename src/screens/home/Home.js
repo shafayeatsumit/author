@@ -12,7 +12,8 @@ import {useContentStore, useSubmissionStore} from '../../store';
 import InfiniteScroll from 'react-native-infinite-looping-scroll';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LinearGradient from 'react-native-linear-gradient';
+import Swiper from 'react-native-swiper';
+
 import PushNotification from 'react-native-push-notification';
 import Page from './Page';
 
