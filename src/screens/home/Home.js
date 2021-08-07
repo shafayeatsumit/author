@@ -13,6 +13,7 @@ import InfiniteScroll from 'react-native-infinite-looping-scroll';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
+import PushNotification from 'react-native-push-notification';
 import Page from './Page';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
@@ -21,8 +22,22 @@ const Home = ({navigation}) => {
   const {contents, initialize} = useContentStore();
   const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
+
+  const firePushNotification = () => {
+    PushNotification.localNotificationSchedule({
+      channelId: 'channel-id',
+      title: 'From Author',
+      date: new Date(Date.now() + 5 * 60 * 1000),
+      message: 'Reminder From Author',
+      allowWhileIdle: true,
+      repeatType: 'hour',
+      repeatTime: 1,
+    });
+  };
+
   useEffect(() => {
     initialize();
+    firePushNotification();
   }, []);
 
   const PromptItem = ({item}) => {

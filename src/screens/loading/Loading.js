@@ -14,6 +14,7 @@ import {useContentStore, useSubmissionStore} from '../../store';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
+import PushNotification from 'react-native-push-notification';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
@@ -22,76 +23,13 @@ const Loading = ({navigation}) => {
   const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
 
-  useEffect(() => {
-    initialize();
-  }, []);
-
-  const PromptItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        style={styles.itemPrompt}
-        onPress={() => navigation.navigate('Note', {content: item})}>
-        <Text style={styles.title}>{item.type}</Text>
-        <Text style={styles.text}>{item.question}</Text>
-      </TouchableOpacity>
-    );
-  };
-  const renderPropmpts = ({item}) => {
-    return <PromptItem item={item} />;
-  };
-
-  const RenderPromtList = () => {
-    if (!contents.length) {
-      return (
-        <View style={styles.itemPrompt}>
-          <Text style={styles.text}>Hit the Max limit</Text>
-        </View>
-      );
-    }
-    return (
-      <FlatList
-        data={contents}
-        renderItem={renderPropmpts}
-        keyExtractor={i => i.id}
-        pagingEnabled
-        getItemLayout={(data, index) => ({
-          length: ScreenHeight,
-          offset: ScreenHeight * index,
-          index,
-        })}
-      />
-    );
-  };
-
-  const renderPage = ({item}) => {
-    if (item.answer) {
-      return (
-        <View style={styles.itemPrompt}>
-          <Text style={styles.text}>{item.answer}</Text>
-        </View>
-      );
-    }
-    return <RenderPromtList />;
-  };
-
   return (
-    <ScrollView
-      pagingEnabled
-      horizontal
-      style={styles.container}
-      ref={scrollViewRef}
-      onContentSizeChange={(contentWidth, contentHeight) => {
-        scrollViewRef.current.scrollToEnd({animated: true});
-      }}>
-      <FlatList
-        data={submission}
-        renderItem={renderPage}
-        keyExtractor={item => item.uid}
-        pagingEnabled
-        horizontal
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <TouchableOpacity
+        onPress={firePushNotification}
+        style={{backgroundColor: 'tomato', height: 100, width: 100}}
       />
-      <RenderPromtList />
-    </ScrollView>
+    </View>
   );
 };
 export default Loading;
