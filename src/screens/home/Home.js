@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -20,16 +20,22 @@ import Page from './Page';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
-  const {contents, initialize} = useContentStore();
+  const [loading, setLoading] = useState(true);
+  const {contents, lastInitialized, initialize} = useContentStore();
   const {submission} = useSubmissionStore();
-  const {lastInitialized} = useUserStore();
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
+
+  const scrollToEnd = () => {
+    scrollViewRef.current.scrollToEnd();
+    setTimeout(() => setLoading(false), 500);
+  };
 
   useEffect(() => {
     if (!isInitializedToday) {
       initialize();
     }
+    setTimeout(scrollToEnd, 200);
   }, []);
 
   const PromptItem = ({item}) => {
@@ -51,15 +57,17 @@ const Home = ({navigation}) => {
     if (!contents.length) {
       return (
         <View style={styles.itemPrompt}>
-          <Text style={styles.text}>Hit the Max limit</Text>
+          <Text style={styles.text}>
+            New prompts will be available tomorrow
+          </Text>
         </View>
       );
     }
     return (
-      <InfiniteScroll
+      <FlatList
         data={contents}
         renderItem={renderPropmpts}
-        // keyExtractor={i => i.id}
+        keyExtractor={i => i.id}
         pagingEnabled
         showsVerticalScrollIndicator={false}
       />
@@ -74,23 +82,26 @@ const Home = ({navigation}) => {
   };
 
   return (
-    <ScrollView
-      pagingEnabled
-      horizontal
-      style={styles.container}
-      ref={scrollViewRef}
-      showsHorizontalScrollIndicator={false}>
-      <FlatList
-        data={submission}
-        renderItem={renderPage}
-        keyExtractor={item => item.uid}
+    <>
+      <ScrollView
         pagingEnabled
         horizontal
-        showsHorizontalScrollIndicator={false}
-      />
+        style={styles.container}
+        ref={scrollViewRef}
+        showsHorizontalScrollIndicator={false}>
+        <FlatList
+          data={submission}
+          renderItem={renderPage}
+          keyExtractor={item => item.uid}
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
 
-      <RenderPromtList />
-    </ScrollView>
+        <RenderPromtList />
+      </ScrollView>
+      {loading && <View style={styles.loading} />}
+    </>
   );
 };
 export default Home;
@@ -98,6 +109,14 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#303B49',
+  },
+  loading: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: '#303B49',
   },
   item: {

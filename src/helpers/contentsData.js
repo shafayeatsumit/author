@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {isMorningTime} from '../helpers/date';
+import {checkIfMorningTime} from '../helpers/date';
 export const CONTENTS_MORNING = [
   {
     id: 'mo_1',
@@ -132,8 +132,9 @@ export const CONTENTS_EVENING = [
 export const getRandomContent = () => {
   const early = _.sampleSize(CONTENTS_MORNING, 3);
   const later = _.sampleSize(CONTENTS_EVENING, 3);
+  const isMorningTime = checkIfMorningTime();
   if (isMorningTime) {
     return [...early, ...later];
   }
-  return [...later, ...early];
+  return [...later];
 };

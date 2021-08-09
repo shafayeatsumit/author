@@ -1,7 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-export const isMorningTime = () => {
+export const checkIfMorningTime = () => {
   const now = moment();
   const format = 'hh:mm:ss';
   const beforeTime = moment('05:00:00', format);

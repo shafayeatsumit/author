@@ -17,13 +17,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import PushNotification from 'react-native-push-notification';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-
+// AsyncStorage.clear();
 const Loading = ({navigation}) => {
   const {finishedIntro} = useUserStore();
   const finishedIntroRef = useRef(null);
 
   const navigate = () => {
-    console.log('current =>', finishedIntroRef.current);
     finishedIntroRef.current
       ? navigation.navigate('Home')
       : navigation.navigate('Intro');

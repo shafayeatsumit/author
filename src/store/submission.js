@@ -19,9 +19,9 @@ let submissionStore = set => ({
     })),
 });
 
-// submissionStore = persist(submissionStore, {
-//   name: 'submission_storage',
-//   getStorage: () => AsyncStorage,
-// });
+submissionStore = persist(submissionStore, {
+  name: 'submission_storage',
+  getStorage: () => AsyncStorage,
+});
 
 export default submissionStore;
