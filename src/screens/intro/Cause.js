@@ -41,6 +41,7 @@ const Cause = ({goNext}) => {
         {CAUSES.map(item => {
           return (
             <TouchableOpacity
+              key={item.id}
               onPress={() => handlePressCause(item.id)}
               style={styles.button}>
               <Text style={styles.cause}>{item.text}</Text>

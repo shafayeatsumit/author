@@ -1,6 +1,17 @@
 import moment from 'moment';
 import _ from 'lodash';
 
+export const isMorningTime = () => {
+  const now = moment();
+  const format = 'hh:mm:ss';
+  const beforeTime = moment('05:00:00', format);
+  const afterTime = moment('12:00:00', format);
+  if (now.isBetween(beforeTime, afterTime)) {
+    return true;
+  }
+  return false;
+};
+
 export const checkIfToday = date => {
   const today = moment();
   return moment(date).isSame(today, 'day');

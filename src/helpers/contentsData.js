@@ -1,116 +1,139 @@
 import _ from 'lodash';
-
-export const CONTENTS_EARLY = [
+import {isMorningTime} from '../helpers/date';
+export const CONTENTS_MORNING = [
   {
-    id: '1',
+    id: 'mo_1',
     type: 'Title',
+    time: 'morning',
     question:
       'If the upcoming day was a chapter in my story, the title would be ______',
   },
   {
-    id: '2',
+    id: 'mo_2',
     type: 'One Thing',
+    time: 'morning',
     question: 'The action my story needs me to take is ______',
   },
   {
-    id: '3',
+    id: 'mo_3',
     type: 'Investment',
+    time: 'morning',
     question: "An investment I'll make in the future of my story is ______",
   },
   {
-    id: '5',
+    id: 'mo_5',
     type: 'Advice',
+    time: 'morning',
     question: "Future me's advice for today would be ______",
   },
   {
-    id: '6',
+    id: 'mo_6',
     type: 'Growth',
+    time: 'morning',
     question: "A hurdle I'll face that will help me grow as a person is ______",
   },
   {
-    id: '7',
+    id: 'mo_7',
     type: 'Purpose',
+    time: 'morning',
     question: 'Today is important to my story because ______',
   },
   {
-    id: '8',
+    id: 'mo_8',
     type: 'Mandate',
+    time: 'morning',
     question: 'Today, I am unwilling to accept ______',
   },
   {
-    id: '9',
+    id: 'mo_9',
     type: 'Challenge',
+    time: 'morning',
     question:
       'A challenge I can accept that will make me better than I was yesterday is ______',
   },
   {
-    id: '10',
+    id: 'mo_10',
     type: 'Guide',
+    time: 'morning',
     question: 'A value that can guide me is ______',
   },
   {
-    id: '11',
+    id: 'mo_11',
     type: 'Word',
+    time: 'morning',
     question: 'One word that could summarize my day is ______',
   },
   {
-    id: '12',
+    id: 'mo_12',
     type: 'Gratitude',
+    time: 'morning',
     question: 'Something that is going well right now is ______',
   },
   {
-    id: '13',
+    id: 'mo_13',
     type: 'Triumph',
+    time: 'morning',
     question: 'I can celebrate ______',
   },
   {
-    id: '14',
+    id: 'mo_14',
     type: 'Mindset',
+    time: 'morning',
     question: 'The thoughts that I need today are ______',
   },
 ];
 
-export const CONTENTS_LATER = [
+export const CONTENTS_EVENING = [
   {
-    id: '21',
+    id: 'ev_1',
     type: 'Word',
+    time: 'evening',
     question: 'One word that could summarize my day is ______',
   },
   {
-    id: '22',
+    id: 'ev_2',
+    time: 'evening',
     type: 'Gratitude',
     question: 'Something that went well was ______',
   },
   {
-    id: '23',
+    id: 'ev_3',
+    time: 'evening',
     type: 'Highlight',
     question: 'The highlight of the day was ______',
   },
   {
-    id: '24',
+    id: 'ev_4',
+    time: 'evening',
     type: 'Triumph',
     question: 'I can celebrate ______',
   },
   {
-    id: '25',
+    id: 'ev_5',
+    time: 'evening',
     type: 'Sidekick',
     question:
       'The best supporting actor or actoress in my story today was ______',
   },
   {
-    id: '26',
+    id: 'ev_6',
+    time: 'evening',
     type: 'Levity',
     question: "Something silly I did that reminds me I'm human is ______",
   },
   {
-    id: '27',
+    id: 'ev_7',
+    time: 'evening',
     type: 'Grace',
     question: 'A completely carefree and lovely moment was ______',
   },
 ];
 
 export const getRandomContent = () => {
-  const early = _.sampleSize(CONTENTS_EARLY, 3);
-  const later = _.sampleSize(CONTENTS_LATER, 3);
-  return [...early, ...later];
+  const early = _.sampleSize(CONTENTS_MORNING, 3);
+  const later = _.sampleSize(CONTENTS_EVENING, 3);
+  if (isMorningTime) {
+    return [...early, ...later];
+  }
+  return [...later, ...early];
 };

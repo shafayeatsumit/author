@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import {useContentStore, useSubmissionStore} from '../../store';
+import {useUserStore, useContentStore, useSubmissionStore} from '../../store';
 import InfiniteScroll from 'react-native-infinite-looping-scroll';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,23 +22,14 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 const Home = ({navigation}) => {
   const {contents, initialize} = useContentStore();
   const {submission} = useSubmissionStore();
+  const {lastInitialized} = useUserStore();
   const scrollViewRef = useRef();
-
-  const firePushNotification = () => {
-    PushNotification.localNotificationSchedule({
-      channelId: 'channel-id',
-      title: 'From Author',
-      date: new Date(Date.now() + 5 * 60 * 1000),
-      message: 'Reminder From Author',
-      allowWhileIdle: true,
-      repeatType: 'hour',
-      repeatTime: 1,
-    });
-  };
+  const isInitializedToday = checkIfToday(lastInitialized);
 
   useEffect(() => {
-    initialize();
-    firePushNotification();
+    if (!isInitializedToday) {
+      initialize();
+    }
   }, []);
 
   const PromptItem = ({item}) => {

@@ -20,9 +20,23 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Loading = ({navigation}) => {
   const {finishedIntro} = useUserStore();
+  const finishedIntroRef = useRef(null);
+
+  const navigate = () => {
+    console.log('current =>', finishedIntroRef.current);
+    finishedIntroRef.current
+      ? navigation.navigate('Home')
+      : navigation.navigate('Intro');
+  };
+
   useEffect(() => {
-    finishedIntro ? navigation.navige('Home') : navigation.navigate('Intro');
+    finishedIntroRef.current = finishedIntro;
+  }, [finishedIntro]);
+
+  useEffect(() => {
+    setTimeout(navigate, 500);
   }, []);
+
   return <View style={styles.container} />;
 };
 export default Loading;

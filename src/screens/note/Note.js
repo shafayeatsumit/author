@@ -116,7 +116,6 @@ const Note = ({navigation, route}) => {
     setTimeout(setCursor, 600);
   }, []);
 
-  console.log('text value', text, text.length);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

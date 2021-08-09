@@ -37,6 +37,7 @@ const Notifications = ({goHome}) => {
         {NOTIFICATIONS.map(item => {
           return (
             <TouchableOpacity
+              key={item.id}
               onPress={() => handlePressTime(item.id)}
               style={styles.button}>
               <Text style={styles.cause}>{item.text}</Text>

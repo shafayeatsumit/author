@@ -1,13 +1,15 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getRandomContent} from '../helpers/contentsData';
+import moment from 'moment';
 
 let contentStore = set => ({
   contents: [],
+  lastInitialized: null,
   initialize: () =>
     set(() => {
       const randomContents = getRandomContent();
-      return {contents: [...randomContents]};
+      return {lastInitialized: moment(), contents: [...randomContents]};
     }),
   removeContent: contentId =>
     set(state => ({
@@ -15,9 +17,9 @@ let contentStore = set => ({
     })),
 });
 
-// contentStore = persist(contentStore, {
-//   name: 'content_storage',
-//   getStorage: () => AsyncStorage,
-// });
+contentStore = persist(contentStore, {
+  name: 'content_storage',
+  getStorage: () => AsyncStorage,
+});
 
 export default contentStore;

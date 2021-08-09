@@ -45,11 +45,9 @@ class Nav extends Component {
               },
             }),
           }}>
-          <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name="Loading" component={LoadingScreen} />
-
           <Stack.Screen name="Home" component={HomeScreen} />
-
+          <Stack.Screen name="Intro" component={IntroScreen} />
           <Stack.Screen name="Note" component={NoteScreen} />
         </Stack.Navigator>
       </NavigationContainer>
