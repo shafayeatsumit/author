@@ -47,15 +47,6 @@ const Home = ({navigation}) => {
   };
 
   const RenderPromtList = () => {
-    if (!contents.length) {
-      return (
-        <View style={styles.itemPrompt}>
-          <Text style={styles.text}>
-            New prompts will be available tomorrow
-          </Text>
-        </View>
-      );
-    }
     return (
       <FlatList
         data={contents}
@@ -76,23 +67,17 @@ const Home = ({navigation}) => {
 
   return (
     <>
-      <ScrollView
+      <FlatList
+        ref={scrollViewRef}
+        data={submission}
+        renderItem={renderPage}
+        keyExtractor={item => item.uid}
         pagingEnabled
         horizontal
-        style={styles.container}
-        ref={scrollViewRef}
-        showsHorizontalScrollIndicator={false}>
-        <FlatList
-          data={submission}
-          renderItem={renderPage}
-          keyExtractor={item => item.uid}
-          pagingEnabled
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
+        ListFooterComponent={RenderPromtList}
+        showsHorizontalScrollIndicator={false}
+      />
 
-        <RenderPromtList />
-      </ScrollView>
       {loading && <View style={styles.loading} />}
     </>
   );
