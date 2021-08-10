@@ -70,12 +70,6 @@ export const CONTENTS_MORNING = [
     question: 'Something that is going well right now is ______',
   },
   {
-    id: 'mo_13',
-    type: 'Triumph',
-    time: 'morning',
-    question: 'I can celebrate ______',
-  },
-  {
     id: 'mo_14',
     type: 'Mindset',
     time: 'morning',
@@ -132,7 +126,10 @@ export const CONTENTS_EVENING = [
 export const getRandomContent = () => {
   const early = _.sampleSize(CONTENTS_MORNING, 3);
   const later = _.sampleSize(CONTENTS_EVENING, 3);
+  // TODO: uncomment this;
   const isMorningTime = checkIfMorningTime();
+  // const isMorningTime = true;
+
   if (isMorningTime) {
     return [...early, ...later];
   }

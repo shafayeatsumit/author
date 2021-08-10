@@ -16,6 +16,7 @@ import Swiper from 'react-native-swiper';
 
 import PushNotification from 'react-native-push-notification';
 import Page from './Page';
+import Prompt from './Prompt';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
@@ -39,15 +40,7 @@ const Home = ({navigation}) => {
   }, []);
 
   const PromptItem = ({item}) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.itemPrompt}
-        onPress={() => navigation.navigate('Note', {content: item})}>
-        <Text style={styles.title}>{item.type}</Text>
-        <Text style={styles.text}>{item.question}</Text>
-      </TouchableOpacity>
-    );
+    return <Prompt navigation={navigation} item={item} />;
   };
   const renderPropmpts = ({item}) => {
     return <PromptItem item={item} />;
@@ -124,12 +117,7 @@ const styles = StyleSheet.create({
     height: ScreenHeight,
     width: ScreenWidth,
   },
-  itemPrompt: {
-    backgroundColor: '#303B49',
-    height: ScreenHeight,
-    width: ScreenWidth,
-    justifyContent: 'center',
-  },
+
   title: {
     fontSize: 35,
     color: 'white',
