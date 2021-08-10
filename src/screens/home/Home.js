@@ -29,7 +29,7 @@ const Home = ({navigation}) => {
 
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd();
-    setTimeout(() => setLoading(false), 500);
+    loading && setLoading(false);
   };
 
   useEffect(() => {
@@ -39,22 +39,29 @@ const Home = ({navigation}) => {
     setTimeout(scrollToEnd, 200);
   }, []);
 
-  const PromptItem = ({item}) => {
-    return <Prompt navigation={navigation} item={item} />;
-  };
-  const renderPropmpts = ({item}) => {
-    return <PromptItem item={item} />;
-  };
-
   const RenderPromtList = () => {
+    if (!contents.length) {
+      return (
+        <View style={styles.max}>
+          <Text style={styles.text}>Max Limit</Text>
+        </View>
+      );
+    }
     return (
-      <FlatList
-        data={contents}
-        renderItem={renderPropmpts}
-        keyExtractor={i => i.id}
+      <Swiper
+        loop={true}
         pagingEnabled
-        showsVerticalScrollIndicator={false}
-      />
+        snapToInterval={ScreenHeight}
+        decelerationRate="fast"
+        removeClippedSubviews={false}
+        showsPagination={false}
+        horizontal={false}
+        style={styles.wrapper}
+        showsButtons={false}>
+        {contents.map(item => (
+          <Prompt key={item} navigation={navigation} item={item} />
+        ))}
+      </Swiper>
     );
   };
 
@@ -70,6 +77,7 @@ const Home = ({navigation}) => {
       <FlatList
         ref={scrollViewRef}
         data={submission}
+        decelerationRate="fast"
         renderItem={renderPage}
         keyExtractor={item => item.uid}
         pagingEnabled
@@ -97,6 +105,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: '#303B49',
   },
+  max: {
+    height: ScreenHeight,
+    width: ScreenWidth,
+    backgroundColor: '#303B49',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   item: {
     backgroundColor: '#303B49',
     height: ScreenHeight,
@@ -116,5 +131,24 @@ const styles = StyleSheet.create({
     fontFamily: 'georgia',
     paddingTop: 30,
     paddingHorizontal: 30,
+  },
+
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB',
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
   },
 });

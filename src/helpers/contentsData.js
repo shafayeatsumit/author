@@ -10,9 +10,9 @@ export const CONTENTS_MORNING = [
   },
   {
     id: 'mo_2',
-    type: 'One Thing',
+    type: 'Priority',
     time: 'morning',
-    question: 'The action my story needs me to take is ______',
+    question: 'The priority that can guide me today is ______',
   },
   {
     id: 'mo_3',
@@ -28,52 +28,35 @@ export const CONTENTS_MORNING = [
   },
   {
     id: 'mo_6',
-    type: 'Growth',
+    type: 'Plot',
     time: 'morning',
-    question: "A hurdle I'll face that will help me grow as a person is ______",
+    question: 'Actions my story needs me to complete are ______',
   },
   {
     id: 'mo_7',
-    type: 'Purpose',
+    type: 'Power',
     time: 'morning',
-    question: 'Today is important to my story because ______',
+    question: 'The thing that is within my power to control today is ______',
   },
   {
     id: 'mo_8',
-    type: 'Mandate',
+    type: 'Composure',
+    time: 'morning',
+    question:
+      'Something I might face today that is outside of my control is ______',
+  },
+  {
+    id: 'mo_9',
+    type: 'Strength',
     time: 'morning',
     question: 'Today, I am unwilling to accept ______',
   },
   {
-    id: 'mo_9',
-    type: 'Challenge',
+    id: 'mo_10',
+    type: 'Start',
     time: 'morning',
     question:
-      'A challenge I can accept that will make me better than I was yesterday is ______',
-  },
-  {
-    id: 'mo_10',
-    type: 'Guide',
-    time: 'morning',
-    question: 'A value that can guide me is ______',
-  },
-  {
-    id: 'mo_11',
-    type: 'Word',
-    time: 'morning',
-    question: 'One word that could summarize my day is ______',
-  },
-  {
-    id: 'mo_12',
-    type: 'Gratitude',
-    time: 'morning',
-    question: 'Something that is going well right now is ______',
-  },
-  {
-    id: 'mo_14',
-    type: 'Mindset',
-    time: 'morning',
-    question: 'The thoughts that I need today are ______',
+      'An extremely easy action I can take to push today in the right direction is ______',
   },
 ];
 
@@ -91,12 +74,6 @@ export const CONTENTS_EVENING = [
     question: 'Something that went well was ______',
   },
   {
-    id: 'ev_3',
-    time: 'evening',
-    type: 'Highlight',
-    question: 'The highlight of the day was ______',
-  },
-  {
     id: 'ev_4',
     time: 'evening',
     type: 'Triumph',
@@ -110,16 +87,28 @@ export const CONTENTS_EVENING = [
       'The best supporting actor or actoress in my story today was ______',
   },
   {
-    id: 'ev_6',
-    time: 'evening',
-    type: 'Levity',
-    question: "Something silly I did that reminds me I'm human is ______",
-  },
-  {
     id: 'ev_7',
     time: 'evening',
     type: 'Grace',
     question: 'A completely carefree and lovely moment was ______',
+  },
+  {
+    id: 'ev_3',
+    time: 'evening',
+    type: 'Keepsake',
+    question: "Something I'll always want to remember is ______",
+  },
+  {
+    id: 'ev_6',
+    time: 'evening',
+    type: 'Misstep',
+    question: 'A misstep that will help me grow as a person is ______',
+  },
+  {
+    id: 'ev_7',
+    time: 'evening',
+    type: 'Foreshadow',
+    question: 'My advice for myself tomorrow is ______',
   },
 ];
 

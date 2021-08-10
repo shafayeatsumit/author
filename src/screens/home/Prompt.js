@@ -45,6 +45,7 @@ const Prompt = ({item, navigation}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
+      key={item.id}
       style={styles.itemPrompt}
       onPress={handlePress}>
       <View style={styles.clockHolder}>
