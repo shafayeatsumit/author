@@ -6,17 +6,38 @@ import moment from 'moment';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {ScrollView as GestureHandlerScrollView} from 'react-native-gesture-handler';
 
-const PageRenderer = ({pages, navigation}) => {
+const PageRenderer = ({pages, navigation, scrollEndCount}) => {
   const [scrollEnabled, setScrollEnabled] = useState(true);
+  const [scrollIndex, setScrollIndex] = useState(0);
   const contentDate = pages[0].date;
   const dateString = moment(contentDate).format('dddd MMMM Do');
+  let offset = 0;
+  const firstIndex = 0;
+  const lastIndex = pages.length - 1;
+
+  const handleScroll = event => {
+    let currentOffset = event.nativeEvent.contentOffset.x;
+    let direction = currentOffset > offset ? 'left' : 'right';
+    offset = currentOffset;
+    // console.log('direction', direction);
+    if (lastIndex === scrollIndex && direction === 'right') {
+      // setScrollEnabled(false);
+    }
+  };
 
   const handleScrollEnd = event => {
     const scrollPosition = event.nativeEvent.contentOffset.x;
-    const scrollIndex = scrollPosition / ScreenWidth;
+    const currentIndex = Math.round(scrollPosition / ScreenWidth);
+    setScrollIndex(currentIndex);
   };
 
   const handleTouchStart = () => {};
+
+  useEffect(() => {
+    if (scrollEndCount !== 0 && scrollEndCount % 3 === 0) {
+      setScrollEnabled(true);
+    }
+  }, [scrollEndCount]);
 
   return (
     <View style={styles.container}>
@@ -28,6 +49,7 @@ const PageRenderer = ({pages, navigation}) => {
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           scrollEnabled={scrollEnabled}
+          onScroll={handleScroll}
           onMomentumScrollEnd={handleScrollEnd}
           onTouchStart={handleTouchStart}
           contentContainerStyle={styles.scrollContainer}

@@ -23,6 +23,7 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
+  const [scrollEndCount, setScrollEndCount] = useState(0);
   const {contents, lastInitialized, initialize} = useContentStore();
   const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
@@ -30,6 +31,10 @@ const Home = ({navigation}) => {
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd();
     loading && setLoading(false);
+  };
+
+  const handleScrollEnd = event => {
+    setScrollEndCount(scrollEndCount + 1);
   };
 
   useEffect(() => {
@@ -66,7 +71,13 @@ const Home = ({navigation}) => {
   };
 
   const renderPage = ({item}) => {
-    return <PageRenderer pages={item} navigation={navigation} />;
+    return (
+      <PageRenderer
+        scrollEndCount={scrollEndCount}
+        pages={item}
+        navigation={navigation}
+      />
+    );
   };
 
   const submissionsByDate = _.values(_.groupBy(submission, 'date'));
@@ -76,6 +87,8 @@ const Home = ({navigation}) => {
       <FlatList
         ref={scrollViewRef}
         data={submissionsByDate}
+        onScroll={e => console.log('scrolling', e.nativeEvent.contentOffset.x)}
+        onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}
         decelerationRate="fast"
         keyExtractor={item => item[0].date}
