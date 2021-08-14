@@ -55,7 +55,7 @@ const Note = ({navigation, route}) => {
       answer: text,
       id: content.id,
       type: content.type,
-      date: moment(),
+      date: moment().startOf('day'),
     });
     logEvent('submit');
   };

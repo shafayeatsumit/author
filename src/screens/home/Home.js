@@ -13,10 +13,11 @@ import InfiniteScroll from 'react-native-infinite-looping-scroll';
 import {checkIfToday} from '../../helpers/date';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Swiper from 'react-native-swiper';
-
+import _ from 'lodash';
 import PushNotification from 'react-native-push-notification';
 import Page from './Page';
 import Prompt from './Prompt';
+import PageRenderer from './PageRenderer';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
@@ -26,7 +27,6 @@ const Home = ({navigation}) => {
   const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
-
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd();
     loading && setLoading(false);
@@ -66,28 +66,26 @@ const Home = ({navigation}) => {
   };
 
   const renderPage = ({item}) => {
-    if (item.answer) {
-      return <Page content={item} navigation={navigation} />;
-    }
-    return <RenderPromtList />;
+    return <PageRenderer pages={item} navigation={navigation} />;
   };
 
+  const submissionsByDate = _.values(_.groupBy(submission, 'date'));
+
   return (
-    <>
+    <View style={styles.container}>
       <FlatList
         ref={scrollViewRef}
-        data={submission}
-        decelerationRate="fast"
+        data={submissionsByDate}
         renderItem={renderPage}
-        keyExtractor={item => item.uid}
+        decelerationRate="fast"
+        keyExtractor={item => item[0].date}
         pagingEnabled
         horizontal
         ListFooterComponent={RenderPromtList}
         showsHorizontalScrollIndicator={false}
       />
-
       {loading && <View style={styles.loading} />}
-    </>
+    </View>
   );
 };
 export default Home;
@@ -97,6 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#303B49',
   },
+
   loading: {
     position: 'absolute',
     top: 0,

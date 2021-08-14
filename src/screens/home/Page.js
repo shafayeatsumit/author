@@ -13,7 +13,7 @@ import {sharedStart} from '../../helpers/utils';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Page = ({content, navigation}) => {
-  const todayString = moment().format('dddd MMMM Do');
+  const dateString = moment(content.date).format('dddd MMMM Do');
   const handlePress = () => {
     navigation.navigate('Note', {content, isEdit: true});
   };
@@ -27,10 +27,8 @@ const Page = ({content, navigation}) => {
       onPress={handlePress}
       activeOpacity={1}
       style={styles.container}>
-      <View style={styles.spacer} />
       <View style={styles.questionContainer}>
         <Text style={styles.titleText}>{content.type}</Text>
-        <Text style={styles.dateText}>{todayString}</Text>
         <Text style={styles.question}>
           {sharedInputValue}
           <Text style={[styles.question, styles.answer]}>
@@ -45,9 +43,10 @@ export default Page;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#303B49',
-    height: ScreenHeight,
+    // backgroundColor: '#303B49',
     width: ScreenWidth,
+    flex: 1,
+    // backgroundColor: 'orange',
   },
   spacer: {
     height: ScreenHeight / 14,
@@ -73,10 +72,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   questionContainer: {
-    padding: 30,
-    // paddingTop: 20,
+    paddingHorizontal: 30,
     paddingBottom: 15,
-    marginTop: 90,
   },
   question: {
     fontFamily: 'georgia',
