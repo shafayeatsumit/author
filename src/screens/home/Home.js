@@ -87,7 +87,6 @@ const Home = ({navigation}) => {
       <FlatList
         ref={scrollViewRef}
         data={submissionsByDate}
-        onScroll={e => console.log('scrolling', e.nativeEvent.contentOffset.x)}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}
         decelerationRate="fast"

@@ -19,9 +19,12 @@ const PageRenderer = ({pages, navigation, scrollEndCount}) => {
     let currentOffset = event.nativeEvent.contentOffset.x;
     let direction = currentOffset > offset ? 'left' : 'right';
     offset = currentOffset;
-    // console.log('direction', direction);
-    if (lastIndex === scrollIndex && direction === 'right') {
-      // setScrollEnabled(false);
+    console.log('scroll Index', scrollIndex);
+    if (lastIndex === scrollIndex && direction === 'left') {
+      setScrollEnabled(true);
+    }
+    if (firstIndex === scrollIndex && direction === 'right') {
+      setScrollEnabled(true);
     }
   };
 
@@ -31,7 +34,13 @@ const PageRenderer = ({pages, navigation, scrollEndCount}) => {
     setScrollIndex(currentIndex);
   };
 
-  const handleTouchStart = () => {};
+  useEffect(() => {
+    if (scrollIndex === lastIndex) {
+      setScrollEnabled(false);
+    }
+  }, [scrollIndex]);
+
+  const handleTouchStart = event => {};
 
   useEffect(() => {
     if (scrollEndCount !== 0 && scrollEndCount % 3 === 0) {
