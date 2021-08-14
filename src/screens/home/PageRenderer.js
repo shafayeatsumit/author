@@ -5,11 +5,18 @@ import Page from './Page';
 import moment from 'moment';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {ScrollView as GestureHandlerScrollView} from 'react-native-gesture-handler';
-import NestedScrollView from 'react-native-nested-scroll-view';
 
 const PageRenderer = ({pages, navigation}) => {
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const contentDate = pages[0].date;
   const dateString = moment(contentDate).format('dddd MMMM Do');
+
+  const handleScrollEnd = event => {
+    const scrollPosition = event.nativeEvent.contentOffset.x;
+    const scrollIndex = scrollPosition / ScreenWidth;
+  };
+
+  const handleTouchStart = () => {};
 
   return (
     <View style={styles.container}>
@@ -20,7 +27,9 @@ const PageRenderer = ({pages, navigation}) => {
         <GestureHandlerScrollView
           showsHorizontalScrollIndicator={false}
           pagingEnabled
-          scrollEventThrottle={16}
+          scrollEnabled={scrollEnabled}
+          onMomentumScrollEnd={handleScrollEnd}
+          onTouchStart={handleTouchStart}
           contentContainerStyle={styles.scrollContainer}
           horizontal={true}>
           {pages.map(item => {
