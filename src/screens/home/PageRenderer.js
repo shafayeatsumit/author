@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Dimensions, ScrollView, Text, StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Page from './Page';
@@ -11,38 +11,43 @@ const PageRenderer = ({pages, navigation, scrollEndCount}) => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const contentDate = pages[0].date;
   const dateString = moment(contentDate).format('dddd MMMM Do');
-  let offset = 0;
+  const offset = useRef(0);
   const firstIndex = 0;
   const lastIndex = pages.length - 1;
 
   const handleScroll = event => {
     let currentOffset = event.nativeEvent.contentOffset.x;
-    let direction = currentOffset > offset ? 'left' : 'right';
-    offset = currentOffset;
-    console.log('scroll Index', scrollIndex);
-    if (lastIndex === scrollIndex && direction === 'left') {
+    let direction = currentOffset > offset.current ? 'left' : 'right';
+    offset.current = currentOffset;
+    if (lastIndex === scrollIndex && direction === 'left' && !scrollEnabled) {
       setScrollEnabled(true);
+      return;
     }
-    if (firstIndex === scrollIndex && direction === 'right') {
+    if (firstIndex === scrollIndex && direction === 'right' && !scrollEnabled) {
       setScrollEnabled(true);
+      return;
     }
   };
 
   const handleScrollEnd = event => {
-    const scrollPosition = event.nativeEvent.contentOffset.x;
-    const currentIndex = Math.round(scrollPosition / ScreenWidth);
+    // const scrollPosition = event.nativeEvent.contentOffset.x;
+    const currentIndex = Math.round(offset.current / ScreenWidth);
     setScrollIndex(currentIndex);
-  };
-
-  useEffect(() => {
-    if (scrollIndex === lastIndex) {
+    if (currentIndex === lastIndex || currentIndex === firstIndex) {
       setScrollEnabled(false);
     }
-  }, [scrollIndex]);
+    console.log('currentIndex', currentIndex);
+  };
+
+  console.log('scroll enabled', scrollEnabled);
 
   const handleTouchStart = event => {};
 
   useEffect(() => {
+    if (pages.length === 1) {
+      setScrollEnabled(false);
+      return;
+    }
     if (scrollEndCount !== 0 && scrollEndCount % 3 === 0) {
       setScrollEnabled(true);
     }

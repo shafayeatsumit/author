@@ -25,7 +25,75 @@ const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [scrollEndCount, setScrollEndCount] = useState(0);
   const {contents, lastInitialized, initialize} = useContentStore();
-  const {submission} = useSubmissionStore();
+  // const {submission} = useSubmissionStore();
+  const submission = [
+    {
+      answer:
+        'The best supporting actor or actoress in my story today was jilll',
+      date: '2021-08-13T18:00:00.000Z',
+      id: 'ev_5',
+      question:
+        'The best supporting actor or actoress in my story today was ______',
+      type: 'Sidekick',
+      uid: '5828d3ac-4f01-46b3-9e5e-1dbddd9dec5e',
+    },
+
+    {
+      answer: 'My advice for myself tomorrow is fresh',
+      date: '2021-08-13T18:00:00.000Z',
+      id: 'ev_7',
+      question: 'My advice for myself tomorrow is ______',
+      type: 'Foreshadow',
+      uid: '0e06d037-5cbf-4589-b453-12425b10a04d',
+    },
+
+    {
+      answer: 'My advice for myself tomorrow is tomorrow non chill',
+      date: '2021-08-12T18:00:00.000Z',
+      id: 'ev_7',
+      question: 'My advice for myself tomorrow is ______',
+      type: 'Foreshadow',
+      uid: '0e06d037-5cbf-4589-b453-12425b10a04c',
+    },
+
+    {
+      answer: 'Something that went well was yes thats right',
+      date: '2021-08-12T18:00:00.000Z',
+      id: 'ev_7',
+      question: 'Something that went well was ______',
+      type: 'Foreshadow',
+      uid: '0e06d037-5cgf-4589-b453-12429b10a04c',
+    },
+
+    {
+      answer: 'My advice for myself tomorrow is',
+      date: '2021-08-12T18:00:00.000Z',
+      id: 'ev_7',
+      question: 'My advice for myself tomorrow is ______',
+      type: 'Farm fresh',
+      uid: '0e10d037-5cgf-4589-b453-12429b10a04c',
+    },
+
+    {
+      answer: 'The thing that is within my power to control today is powerful',
+      date: '2021-08-11T18:00:00.000Z',
+      id: 'ev_7',
+      question: 'The thing that is within my power to control today is ______',
+      type: 'powerful',
+      uid: '0e10d037-5cgf-4589-b453-12429b10a04c',
+    },
+
+    // {
+    //   answer:
+    //     'Messi The thing that is within my power to control today is powerful',
+    //   date: '2021-08-11T18:00:00.000Z',
+    //   id: 'ev_7',
+    //   question: 'The thing that is within my power to control today is ______',
+    //   type: 'Messi',
+    //   uid: '0e10d037-5cgf-4589-b053-12429b10a04c',
+    // },
+  ];
+  // console.log('submissions', submission);
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
   const scrollToEnd = () => {
