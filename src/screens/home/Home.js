@@ -17,6 +17,7 @@ import _ from 'lodash';
 import PushNotification from 'react-native-push-notification';
 import Page from './Page';
 import Prompt from './Prompt';
+import PageHeader from './PageHeader';
 import PageRenderer from './PageRenderer';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
@@ -24,7 +25,11 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [scrollEndCount, setScrollEndCount] = useState(0);
+  const [activeContent, setActiveContent] = useState({});
   const {contents, lastInitialized, initialize} = useContentStore();
+  const [scrollIndex, setScrollIndex] = useState(0);
+  const offset = useRef(0);
+
   // const {submission} = useSubmissionStore();
   const submission = [
     {
@@ -71,7 +76,7 @@ const Home = ({navigation}) => {
       id: 'ev_7',
       question: 'My advice for myself tomorrow is ______',
       type: 'Farm fresh',
-      uid: '0e10d037-5cgf-4589-b453-12429b10a04c',
+      uid: '0e10d037-5cgf-4589-b453-12429b10a14c',
     },
 
     {
@@ -102,7 +107,13 @@ const Home = ({navigation}) => {
   };
 
   const handleScrollEnd = event => {
-    setScrollEndCount(scrollEndCount + 1);
+    const currentIndex = Math.round(offset.current / ScreenWidth);
+    setScrollIndex(currentIndex);
+  };
+
+  const handleScroll = event => {
+    let currentOffset = event.nativeEvent.contentOffset.x;
+    offset.current = currentOffset;
   };
 
   useEffect(() => {
@@ -139,26 +150,24 @@ const Home = ({navigation}) => {
   };
 
   const renderPage = ({item}) => {
-    return (
-      <PageRenderer
-        scrollEndCount={scrollEndCount}
-        pages={item}
-        navigation={navigation}
-      />
-    );
+    return <Page content={item} navigation={navigation} />;
   };
 
-  const submissionsByDate = _.values(_.groupBy(submission, 'date'));
-
+  const showHeader = scrollIndex < submission.length;
   return (
     <View style={styles.container}>
+      {showHeader && (
+        <PageHeader submission={submission} activeIndex={scrollIndex} />
+      )}
+
       <FlatList
         ref={scrollViewRef}
-        data={submissionsByDate}
+        data={submission}
+        onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}
         decelerationRate="fast"
-        keyExtractor={item => item[0].date}
+        keyExtractor={item => item.uid}
         pagingEnabled
         horizontal
         ListFooterComponent={RenderPromtList}

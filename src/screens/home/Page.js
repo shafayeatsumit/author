@@ -43,10 +43,9 @@ export default Page;
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#303B49',
+    height: ScreenHeight,
     width: ScreenWidth,
-    flex: 1,
-    // backgroundColor: 'orange',
+    justifyContent: 'center',
   },
   spacer: {
     height: ScreenHeight / 14,
