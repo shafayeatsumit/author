@@ -32,7 +32,6 @@ const PageHeader = ({submission, activeIndex}) => {
 
   useEffect(() => {
     fadeOut();
-    console.log('date change');
   }, [dateString]);
 
   return (

@@ -19,75 +19,37 @@ import Page from './Page';
 import Prompt from './Prompt';
 import PageHeader from './PageHeader';
 import PageRenderer from './PageRenderer';
+import {submission} from '../../helpers/contentsData';
+import {SwiperFlatList} from 'react-native-swiper-flatlist';
+import Carousel from 'react-native-snap-carousel';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
+let renderCount = 0;
 
 const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
+
   const {contents, lastInitialized, initialize} = useContentStore();
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
   // const {submission} = useSubmissionStore();
-  const submission = [
-    {
-      answer: 'The best supporting actor or actoress in my story today was kik',
-      date: '2021-08-16T18:00:00.000Z',
-      id: 'ev_5',
-      question:
-        'The best supporting actor or actoress in my story today was ______',
-      type: 'Sidekick',
-      uid: 'c7548598-4c7a-4184-8fda-9af98cc3ca5b',
-    },
-
-    {
-      answer: "Something I'll always want to remember is jikam",
-      date: '2021-08-16T18:00:00.000Z',
-      id: 'ev_3',
-      question: "Something I'll always want to remember is ______",
-      type: 'Keepsake',
-      uid: '919ee223-1412-432c-a7a0-0774d4f517c6',
-    },
-
-    {
-      answer: "Something I'll always want to remember is jikam",
-      date: '2021-08-15T18:00:00.000Z',
-      id: 'ev_3',
-      question: "Something I'll always want to remember is ______",
-      type: 'Keepsake',
-      uid: '919ee223-1412-432c-a7a0-6774d4f517c6',
-    },
-
-    {
-      answer: "Something I'll always want to remember is jikam",
-      date: '2021-08-15T18:00:00.000Z',
-      id: 'ev_3',
-      question: "Something I'll always want to remember is ______",
-      type: 'Keepsake',
-      uid: '919ee223-1412-432c-a7a0-6664d4f517c6',
-    },
-
-    {
-      answer: "Something I'll always want to remember is jikam",
-      date: '2021-08-15T18:00:00.000Z',
-      id: 'ev_3',
-      question: "Something I'll always want to remember is ______",
-      type: 'Keepsake',
-      uid: '919ee223-1412-432c-a7a0-6884d4f517c6',
-    },
-  ];
 
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
+
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd();
+    setScrollIndex(submission.length - 1);
     setTimeout(() => {
       loading && setLoading(false);
-    }, 1000);
+    }, 2000);
   };
 
   const handleScrollEnd = event => {
     const currentIndex = Math.round(offset.current / ScreenWidth);
-    setScrollIndex(currentIndex);
+    if (scrollIndex !== currentIndex) {
+      setScrollIndex(currentIndex);
+    }
   };
 
   const handleScroll = event => {
@@ -102,6 +64,10 @@ const Home = ({navigation}) => {
     setTimeout(scrollToEnd, 200);
   }, []);
 
+  const handleSwipeScroll = e => {
+    console.log('handle swipe event', e.nativeEvent.target);
+  };
+
   const RenderPromtList = () => {
     if (!contents.length) {
       return (
@@ -110,9 +76,10 @@ const Home = ({navigation}) => {
         </View>
       );
     }
+
     return (
       <Swiper
-        loop={true}
+        loop
         pagingEnabled
         snapToInterval={ScreenHeight}
         decelerationRate="fast"
@@ -132,13 +99,14 @@ const Home = ({navigation}) => {
     return <Page content={item} navigation={navigation} />;
   };
 
-  const showHeader = scrollIndex < submission.length;
+  const headerVisible = scrollIndex < submission.length;
+  // renderCount += 1;
+  // console.log(`render count ${renderCount} scrollIndex ${scrollIndex}`);
   return (
     <View style={styles.container}>
-      {showHeader && (
+      {headerVisible && (
         <PageHeader submission={submission} activeIndex={scrollIndex} />
       )}
-
       <FlatList
         ref={scrollViewRef}
         data={submission}
