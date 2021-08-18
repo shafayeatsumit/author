@@ -16,7 +16,7 @@ const PageHeader = ({submission, activeIndex}) => {
   const fadeOut = () => {
     Animated.timing(textOpactiy, {
       toValue: 0,
-      duration: 50,
+      duration: 10,
       useNativeDriver: true,
     }).start(fadeIn);
   };
@@ -24,22 +24,34 @@ const PageHeader = ({submission, activeIndex}) => {
   const fadeIn = () => {
     Animated.timing(textOpactiy, {
       toValue: 1,
-      delay: 200,
-      duration: 700,
+      delay: 100,
+      duration: 600,
       useNativeDriver: true,
-    }).start(() => console.log('fade out'));
+    }).start();
   };
 
   useEffect(() => {
     fadeOut();
-  }, [date]);
+    console.log('date change');
+  }, [dateString]);
 
-  console.log('text opacity', textOpactiy);
   return (
     <View style={styles.container}>
       <Animated.Text style={[styles.dateText, {opacity: textOpactiy}]}>
         {dateString}
       </Animated.Text>
+
+      <View style={styles.dotContainer}>
+        {[...Array(totalItems)].map((item, indx) => (
+          <View
+            key={indx}
+            style={[
+              styles.dot,
+              indx === activeContentIdex && {backgroundColor: 'white'},
+            ]}
+          />
+        ))}
+      </View>
     </View>
   );
 };
@@ -61,5 +73,19 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingLeft: 35,
     color: 'rgba(255,255,255,0.7)',
+  },
+  dotContainer: {
+    height: 25,
+    width: 120,
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginLeft: 35,
+  },
+  dot: {
+    height: 7,
+    width: 7,
+    borderRadius: 3.5,
+    backgroundColor: 'rgba(255,255,255,0.37)',
+    marginLeft: 5,
   },
 });

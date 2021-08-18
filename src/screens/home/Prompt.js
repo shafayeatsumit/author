@@ -14,7 +14,6 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 const Prompt = ({item, navigation}) => {
   const isMorningTime = checkIfMorningTime();
   const disableNote = isMorningTime && item.time === 'evening';
-
   const goToNote = () => {
     navigation.navigate('Note', {content: item});
   };

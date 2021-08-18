@@ -24,86 +24,65 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
-  const [scrollEndCount, setScrollEndCount] = useState(0);
-  const [activeContent, setActiveContent] = useState({});
   const {contents, lastInitialized, initialize} = useContentStore();
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
-
   // const {submission} = useSubmissionStore();
   const submission = [
     {
-      answer:
-        'The best supporting actor or actoress in my story today was jilll',
-      date: '2021-08-13T18:00:00.000Z',
+      answer: 'The best supporting actor or actoress in my story today was kik',
+      date: '2021-08-16T18:00:00.000Z',
       id: 'ev_5',
       question:
         'The best supporting actor or actoress in my story today was ______',
       type: 'Sidekick',
-      uid: '5828d3ac-4f01-46b3-9e5e-1dbddd9dec5e',
+      uid: 'c7548598-4c7a-4184-8fda-9af98cc3ca5b',
     },
 
     {
-      answer: 'My advice for myself tomorrow is fresh',
-      date: '2021-08-13T18:00:00.000Z',
-      id: 'ev_7',
-      question: 'My advice for myself tomorrow is ______',
-      type: 'Foreshadow',
-      uid: '0e06d037-5cbf-4589-b453-12425b10a04d',
+      answer: "Something I'll always want to remember is jikam",
+      date: '2021-08-16T18:00:00.000Z',
+      id: 'ev_3',
+      question: "Something I'll always want to remember is ______",
+      type: 'Keepsake',
+      uid: '919ee223-1412-432c-a7a0-0774d4f517c6',
     },
 
     {
-      answer: 'My advice for myself tomorrow is tomorrow non chill',
-      date: '2021-08-12T18:00:00.000Z',
-      id: 'ev_7',
-      question: 'My advice for myself tomorrow is ______',
-      type: 'Foreshadow',
-      uid: '0e06d037-5cbf-4589-b453-12425b10a04c',
+      answer: "Something I'll always want to remember is jikam",
+      date: '2021-08-15T18:00:00.000Z',
+      id: 'ev_3',
+      question: "Something I'll always want to remember is ______",
+      type: 'Keepsake',
+      uid: '919ee223-1412-432c-a7a0-6774d4f517c6',
     },
 
     {
-      answer: 'Something that went well was yes thats right',
-      date: '2021-08-12T18:00:00.000Z',
-      id: 'ev_7',
-      question: 'Something that went well was ______',
-      type: 'Foreshadow',
-      uid: '0e06d037-5cgf-4589-b453-12429b10a04c',
+      answer: "Something I'll always want to remember is jikam",
+      date: '2021-08-15T18:00:00.000Z',
+      id: 'ev_3',
+      question: "Something I'll always want to remember is ______",
+      type: 'Keepsake',
+      uid: '919ee223-1412-432c-a7a0-6664d4f517c6',
     },
 
     {
-      answer: 'My advice for myself tomorrow is',
-      date: '2021-08-12T18:00:00.000Z',
-      id: 'ev_7',
-      question: 'My advice for myself tomorrow is ______',
-      type: 'Farm fresh',
-      uid: '0e10d037-5cgf-4589-b453-12429b10a14c',
+      answer: "Something I'll always want to remember is jikam",
+      date: '2021-08-15T18:00:00.000Z',
+      id: 'ev_3',
+      question: "Something I'll always want to remember is ______",
+      type: 'Keepsake',
+      uid: '919ee223-1412-432c-a7a0-6884d4f517c6',
     },
-
-    {
-      answer: 'The thing that is within my power to control today is powerful',
-      date: '2021-08-11T18:00:00.000Z',
-      id: 'ev_7',
-      question: 'The thing that is within my power to control today is ______',
-      type: 'powerful',
-      uid: '0e10d037-5cgf-4589-b453-12429b10a04c',
-    },
-
-    // {
-    //   answer:
-    //     'Messi The thing that is within my power to control today is powerful',
-    //   date: '2021-08-11T18:00:00.000Z',
-    //   id: 'ev_7',
-    //   question: 'The thing that is within my power to control today is ______',
-    //   type: 'Messi',
-    //   uid: '0e10d037-5cgf-4589-b053-12429b10a04c',
-    // },
   ];
-  // console.log('submissions', submission);
+
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd();
-    loading && setLoading(false);
+    setTimeout(() => {
+      loading && setLoading(false);
+    }, 1000);
   };
 
   const handleScrollEnd = event => {
@@ -166,7 +145,6 @@ const Home = ({navigation}) => {
         onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}
-        decelerationRate="fast"
         keyExtractor={item => item.uid}
         pagingEnabled
         horizontal

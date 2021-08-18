@@ -9,9 +9,10 @@ import {ScrollView as GestureHandlerScrollView} from 'react-native-gesture-handl
 const PageRenderer = ({pages, navigation, scrollEndCount}) => {
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [scrollIndex, setScrollIndex] = useState(0);
+  const offset = useRef(0);
   const contentDate = pages[0].date;
   const dateString = moment(contentDate).format('dddd MMMM Do');
-  const offset = useRef(0);
+
   const firstIndex = 0;
   const lastIndex = pages.length - 1;
 
@@ -59,21 +60,7 @@ const PageRenderer = ({pages, navigation, scrollEndCount}) => {
         <Text style={styles.dateText}>{dateString}</Text>
       </View>
       <View style={{height: ScreenHeight - 200, width: ScreenWidth}}>
-        <GestureHandlerScrollView
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          scrollEnabled={scrollEnabled}
-          onScroll={handleScroll}
-          onMomentumScrollEnd={handleScrollEnd}
-          onTouchStart={handleTouchStart}
-          contentContainerStyle={styles.scrollContainer}
-          horizontal={true}>
-          {pages.map(item => {
-            return (
-              <Page key={item.uid} content={item} navigation={navigation} />
-            );
-          })}
-        </GestureHandlerScrollView>
+        <Page key={item.uid} content={item} navigation={navigation} />
       </View>
     </View>
   );
