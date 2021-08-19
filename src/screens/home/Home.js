@@ -67,6 +67,9 @@ const Home = ({navigation}) => {
   const handleSwipeScroll = e => {
     console.log('handle swipe event', e.nativeEvent.target);
   };
+  const RenderSwiper = ({item, index}) => {
+    return <Prompt key={item} navigation={navigation} item={item} />;
+  };
 
   const RenderPromtList = () => {
     if (!contents.length) {
@@ -78,20 +81,19 @@ const Home = ({navigation}) => {
     }
 
     return (
-      <Swiper
+      <Carousel
         loop
+        inactiveSlideOpacity={1}
+        inactiveSlideScale={1}
         pagingEnabled
-        snapToInterval={ScreenHeight}
-        decelerationRate="fast"
+        data={contents}
+        vertical={true}
+        renderItem={RenderSwiper}
+        sliderHeight={ScreenHeight}
+        itemHeight={ScreenHeight}
         removeClippedSubviews={false}
-        showsPagination={false}
-        horizontal={false}
-        style={styles.wrapper}
-        showsButtons={false}>
-        {contents.map(item => (
-          <Prompt key={item} navigation={navigation} item={item} />
-        ))}
-      </Swiper>
+        swipeThreshold={10}
+      />
     );
   };
 
