@@ -11,34 +11,10 @@ const PageHeader = ({submission, activeIndex}) => {
   const totalItems = items.length;
   const activeContentIdex = items.findIndex(i => i.uid === itemId);
   const dateString = moment(date).format('dddd MMMM Do');
-  const textOpactiy = useRef(new Animated.Value(0)).current;
-
-  const fadeOut = () => {
-    Animated.timing(textOpactiy, {
-      toValue: 0,
-      duration: 10,
-      useNativeDriver: true,
-    }).start(fadeIn);
-  };
-
-  const fadeIn = () => {
-    Animated.timing(textOpactiy, {
-      toValue: 1,
-      delay: 100,
-      duration: 600,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  useEffect(() => {
-    fadeOut();
-  }, [dateString]);
 
   return (
     <View style={styles.container}>
-      <Animated.Text style={[styles.dateText, {opacity: textOpactiy}]}>
-        {dateString}
-      </Animated.Text>
+      <Animated.Text style={styles.dateText}>{dateString}</Animated.Text>
 
       <View style={styles.dotContainer}>
         {[...Array(totalItems)].map((item, indx) => (
