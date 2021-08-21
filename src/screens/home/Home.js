@@ -19,7 +19,7 @@ import Page from './Page';
 import Prompt from './Prompt';
 import PageHeader from './PageHeader';
 import PageRenderer from './PageRenderer';
-import {submission} from '../../helpers/contentsData';
+// import {submission} from '../../helpers/contentsData';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 import Carousel from 'react-native-snap-carousel';
 
@@ -27,22 +27,21 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 let renderCount = 0;
 
 const Home = ({navigation}) => {
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
   const {contents, lastInitialized, initialize} = useContentStore();
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
-  // const {submission} = useSubmissionStore();
-
+  const {submission} = useSubmissionStore();
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
 
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd();
-    setScrollIndex(submission.length - 1);
+    submission.length && setScrollIndex(submission.length - 1);
     setTimeout(() => {
       loading && setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const handleScrollEnd = event => {
@@ -50,23 +49,31 @@ const Home = ({navigation}) => {
     if (scrollIndex !== currentIndex) {
       setScrollIndex(currentIndex);
     }
+    !showHeader && setShowHeader(true);
   };
 
   const handleScroll = event => {
     let currentOffset = event.nativeEvent.contentOffset.x;
+    const diff = currentOffset - offset.current;
+    const direction = currentOffset > offset.current ? 'right' : 'left';
     offset.current = currentOffset;
+    if (diff > 2 && scrollIndex === submission.length - 1) {
+      console.log('hiding header', showHeader);
+      showHeader && setShowHeader(false);
+    }
   };
+
+  const onScrollBeginDrag = event => {};
+
+  const onScrollEndDrag = () => {};
 
   useEffect(() => {
     if (!isInitializedToday) {
       initialize();
     }
-    setTimeout(scrollToEnd, 200);
+    // setTimeout(scrollToEnd, 200);
   }, []);
 
-  const handleSwipeScroll = e => {
-    console.log('handle swipe event', e.nativeEvent.target);
-  };
   const RenderSwiper = ({item, index}) => {
     return <Prompt key={item} navigation={navigation} item={item} />;
   };
@@ -82,7 +89,7 @@ const Home = ({navigation}) => {
 
     return (
       <Carousel
-        loop
+        loop={true}
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         pagingEnabled
@@ -101,9 +108,9 @@ const Home = ({navigation}) => {
     return <Page content={item} navigation={navigation} />;
   };
 
-  const headerVisible = scrollIndex < submission.length;
-  // renderCount += 1;
-  // console.log(`render count ${renderCount} scrollIndex ${scrollIndex}`);
+  const headerVisible = scrollIndex < submission.length && showHeader;
+  renderCount = renderCount + 1;
+
   return (
     <View style={styles.container}>
       {headerVisible && (
@@ -112,6 +119,8 @@ const Home = ({navigation}) => {
       <FlatList
         ref={scrollViewRef}
         data={submission}
+        onScrollBeginDrag={onScrollBeginDrag}
+        onScrollEndDrag={onScrollEndDrag}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}
@@ -121,6 +130,7 @@ const Home = ({navigation}) => {
         ListFooterComponent={RenderPromtList}
         showsHorizontalScrollIndicator={false}
       />
+
       {loading && <View style={styles.loading} />}
     </View>
   );

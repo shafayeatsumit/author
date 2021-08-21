@@ -1,14 +1,16 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {View, Text, Animated, StyleSheet} from 'react-native';
+import {checkIfToday} from '../../helpers/date';
 import _ from 'lodash';
 import moment from 'moment';
 
 const PageHeader = ({submission, activeIndex}) => {
   const activeContent = submission[activeIndex];
+  const isToday = checkIfToday(activeContent.date);
   const {uid: itemId, date} = activeContent;
   const contentByDate = _.groupBy(submission, 'date');
   const items = contentByDate[date];
-  const totalItems = items.length;
+  const totalItems = isToday ? 3 : items.length;
   const activeContentIdex = items.findIndex(i => i.uid === itemId);
   const dateString = moment(date).format('dddd MMMM Do');
 

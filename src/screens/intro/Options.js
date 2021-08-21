@@ -10,7 +10,7 @@ const Options = ({navigation}) => {
   const scrollRef = useRef(null);
   const goHome = () => {
     setFinishedIntro();
-    navigation.navigate('Home');
+    navigation.replace('Home');
   };
 
   const goToNotificationSettings = () => {

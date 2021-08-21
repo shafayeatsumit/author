@@ -26,7 +26,7 @@ const Loading = ({navigation}) => {
 
   const navigate = () => {
     finishedIntroRef.current
-      ? navigation.navigate('Home')
+      ? navigation.replace('Home')
       : navigation.navigate('Intro');
   };
 
