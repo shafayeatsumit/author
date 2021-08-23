@@ -12,7 +12,7 @@ import {sharedStart} from '../../helpers/utils';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
-const Page = ({content, navigation}) => {
+const Page = ({totalLength, handleFastForward, index, content, navigation}) => {
   const dateString = moment(content.date).format('dddd MMMM Do');
   const handlePress = () => {
     navigation.navigate('Note', {content, isEdit: true});
@@ -35,6 +35,18 @@ const Page = ({content, navigation}) => {
             {unsharedInputValue}
           </Text>
         </Text>
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerBtn}>
+          <Text style={styles.footerText}>Delete</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.footerText}>
+          {index + 1}/{totalLength}
+        </Text>
+        <TouchableOpacity style={styles.footerBtn} onPress={handleFastForward}>
+          <Text style={styles.footerText}>FastForward</Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -84,5 +96,29 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
     fontSize: RFValue(22),
     color: 'rgba(255,255,255,1)',
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 100,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    // backgroundColor: 'red',
+  },
+  footerText: {
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 14,
+    color: 'white',
+    // padding: 20,
+  },
+  footerBtn: {
+    height: 50,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'orange',
   },
 });

@@ -47,7 +47,9 @@ const Home = ({navigation}) => {
 
   const handleScrollEnd = event => {
     const currentIndex = Math.round(offset.current / ScreenWidth);
-    console.log(`scrollindex ${scrollIndex} currentindex ${currentIndex}`);
+    if (currentIndex === submission.length - 1) {
+      return;
+    }
     if (scrollIndex !== currentIndex) {
       setScrollIndex(currentIndex);
     }
@@ -67,6 +69,10 @@ const Home = ({navigation}) => {
   const onScrollBeginDrag = event => {};
 
   const onScrollEndDrag = () => {};
+
+  const handleFastForward = () => {
+    scrollViewRef && scrollViewRef.current.scrollToEnd({animated: true});
+  };
 
   const onEndReached = () => {
     loading && setLoading(false);
@@ -109,13 +115,22 @@ const Home = ({navigation}) => {
     );
   };
 
-  const renderPage = ({item}) => {
-    return <Page loading={loading} content={item} navigation={navigation} />;
+  const renderPage = ({item, index}) => {
+    return (
+      <Page
+        totalLength={submission.length}
+        index={index}
+        loading={loading}
+        content={item}
+        handleFastForward={handleFastForward}
+        navigation={navigation}
+      />
+    );
   };
 
   const headerVisible = scrollIndex < submission.length && showHeader;
   renderCount = renderCount + 1;
-  console.log('renderCount', renderCount);
+
   return (
     <View style={styles.container}>
       <Modal
@@ -132,6 +147,7 @@ const Home = ({navigation}) => {
 
       <FlatList
         ref={scrollViewRef}
+        bounces={false}
         onEndReached={onEndReached}
         data={submission}
         onScrollBeginDrag={onScrollBeginDrag}
