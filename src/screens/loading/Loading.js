@@ -27,7 +27,7 @@ const Loading = ({navigation}) => {
   const navigate = () => {
     finishedIntroRef.current
       ? navigation.replace('Home')
-      : navigation.navigate('Intro');
+      : navigation.replace('Intro');
   };
 
   useEffect(() => {

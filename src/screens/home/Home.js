@@ -3,6 +3,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Modal,
   Dimensions,
   FlatList,
   StyleSheet,
@@ -27,7 +28,7 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 let renderCount = 0;
 
 const Home = ({navigation}) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showHeader, setShowHeader] = useState(true);
   const {contents, lastInitialized, initialize} = useContentStore();
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -37,7 +38,7 @@ const Home = ({navigation}) => {
   const isInitializedToday = checkIfToday(lastInitialized);
 
   const scrollToEnd = () => {
-    scrollViewRef.current.scrollToEnd();
+    scrollViewRef.current.scrollToEnd({animated: true});
     submission.length && setScrollIndex(submission.length - 1);
     setTimeout(() => {
       loading && setLoading(false);
@@ -46,6 +47,7 @@ const Home = ({navigation}) => {
 
   const handleScrollEnd = event => {
     const currentIndex = Math.round(offset.current / ScreenWidth);
+    console.log(`scrollindex ${scrollIndex} currentindex ${currentIndex}`);
     if (scrollIndex !== currentIndex) {
       setScrollIndex(currentIndex);
     }
@@ -58,7 +60,6 @@ const Home = ({navigation}) => {
     const direction = currentOffset > offset.current ? 'right' : 'left';
     offset.current = currentOffset;
     if (diff > 2 && scrollIndex === submission.length - 1) {
-      console.log('hiding header', showHeader);
       showHeader && setShowHeader(false);
     }
   };
@@ -67,11 +68,15 @@ const Home = ({navigation}) => {
 
   const onScrollEndDrag = () => {};
 
+  const onEndReached = () => {
+    loading && setLoading(false);
+  };
+
   useEffect(() => {
     if (!isInitializedToday) {
       initialize();
     }
-    // setTimeout(scrollToEnd, 200);
+    setTimeout(scrollToEnd, 200);
   }, []);
 
   const RenderSwiper = ({item, index}) => {
@@ -105,19 +110,29 @@ const Home = ({navigation}) => {
   };
 
   const renderPage = ({item}) => {
-    return <Page content={item} navigation={navigation} />;
+    return <Page loading={loading} content={item} navigation={navigation} />;
   };
 
   const headerVisible = scrollIndex < submission.length && showHeader;
   renderCount = renderCount + 1;
-
+  console.log('renderCount', renderCount);
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={loading}
+        onRequestClose={() => {}}>
+        <View style={styles.loading} />
+      </Modal>
+
       {headerVisible && (
         <PageHeader submission={submission} activeIndex={scrollIndex} />
       )}
+
       <FlatList
         ref={scrollViewRef}
+        onEndReached={onEndReached}
         data={submission}
         onScrollBeginDrag={onScrollBeginDrag}
         onScrollEndDrag={onScrollEndDrag}
@@ -130,8 +145,6 @@ const Home = ({navigation}) => {
         ListFooterComponent={RenderPromtList}
         showsHorizontalScrollIndicator={false}
       />
-
-      {loading && <View style={styles.loading} />}
     </View>
   );
 };
