@@ -9,11 +9,12 @@ import {
 import moment from 'moment';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {sharedStart} from '../../helpers/utils';
+import {useSubmissionStore} from '../../store';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Page = ({totalLength, handleFastForward, index, content, navigation}) => {
-  const dateString = moment(content.date).format('dddd MMMM Do');
+  const {deleteSubmission} = useSubmissionStore();
   const handlePress = () => {
     navigation.navigate('Note', {content, isEdit: true});
   };
@@ -21,7 +22,10 @@ const Page = ({totalLength, handleFastForward, index, content, navigation}) => {
   const contentAnswer = content.answer;
   const sharedInputValue = sharedStart([question, contentAnswer]);
   const unsharedInputValue = contentAnswer.replace(sharedInputValue, '');
-
+  const handleDelete = () => {
+    console.log('delete', content.uid);
+    deleteSubmission(content.uid);
+  };
   return (
     <TouchableOpacity
       onPress={handlePress}
@@ -37,7 +41,7 @@ const Page = ({totalLength, handleFastForward, index, content, navigation}) => {
         </Text>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerBtn}>
+        <TouchableOpacity onPress={handleDelete} style={styles.footerBtn}>
           <Text style={styles.footerText}>Delete</Text>
         </TouchableOpacity>
 

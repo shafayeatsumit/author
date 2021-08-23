@@ -17,6 +17,10 @@ let submissionStore = set => ({
         return item;
       }),
     })),
+  deleteSubmission: contentId =>
+    set(state => ({
+      submission: state.submission.filter(item => item.uid !== contentId),
+    })),
 });
 
 submissionStore = persist(submissionStore, {
