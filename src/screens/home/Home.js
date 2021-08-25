@@ -97,7 +97,7 @@ const Home = ({navigation}) => {
 
     return (
       <Carousel
-        loop={true}
+        loop={false}
         useScrollView={true}
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
@@ -157,6 +157,7 @@ const Home = ({navigation}) => {
         pagingEnabled
         horizontal
         ListFooterComponent={RenderPromtList}
+        removeClippedSubviews={false}
         showsHorizontalScrollIndicator={false}
       />
     </View>

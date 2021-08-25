@@ -49,13 +49,16 @@ const Note = ({navigation, route}) => {
   };
 
   const submitAnswer = () => {
+    const date = moment();
+    const day = date.format('YYYY-MM-DD');
     setSubmission({
       uid: uuid.v4(),
       question: content.question,
       answer: text,
       id: content.id,
       type: content.type,
-      date: moment().startOf('day'),
+      date,
+      day,
     });
     logEvent('submit');
   };

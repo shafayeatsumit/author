@@ -113,8 +113,8 @@ export const CONTENTS_EVENING = [
 ];
 
 export const getRandomContent = () => {
-  const early = _.sampleSize(CONTENTS_MORNING, 3);
-  const later = _.sampleSize(CONTENTS_EVENING, 3);
+  const early = _.sampleSize(CONTENTS_MORNING, 4);
+  const later = _.sampleSize(CONTENTS_EVENING, 4);
   // TODO: uncomment this;
   const isMorningTime = checkIfMorningTime();
   // const isMorningTime = true;
@@ -122,7 +122,9 @@ export const getRandomContent = () => {
   if (isMorningTime) {
     return [...early, ...later];
   }
-  return [...later];
+  // TODO: will change later
+  // return [...later];
+  return [...later, ...early];
 };
 
 export const submission = [

@@ -7,9 +7,11 @@ import moment from 'moment';
 const PageHeader = ({submission, activeIndex}) => {
   const activeContent = submission[activeIndex];
   const isToday = checkIfToday(activeContent.date);
-  const {uid: itemId, date} = activeContent;
-  const contentByDate = _.groupBy(submission, 'date');
-  const items = contentByDate[date];
+  const {uid: itemId, day, date} = activeContent;
+  console.log('submission', submission);
+  const contentByDate = _.groupBy(submission, 'day');
+
+  const items = contentByDate[day];
   const totalItems = items.length;
   const activeContentIdex = items.findIndex(i => i.uid === itemId);
   const dateString = moment(date).format('dddd MMMM Do');
