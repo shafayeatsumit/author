@@ -10,7 +10,7 @@ const PageHeader = ({submission, activeIndex}) => {
   const {uid: itemId, date} = activeContent;
   const contentByDate = _.groupBy(submission, 'date');
   const items = contentByDate[date];
-  const totalItems = isToday ? 3 : items.length;
+  const totalItems = items.length;
   const activeContentIdex = items.findIndex(i => i.uid === itemId);
   const dateString = moment(date).format('dddd MMMM Do');
 
@@ -28,6 +28,7 @@ const PageHeader = ({submission, activeIndex}) => {
             ]}
           />
         ))}
+        {isToday && <View style={[styles.dot, styles.emptyDot]} />}
       </View>
     </View>
   );
@@ -64,5 +65,10 @@ const styles = StyleSheet.create({
     borderRadius: 3.5,
     backgroundColor: 'rgba(255,255,255,0.37)',
     marginLeft: 5,
+  },
+  emptyDot: {
+    borderColor: 'white',
+    backgroundColor: 'transparent',
+    borderWidth: 0.4,
   },
 });

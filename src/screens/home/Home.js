@@ -47,9 +47,6 @@ const Home = ({navigation}) => {
 
   const handleScrollEnd = event => {
     const currentIndex = Math.round(offset.current / ScreenWidth);
-    if (currentIndex === submission.length - 1) {
-      return;
-    }
     if (scrollIndex !== currentIndex) {
       setScrollIndex(currentIndex);
     }
@@ -101,6 +98,7 @@ const Home = ({navigation}) => {
     return (
       <Carousel
         loop={true}
+        useScrollView={true}
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         pagingEnabled
