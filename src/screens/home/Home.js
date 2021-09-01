@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   Modal,
+  AppState,
   Dimensions,
   FlatList,
   StyleSheet,
@@ -18,9 +19,10 @@ import _ from 'lodash';
 import PushNotification from 'react-native-push-notification';
 import Page from './Page';
 import Prompt from './Prompt';
+import DailyPrompt from './DailyPrompt';
 import PageHeader from './PageHeader';
 import PageRenderer from './PageRenderer';
-// import {submission} from '../../helpers/contentsData';
+import {ContentTitles} from '../../helpers/contentsData';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 import Carousel from 'react-native-snap-carousel';
 
@@ -28,12 +30,16 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 let renderCount = 0;
 
 const Home = ({navigation}) => {
+  const appState = useRef(AppState.currentState);
   const [loading, setLoading] = useState(true);
   const [showHeader, setShowHeader] = useState(true);
+  const {setLastVisit} = useUserStore();
   const {contents, lastInitialized, initialize} = useContentStore();
+
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
   const {submission} = useSubmissionStore();
+
   const scrollViewRef = useRef();
   const isInitializedToday = checkIfToday(lastInitialized);
 
@@ -63,10 +69,6 @@ const Home = ({navigation}) => {
     }
   };
 
-  const onScrollBeginDrag = event => {};
-
-  const onScrollEndDrag = () => {};
-
   const handleFastForward = () => {
     scrollViewRef && scrollViewRef.current.scrollToEnd({animated: true});
   };
@@ -76,25 +78,29 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    if (!isInitializedToday) {
-      initialize();
-    }
     setTimeout(scrollToEnd, 200);
   }, []);
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        setLastVisit();
+        console.log('App has come to the foreground!');
+      }
+      appState.current = nextAppState;
+    });
+  }, []);
+
   const RenderSwiper = ({item, index}) => {
-    return <Prompt key={item} navigation={navigation} item={item} />;
+    if (item.type === 'daily') {
+      return <DailyPrompt key={item.id} navigation={navigation} item={item} />;
+    }
   };
 
   const RenderPromtList = () => {
-    if (!contents.length) {
-      return (
-        <View style={styles.max}>
-          <Text style={styles.text}>Max Limit</Text>
-        </View>
-      );
-    }
-
     return (
       <Carousel
         loop={false}
@@ -102,7 +108,7 @@ const Home = ({navigation}) => {
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         pagingEnabled
-        data={contents}
+        data={ContentTitles}
         vertical={true}
         renderItem={RenderSwiper}
         sliderHeight={ScreenHeight}
@@ -148,8 +154,6 @@ const Home = ({navigation}) => {
         bounces={false}
         onEndReached={onEndReached}
         data={submission}
-        onScrollBeginDrag={onScrollBeginDrag}
-        onScrollEndDrag={onScrollEndDrag}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}

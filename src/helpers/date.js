@@ -17,6 +17,11 @@ export const checkIfToday = date => {
   return moment(date).isSame(today, 'day');
 };
 
+export const checkTodayAfterFive = date => {
+  const fiveAM = moment().hours(5).startOf('hour');
+  return date > fiveAM;
+};
+
 export const checkIfYesterday = date => {
   const yesterday = moment().add(-1, 'days');
   return moment(date).isSame(yesterday, 'day');

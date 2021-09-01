@@ -5,6 +5,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 let contentStore = set => ({
+  all: [],
   contents: [],
   lastInitialized: null,
   initialize: () =>

@@ -52,12 +52,11 @@ const Note = ({navigation, route}) => {
     const date = moment();
     const day = date.format('YYYY-MM-DD');
     setSubmission({
+      ...content,
       uid: uuid.v4(),
-      question: content.question,
       answer: text,
       id: content.id,
       type: content.type,
-      date,
       day,
     });
     logEvent('submit');
@@ -82,7 +81,6 @@ const Note = ({navigation, route}) => {
     submitAnswer();
     goBack();
     setLastSubmit();
-    removeContent(content.id);
   };
 
   const handleEdit = () => {

@@ -21,7 +21,7 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 // AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
-  const {finishedIntro} = useUserStore();
+  const {finishedIntro, setLastVisit} = useUserStore();
   const finishedIntroRef = useRef(null);
 
   const navigate = () => {
@@ -35,6 +35,7 @@ const Loading = ({navigation}) => {
   }, [finishedIntro]);
 
   useEffect(() => {
+    setLastVisit();
     setTimeout(navigate, 500);
   }, []);
 
