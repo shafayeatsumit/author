@@ -125,7 +125,7 @@ const Home = ({navigation}) => {
         totalLength={submission.length}
         index={index}
         loading={loading}
-        content={item}
+        prompt={item}
         handleFastForward={handleFastForward}
         navigation={navigation}
       />

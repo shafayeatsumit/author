@@ -11,39 +11,39 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import {useSubmissionStore, useUserStore, useContentStore} from '../../store';
+import {useSubmissionStore, useUserStore} from '../../store';
 import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
+import _ from 'lodash';
 TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
   const {setSubmission, updateSubmission} = useSubmissionStore();
-  const {removeContent} = useContentStore();
   const inputRef = useRef();
-  const {content, isEdit} = route.params;
-  const contentQuestion = content.question.replace('______', '');
-  const contentAnswer = content.answer;
+  const {prompt, isEdit} = route.params;
+  const promptQuestion = prompt.question;
+  const promptAnswer = prompt.answer;
   const getAnswer = () => {
-    const firstHalf = sharedStart([contentQuestion, contentAnswer]);
-    const secondHalf = contentAnswer.replace(firstHalf, '');
+    const firstHalf = sharedStart([promptQuestion, promptAnswer]);
+    const secondHalf = promptAnswer.replace(firstHalf, '');
     return secondHalf;
   };
 
   const answerPart = isEdit ? getAnswer() : '';
 
-  const defaultText = contentQuestion + answerPart;
+  const defaultText = promptQuestion + answerPart;
 
   const [text, onChangeText] = React.useState(defaultText);
 
-  const todayString = moment().format('MMMM Do');
+  const dateString = moment().format('MMMM Do');
 
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
-      q: `${content.question}`,
+      q: `${prompt.question}`,
       a: `${text}`,
     });
   };
@@ -52,18 +52,18 @@ const Note = ({navigation, route}) => {
     const date = moment();
     const day = date.format('YYYY-MM-DD');
     setSubmission({
-      ...content,
+      ...prompt,
       uid: uuid.v4(),
       answer: text,
-      id: content.id,
-      type: content.type,
+      id: prompt.id,
+      type: prompt.type,
       day,
     });
     logEvent('submit');
   };
 
   const editAnswer = () => {
-    updateSubmission(content.id, text);
+    updateSubmission(prompt.id, text);
     logEvent('edit');
   };
 
@@ -88,7 +88,7 @@ const Note = ({navigation, route}) => {
     goBack();
   };
 
-  const sharedInputValue = sharedStart([contentQuestion, text]);
+  const sharedInputValue = sharedStart([promptQuestion, text]);
   const unsharedInputValue = text.replace(sharedInputValue, '');
 
   const resetCursor = () => {
@@ -116,7 +116,7 @@ const Note = ({navigation, route}) => {
   useEffect(() => {
     setTimeout(setCursor, 600);
   }, []);
-
+  const capitalizedTitle = _.upperFirst(prompt.type);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -126,8 +126,8 @@ const Note = ({navigation, route}) => {
       </TouchableOpacity>
 
       <View style={styles.questionContainer}>
-        <Text style={styles.titleText}>{content.type}</Text>
-        <Text style={styles.dateText}>{todayString}</Text>
+        <Text style={styles.titleText}>{capitalizedTitle}</Text>
+        <Text style={styles.dateText}>{dateString}</Text>
 
         <TextInput
           onSubmitEditing={handleSubmit}

@@ -3,23 +3,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let submissionStore = set => ({
   submission: [],
-  setSubmission: content =>
-    set(state => ({submission: [...state.submission, content]})),
-  updateSubmission: (contentId, content) =>
+  setSubmission: prompt =>
+    set(state => ({submission: [...state.submission, prompt]})),
+  updateSubmission: (promptId, prompt) =>
     set(state => ({
       submission: state.submission.map(item => {
-        if (item.id === contentId) {
+        if (item.id === promptId) {
           return {
             ...item,
-            answer: content,
+            answer: prompt,
           };
         }
         return item;
       }),
     })),
-  deleteSubmission: contentId =>
+  deleteSubmission: promptId =>
     set(state => ({
-      submission: state.submission.filter(item => item.uid !== contentId),
+      submission: state.submission.filter(item => item.uid !== promptId),
     })),
 });
 

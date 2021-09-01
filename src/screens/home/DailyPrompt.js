@@ -42,7 +42,7 @@ const Prompt = ({item, navigation}) => {
   const isActive = checkIfActive(item.time);
 
   const goToNote = () => {
-    navigation.navigate('Note', {content: selectedPrompt});
+    navigation.navigate('Note', {prompt: selectedPrompt});
   };
 
   const askAlert = () => {

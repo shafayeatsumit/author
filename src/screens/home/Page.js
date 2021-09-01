@@ -7,32 +7,34 @@ import {
   StyleSheet,
 } from 'react-native';
 import moment from 'moment';
+import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {sharedStart} from '../../helpers/utils';
 import {useSubmissionStore} from '../../store';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
-const Page = ({totalLength, handleFastForward, index, content, navigation}) => {
+const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
   const {deleteSubmission} = useSubmissionStore();
   const handlePress = () => {
-    navigation.navigate('Note', {content, isEdit: true});
+    navigation.navigate('Note', {prompt, isEdit: true});
   };
-  const question = content.question.replace('______', '');
-  const contentAnswer = content.answer;
-  const sharedInputValue = sharedStart([question, contentAnswer]);
-  const unsharedInputValue = contentAnswer.replace(sharedInputValue, '');
+  const question = prompt.question.replace('______', '');
+  const promptAnswer = prompt.answer;
+  const sharedInputValue = sharedStart([question, promptAnswer]);
+  const unsharedInputValue = promptAnswer.replace(sharedInputValue, '');
   const handleDelete = () => {
-    console.log('delete', content.uid);
-    deleteSubmission(content.uid);
+    console.log('delete', prompt.uid);
+    deleteSubmission(prompt.uid);
   };
+  const capitalizedTitle = _.upperFirst(prompt.type);
   return (
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={1}
       style={styles.container}>
       <View style={styles.questionContainer}>
-        <Text style={styles.titleText}>{content.type}</Text>
+        <Text style={styles.titleText}>{capitalizedTitle}</Text>
         <Text style={styles.question}>
           {sharedInputValue}
           <Text style={[styles.question, styles.answer]}>
