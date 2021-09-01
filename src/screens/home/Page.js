@@ -27,7 +27,7 @@ const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
     console.log('delete', prompt.uid);
     deleteSubmission(prompt.uid);
   };
-  const capitalizedTitle = _.upperFirst(prompt.type);
+  const capitalizedTitle = _.upperFirst(prompt.title);
   return (
     <TouchableOpacity
       onPress={handlePress}

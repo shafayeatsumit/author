@@ -57,6 +57,7 @@ const Note = ({navigation, route}) => {
       answer: text,
       id: prompt.id,
       type: prompt.type,
+      date: new Date(),
       day,
     });
     logEvent('submit');

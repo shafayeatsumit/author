@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
-import {useUserStore, usePromptStore} from '../../store';
+import {useUserStore, useSubmissionStore, usePromptStore} from '../../store';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {DailyTitles} from '../../helpers/contentsData';
 import {checkIfToday} from '../../helpers/date';
@@ -18,18 +18,19 @@ import _ from 'lodash';
 
 const Prompt = ({item, navigation}) => {
   const [loading, setLoading] = useState(false);
+  const [isDisabled, setDisabled] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState('');
   const isMorningTime = checkIfMorningTime();
   const isAfternoonTime = !isMorningTime;
-  const isLastVisitToday = checkTodayAfterFive(lastVisit);
   const promptTitle = item.title;
   let allPrompts = DailyTitles[promptTitle];
-
-  const {lastVisit} = useUserStore();
   const promptStore = usePromptStore();
+  const {submission} = useSubmissionStore();
   const {updatePrompt} = promptStore;
-
-  console.log('is today', isLastVisitToday);
+  const lastAnsweredPrompt = _.findLast(
+    submission,
+    pmpt => pmpt.title === promptTitle,
+  );
 
   const checkIfActive = type => {
     if (type === 'morning') {
@@ -86,15 +87,21 @@ const Prompt = ({item, navigation}) => {
   };
 
   const serveForToday = () => {
+    const lastServedAt = promptStore[promptTitle].date;
     const lastServedId = promptStore[promptTitle].id;
+    console.log('last served AT', checkTodayAfterFive(lastServedAt));
+    const isAnsweredToday =
+      !!lastAnsweredPrompt && checkTodayAfterFive(lastServedAt);
+    if (isAnsweredToday) {
+      setDisabled(true);
+    }
     const prompt = allPrompts.find(p => p.id === lastServedId);
-
     setSelectedPrompt(prompt);
   };
 
   const serveContent = () => {
     let lastServedAt = promptStore[promptTitle].date;
-    const isServedToday = checkIfToday(lastServedAt);
+    const isServedToday = checkTodayAfterFive(lastServedAt);
     if (isServedToday) {
       serveForToday();
     } else {
@@ -110,6 +117,7 @@ const Prompt = ({item, navigation}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
+      disabled={isDisabled}
       key={selectedPrompt.id}
       style={styles.itemPrompt}
       onPress={handlePress}>
@@ -122,7 +130,11 @@ const Prompt = ({item, navigation}) => {
           />
         )}
       </View>
-      <Text style={styles.text}>{contentQuestion}</Text>
+      {isDisabled ? (
+        <Text style={styles.text}>Next prompt will be available tomorrow</Text>
+      ) : (
+        <Text style={styles.text}>{contentQuestion}</Text>
+      )}
     </TouchableOpacity>
   );
 };
