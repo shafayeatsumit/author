@@ -24,7 +24,6 @@ const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
   const sharedInputValue = sharedStart([question, promptAnswer]);
   const unsharedInputValue = promptAnswer.replace(sharedInputValue, '');
   const handleDelete = () => {
-    console.log('delete', prompt.uid);
     deleteSubmission(prompt.uid);
   };
   const capitalizedTitle = _.upperFirst(prompt.title);

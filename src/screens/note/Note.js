@@ -11,7 +11,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import {useSubmissionStore, useUserStore} from '../../store';
+import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
 import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
 const {height: ScreenHeight} = Dimensions.get('window');
@@ -22,6 +22,7 @@ TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
+  const {updatePrompt} = usePromptStore();
   const {setSubmission, updateSubmission} = useSubmissionStore();
   const inputRef = useRef();
   const {prompt, isEdit} = route.params;
@@ -60,7 +61,12 @@ const Note = ({navigation, route}) => {
       date: new Date(),
       day,
     });
-    logEvent('submit');
+    const create = !isEdit;
+    if (create) {
+      const {id, title} = prompt;
+      updatePrompt(title, id, null, new Date());
+      logEvent('submit');
+    }
   };
 
   const editAnswer = () => {

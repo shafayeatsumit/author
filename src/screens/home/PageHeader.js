@@ -8,7 +8,6 @@ const PageHeader = ({submission, activeIndex}) => {
   const activeContent = submission[activeIndex];
   const isToday = checkIfToday(activeContent.date);
   const {uid: itemId, day, date} = activeContent;
-  console.log('submission', submission);
   const contentByDate = _.groupBy(submission, 'day');
 
   const items = contentByDate[day];

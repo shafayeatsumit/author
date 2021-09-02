@@ -15,9 +15,14 @@ let promptStore = set => ({
   celebrate: {},
   moment: {},
   conclusion: {},
-  updatePrompt: (title, id) =>
+  updatePrompt: (title, id, servedAt, answeredAt) =>
     set(state => ({
-      [title]: {id, date: new Date()},
+      [title]: {
+        ...state[title],
+        ...(id && {id: id}),
+        ...(servedAt && {servedAt}),
+        ...(answeredAt && {answeredAt}),
+      },
     })),
 });
 

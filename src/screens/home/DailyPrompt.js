@@ -6,6 +6,7 @@ import {
   Alert,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
   StyleSheet,
 } from 'react-native';
 import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
@@ -17,7 +18,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 const Prompt = ({item, navigation}) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isDisabled, setDisabled] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState('');
   const isMorningTime = checkIfMorningTime();
@@ -27,10 +28,7 @@ const Prompt = ({item, navigation}) => {
   const promptStore = usePromptStore();
   const {submission} = useSubmissionStore();
   const {updatePrompt} = promptStore;
-  const lastAnsweredPrompt = _.findLast(
-    submission,
-    pmpt => pmpt.title === promptTitle,
-  );
+  const currentPrompt = promptStore[promptTitle];
 
   const checkIfActive = type => {
     if (type === 'morning') {
@@ -77,31 +75,30 @@ const Prompt = ({item, navigation}) => {
     const servedBefore = _.has(promptStore, `${promptTitle}.date`);
     const multiplePrompts = allPrompts.length > 1;
     if (servedBefore && multiplePrompts) {
-      const lastServedId = promptStore[promptTitle].id;
+      const lastServedId = currentPrompt.id;
       allPrompts = allPrompts.filter(p => p.id !== lastServedId);
     }
     const prompt = _.sample(allPrompts);
     const {title, id} = prompt;
-    updatePrompt(title, id);
+    updatePrompt(title, id, new Date());
     setSelectedPrompt(prompt);
   };
 
   const serveForToday = () => {
-    const lastServedAt = promptStore[promptTitle].date;
-    const lastServedId = promptStore[promptTitle].id;
-    console.log('last served AT', checkTodayAfterFive(lastServedAt));
+    const {id: promptId, answeredAt} = currentPrompt;
+    const hasAnsweredBefore = !!answeredAt;
     const isAnsweredToday =
-      !!lastAnsweredPrompt && checkTodayAfterFive(lastServedAt);
+      hasAnsweredBefore && checkTodayAfterFive(answeredAt);
     if (isAnsweredToday) {
       setDisabled(true);
     }
-    const prompt = allPrompts.find(p => p.id === lastServedId);
+    const prompt = allPrompts.find(p => p.id === promptId);
     setSelectedPrompt(prompt);
   };
 
   const serveContent = () => {
-    let lastServedAt = promptStore[promptTitle].date;
-    const isServedToday = checkTodayAfterFive(lastServedAt);
+    const {servedAt} = currentPrompt;
+    const isServedToday = checkTodayAfterFive(servedAt);
     if (isServedToday) {
       serveForToday();
     } else {
@@ -112,8 +109,17 @@ const Prompt = ({item, navigation}) => {
 
   useEffect(() => {
     serveContent();
+    setTimeout(() => setLoading(false), 400);
   }, []);
 
+  console.log('loading', loading);
+  if (loading) {
+    return (
+      <View style={styles.loading}>
+        {/* <ActivityIndicator size="large" color="#BBBFC2" /> */}
+      </View>
+    );
+  }
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -141,6 +147,13 @@ const Prompt = ({item, navigation}) => {
 export default Prompt;
 
 const styles = StyleSheet.create({
+  loading: {
+    height: ScreenHeight,
+    width: ScreenWidth,
+    backgroundColor: '#303B49',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   itemPrompt: {
     backgroundColor: '#303B49',
     height: ScreenHeight,
