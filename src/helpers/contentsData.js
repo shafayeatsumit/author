@@ -1,5 +1,10 @@
 export const ContentTitles = [
   {
+    id: 'settings',
+    title: 'settings',
+    type: 'progressive',
+  },
+  {
     id: 'title',
     title: 'title',
     type: 'daily',
@@ -16,6 +21,12 @@ export const ContentTitles = [
     title: 'struggle',
     type: 'daily',
     time: 'morning',
+  },
+  {
+    id: 'blank',
+    title: 'blank',
+    type: 'blank',
+    time: 'all_time',
   },
   {
     id: 'celebrate',
@@ -35,16 +46,32 @@ export const ContentTitles = [
     type: 'daily',
     time: 'afternoon',
   },
-  // {
-  //   id: 'backstory',
-  //   title: 'backstory',
-  //   type: 'progressive',
-  // },
-  // {
-  //   id: 'settings',
-  //   title: 'settings',
-  //   type: 'progressive',
-  // },
+  {
+    id: 'backstory',
+    title: 'backstory',
+    type: 'progressive',
+  },
+
+  {
+    id: 'flashforward',
+    title: 'flashforward',
+    type: 'progressive',
+  },
+  {
+    id: 'characters',
+    title: 'characters',
+    type: 'progressive',
+  },
+  {
+    id: 'narrator',
+    title: 'narrator',
+    type: 'progressive',
+  },
+  {
+    id: 'plot_twist',
+    title: 'Plot Twist',
+    type: 'progressive',
+  },
 ];
 export const TITLE = [
   {
@@ -167,6 +194,14 @@ export const BACKSTORY = [
     question:
       "A talent I've acquired along the way that's been useful of late is",
   },
+
+  {
+    id: '4fb54c0c-07da-11ec-8003-0242ac139993',
+    title: 'backstory',
+    type: 'progressive',
+    question:
+      "A childhood memory I've had recently that's important to this part of my story is",
+  },
 ];
 
 export const SETTINGS = [
@@ -184,6 +219,103 @@ export const SETTINGS = [
     type: 'progressive',
     question: 'I have felt most like myself',
   },
+  {
+    id: '4fb54ffc-07da-11ec-8003-0242ac130003',
+    title: 'settings',
+    type: 'progressive',
+    question: "An ordinary object that's played a crucial role in my story is",
+  },
+];
+
+export const CHARACTERS = [
+  {
+    id: '4fb54ffc-07cs-11ec-8003-0242ac130003',
+    title: 'characters',
+    type: 'progressive',
+    question: 'The best supporting actor or actress in my story has been',
+  },
+
+  {
+    id: '4fb54ffc-07cs-11ec-4003-0242ac130003',
+    title: 'characters',
+    type: 'progressive',
+    question: 'Some people this part of my story owes a thank you to are',
+  },
+  {
+    id: '4fb54ffc-07cs-11ec-4503-0242ac130003',
+    title: 'characters',
+    type: 'progressive',
+    question: "The next part of my story wouldn't be much fun without",
+  },
+];
+
+export const FLASHFORWARD = [
+  {
+    id: '4b5c47de-0d46-11ec-82a8-0242ac130003',
+    title: 'flashforward',
+    type: 'progressive',
+    question: 'Next year, an action I take more often is',
+  },
+  {
+    id: '4b5c47de-0d46-11ec-82a8-2342ac130003',
+    title: 'flashforward',
+    type: 'progressive',
+    question:
+      "The priority that I know I'll have in 20 years and is relevant today is ",
+  },
+  {
+    id: '4b5c47de-0d46-11ec-82a8-0277ac130003',
+    title: 'flashforward',
+    type: 'progressive',
+    question: "Future me's advice for today would be",
+  },
+];
+
+export const NARRATOR = [
+  {
+    id: '4b5c540e-0d46-11ec-82a8-0242ac130003',
+    title: 'narrator',
+    type: 'progressive',
+    question:
+      "A positive aspect of your main character's life that isn't top of mind is",
+  },
+
+  {
+    id: '4b5c540e-0000-11ec-82a8-0242ac130003',
+    title: 'narrator',
+    type: 'progressive',
+    question:
+      'Overly self-critical thoughts that make our main character enedearingly human are',
+  },
+  {
+    id: '4b5c540e-0d46-11ec-9876-0242ac130003',
+    title: 'narrator',
+    type: 'progressive',
+    question: 'Our main character is about to get great advice from',
+  },
+];
+
+export const PLOT_TWIST = [
+  {
+    id: '4b5c587e-0d46-11ec-9876-0242ac130003',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question: 'An action that drastically alters the course of my story is',
+  },
+  {
+    id: '4b5c599e-0d46-11ec-9876-0242ac130003',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question:
+      'An action - if not taken - that would have a big cost on my story is',
+  },
+  {
+    id: '4b78587e-0d46-11ec-9876-0242ac130003',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question:
+      "The person who will help you see your fears aren't as big as they seem is",
+  },
 ];
 
 export const DailyTitles = {
@@ -193,4 +325,10 @@ export const DailyTitles = {
   celebrate: CELEBRATE,
   moment: MOMENT,
   conclusion: CONCLUSION,
+  backstory: BACKSTORY,
+  settings: SETTINGS,
+  characters: CHARACTERS,
+  flashforward: FLASHFORWARD,
+  narrator: NARRATOR,
+  'Plot Twist': PLOT_TWIST,
 };

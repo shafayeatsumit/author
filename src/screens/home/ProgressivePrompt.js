@@ -11,132 +11,115 @@ import {
 } from 'react-native';
 import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
 import {useUserStore, useSubmissionStore, usePromptStore} from '../../store';
+import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {DailyTitles} from '../../helpers/contentsData';
 import {checkIfToday} from '../../helpers/date';
 import moment from 'moment';
 import _ from 'lodash';
-import {useNavigation} from '@react-navigation/native';
+let count = 0;
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
-  const [isDisabled, setDisabled] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
+  const [disableMessage, setDisableMessage] = useState('');
   const [selectedPrompt, setSelectedPrompt] = useState('');
-  const isMorningTime = checkIfMorningTime();
-  const isAfternoonTime = !isMorningTime;
+
   const promptTitle = item.title;
   let allPrompts = DailyTitles[promptTitle];
+
   const promptStore = usePromptStore();
   const {submission} = useSubmissionStore();
-  const {updatePrompt} = promptStore;
+  console.log('submission', submission.length);
+  const totalPages = submission.length + 1;
+  const {updateProgressive} = promptStore;
   const currentPrompt = promptStore[promptTitle];
 
-  const checkIfActive = type => {
-    if (type === 'morning') {
-      return isMorningTime;
-    }
-    if (type === 'afternoon') {
-      return isAfternoonTime;
-    }
-  };
-  const isActive = checkIfActive(item.time);
+  const {isOn, firstAvailable, nextAvailable, increment} = currentPrompt;
 
   const goToNote = () => {
     navigation.navigate('Note', {prompt: selectedPrompt});
   };
 
-  const askAlert = () => {
-    const isMorningPrompt = selectedPrompt.time === 'morning';
-    const whenToAnswer = isMorningPrompt ? 'early' : 'later';
-    Alert.alert(
-      'Wait',
-      `Some of these prompts are meant for ${whenToAnswer} in your day`,
-      [
-        {
-          text: 'answer now',
-          onPress: goToNote,
-          style: 'cancel',
-        },
-        {text: 'Got it', onPress: () => console.log('OK Pressed')},
-      ],
-    );
-  };
-
   const handlePress = () => {
-    !isActive ? askAlert() : goToNote();
+    goToNote();
   };
-
-  const contentQuestion = isActive
-    ? selectedPrompt.question + ' ' + '______'
-    : selectedPrompt.question;
-
-  const capitalizedTitle = _.upperFirst(selectedPrompt.title);
 
   const pickRandomPrompt = () => {
-    const servedBefore = _.has(promptStore, `${promptTitle}.date`);
     const multiplePrompts = allPrompts.length > 1;
-    if (servedBefore && multiplePrompts) {
+    const firstTime = !isOn;
+    if (!firstTime && multiplePrompts) {
       const lastServedId = currentPrompt.id;
       allPrompts = allPrompts.filter(p => p.id !== lastServedId);
     }
     const prompt = _.sample(allPrompts);
-    const {title, id} = prompt;
-    updatePrompt(title, id, new Date());
-    setSelectedPrompt(prompt);
-  };
 
-  const serveForToday = () => {
-    const {id: promptId, answeredAt} = currentPrompt;
-    const hasAnsweredBefore = !!answeredAt;
-    const isAnsweredToday =
-      hasAnsweredBefore && checkTodayAfterFive(answeredAt);
-    console.log(`prompt title ${promptTitle} ==> ${isAnsweredToday}`);
-    if (isAnsweredToday) {
-      setDisabled(true);
-    }
-    const prompt = allPrompts.find(p => p.id === promptId);
+    const {title, id} = prompt;
+    updateProgressive(title, id);
     setSelectedPrompt(prompt);
   };
 
   const serveContent = () => {
-    const {servedAt} = currentPrompt;
-    const isServedToday = checkTodayAfterFive(servedAt);
-    if (isServedToday) {
-      serveForToday();
-    } else {
-      // all prompts filter then pick one,
+    const canServe = totalPages >= nextAvailable;
+
+    if (canServe) {
       pickRandomPrompt();
+    } else {
+      const msg = `This will be available at page ${nextAvailable}`;
+      setIsDisable(true);
+      setDisableMessage(msg);
+    }
+  };
+
+  const serveFirstTime = () => {
+    const canServe = totalPages >= firstAvailable;
+    console.log(
+      `${promptTitle} ==> disable ${isDisable} can serve ${canServe}`,
+    );
+    if (canServe) {
+      pickRandomPrompt();
+    } else {
+      const msg = `This will be first available at page ${firstAvailable}`;
+      setIsDisable(true);
+      setDisableMessage(msg);
     }
   };
 
   useEffect(() => {
-    serveContent();
+    const servedBefore = !!currentPrompt.nextAvailable;
+
+    if (servedBefore) {
+      serveContent();
+    } else {
+      serveFirstTime();
+    }
   }, []);
 
+  const contentQuestion = !isDisable
+    ? selectedPrompt.question + ' ' + '______'
+    : null;
+
+  console.log(`prompt title ${promptTitle} ${isDisable}`);
   return (
     <TouchableOpacity
       activeOpacity={1}
-      disabled={isDisabled}
-      key={selectedPrompt.id}
+      disabled={isDisable}
+      key={'zero'}
       style={styles.itemPrompt}
       onPress={handlePress}>
       <View style={styles.clockHolder}>
-        <Text style={styles.title}>{capitalizedTitle}</Text>
-        {!isActive && (
-          <Image
-            style={styles.clock}
-            source={require('../../../assets/clock.png')}
-          />
-        )}
+        <Text style={styles.title}>{promptTitle}</Text>
       </View>
-      {isDisabled ? (
-        <Text style={styles.text}>Next prompt will be available tomorrow</Text>
+      {isDisable ? (
+        <Text style={styles.text}>{disableMessage}</Text>
       ) : (
         <Text style={styles.text}>{contentQuestion}</Text>
       )}
     </TouchableOpacity>
   );
 };
+
 export default Prompt;
 
 const styles = StyleSheet.create({

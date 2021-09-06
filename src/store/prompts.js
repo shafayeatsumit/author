@@ -3,11 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 import _ from 'lodash';
 
-//  removeContent: contentId =>
-//     set(state => ({
-//       contents: state.contents.filter(item => item.id !== contentId),
-//     })),
-
 let promptStore = set => ({
   title: {},
   plot: {},
@@ -15,6 +10,35 @@ let promptStore = set => ({
   celebrate: {},
   moment: {},
   conclusion: {},
+  circumstance: {
+    firstAvailable: 1,
+    increment: 11,
+  },
+  backstory: {
+    firstAvailable: 2,
+    increment: 11,
+  },
+  settings: {
+    firstAvailable: 1,
+    increment: 11,
+  },
+  flashforward: {
+    firstAvailable: 8,
+    increment: 11,
+  },
+  characters: {
+    firstAvailable: 7,
+    increment: 11,
+  },
+  narrator: {
+    firstAvailable: 3,
+    increment: 11,
+  },
+  'Plot Twist': {
+    isOn: false,
+    firstAvailable: 11,
+    increment: 27,
+  },
   updatePrompt: (title, id, servedAt, answeredAt) =>
     set(state => ({
       [title]: {
@@ -22,6 +46,22 @@ let promptStore = set => ({
         ...(id && {id: id}),
         ...(servedAt && {servedAt}),
         ...(answeredAt && {answeredAt}),
+      },
+    })),
+  updateProgressive: (title, id) =>
+    set(state => ({
+      [title]: {
+        ...state[title],
+        ...(id && {id: id}),
+        ...(!state[title].isOn && {isOn: true}),
+      },
+    })),
+
+  updateNextAvailable: (title, pageNumber) =>
+    set(state => ({
+      [title]: {
+        ...state[title],
+        nextAvailable: pageNumber,
       },
     })),
 });

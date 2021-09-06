@@ -18,7 +18,7 @@ import PushNotification from 'react-native-push-notification';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 // TODO: comment this
-// AsyncStorage.clear();
+AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit} = useUserStore();

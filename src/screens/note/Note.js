@@ -36,7 +36,7 @@ const Note = ({navigation, route}) => {
 
   const answerPart = isEdit ? getAnswer() : '';
 
-  const defaultText = promptQuestion + answerPart;
+  const defaultText = promptQuestion + ' ' + answerPart;
 
   const [text, onChangeText] = React.useState(defaultText);
 
@@ -123,7 +123,7 @@ const Note = ({navigation, route}) => {
   useEffect(() => {
     setTimeout(setCursor, 600);
   }, []);
-  const capitalizedTitle = _.upperFirst(prompt.type);
+  const capitalizedTitle = _.upperFirst(prompt.title);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -147,7 +147,6 @@ const Note = ({navigation, route}) => {
           ref={inputRef}>
           <Text>
             {sharedInputValue}
-
             <Text style={styles.boldInput}>{unsharedInputValue}</Text>
           </Text>
         </TextInput>

@@ -20,11 +20,14 @@ import PushNotification from 'react-native-push-notification';
 import Page from './Page';
 import Prompt from './Prompt';
 import DailyPrompt from './DailyPrompt';
+import BlankPrompt from './BlankPrompt';
+import ProgressivePrompt from './ProgressivePrompt';
 import PageHeader from './PageHeader';
 import PageRenderer from './PageRenderer';
 import {ContentTitles} from '../../helpers/contentsData';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
 import Carousel from 'react-native-snap-carousel';
+import RenderPromptList from './RenderPromptList';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 let renderCount = 0;
@@ -94,31 +97,6 @@ const Home = ({navigation}) => {
     });
   }, []);
 
-  const RenderSwiper = ({item, index}) => {
-    if (item.type === 'daily') {
-      return <DailyPrompt key={item.id} navigation={navigation} item={item} />;
-    }
-  };
-
-  const RenderPromtList = () => {
-    return (
-      <Carousel
-        loop={false}
-        useScrollView={true}
-        inactiveSlideOpacity={1}
-        inactiveSlideScale={1}
-        pagingEnabled
-        data={ContentTitles}
-        vertical={true}
-        renderItem={RenderSwiper}
-        sliderHeight={ScreenHeight}
-        itemHeight={ScreenHeight}
-        removeClippedSubviews={false}
-        swipeThreshold={10}
-      />
-    );
-  };
-
   const renderPage = ({item, index}) => {
     return (
       <Page
@@ -131,6 +109,8 @@ const Home = ({navigation}) => {
       />
     );
   };
+
+  const keyExtractor = item => item.uid;
 
   const headerVisible = scrollIndex < submission.length && showHeader;
   renderCount = renderCount + 1;
@@ -157,10 +137,10 @@ const Home = ({navigation}) => {
         onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}
-        keyExtractor={item => item.uid}
+        keyExtractor={keyExtractor}
         pagingEnabled
         horizontal
-        ListFooterComponent={RenderPromtList}
+        ListFooterComponent={<RenderPromptList />}
         removeClippedSubviews={false}
         showsHorizontalScrollIndicator={false}
       />
