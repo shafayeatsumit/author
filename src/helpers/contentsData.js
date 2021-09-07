@@ -1,27 +1,46 @@
 export const ContentTitles = [
-  {
-    id: 'settings',
-    title: 'settings',
-    type: 'progressive',
-  },
-  {
-    id: 'title',
-    title: 'title',
-    type: 'daily',
-    time: 'morning',
-  },
-  {
-    id: 'plot',
-    title: 'plot',
-    type: 'daily',
-    time: 'morning',
-  },
-  {
-    id: 'struggle',
-    title: 'struggle',
-    type: 'daily',
-    time: 'morning',
-  },
+  // {
+  //   id: 'title',
+  //   title: 'title',
+  //   type: 'daily',
+  //   time: 'morning',
+  // },
+  // {
+  //   id: 'plot',
+  //   title: 'plot',
+  //   type: 'daily',
+  //   time: 'morning',
+  // },
+  // {
+  //   id: 'struggle',
+  //   title: 'struggle',
+  //   type: 'daily',
+  //   time: 'morning',
+  // },
+  // {
+  //   id: 'blank',
+  //   title: 'blank',
+  //   type: 'blank',
+  //   time: 'all_time',
+  // },
+  // {
+  //   id: 'celebrate',
+  //   title: 'celebrate',
+  //   type: 'daily',
+  //   time: 'afternoon',
+  // },
+  // {
+  //   id: 'moment',
+  //   title: 'moment',
+  //   type: 'daily',
+  //   time: 'afternoon',
+  // },
+  // {
+  //   id: 'conclusion',
+  //   title: 'conclusion',
+  //   type: 'daily',
+  //   time: 'afternoon',
+  // },
   {
     id: 'blank',
     title: 'blank',
@@ -29,22 +48,9 @@ export const ContentTitles = [
     time: 'all_time',
   },
   {
-    id: 'celebrate',
-    title: 'celebrate',
-    type: 'daily',
-    time: 'afternoon',
-  },
-  {
-    id: 'moment',
-    title: 'moment',
-    type: 'daily',
-    time: 'afternoon',
-  },
-  {
-    id: 'conclusion',
-    title: 'conclusion',
-    type: 'daily',
-    time: 'afternoon',
+    id: 'settings',
+    title: 'settings',
+    type: 'progressive',
   },
   {
     id: 'backstory',
@@ -52,26 +58,26 @@ export const ContentTitles = [
     type: 'progressive',
   },
 
-  {
-    id: 'flashforward',
-    title: 'flashforward',
-    type: 'progressive',
-  },
-  {
-    id: 'characters',
-    title: 'characters',
-    type: 'progressive',
-  },
-  {
-    id: 'narrator',
-    title: 'narrator',
-    type: 'progressive',
-  },
-  {
-    id: 'plot_twist',
-    title: 'Plot Twist',
-    type: 'progressive',
-  },
+  // {
+  //   id: 'flashforward',
+  //   title: 'flashforward',
+  //   type: 'progressive',
+  // },
+  // {
+  //   id: 'characters',
+  //   title: 'characters',
+  //   type: 'progressive',
+  // },
+  // {
+  //   id: 'narrator',
+  //   title: 'narrator',
+  //   type: 'progressive',
+  // },
+  // {
+  //   id: 'plot_twist',
+  //   title: 'Plot Twist',
+  //   type: 'progressive',
+  // },
 ];
 export const TITLE = [
   {

@@ -10,12 +10,13 @@ import moment from 'moment';
 import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {sharedStart} from '../../helpers/utils';
-import {useSubmissionStore} from '../../store';
+import {useSubmissionStore, usePromptStore} from '../../store';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
   const {deleteSubmission} = useSubmissionStore();
+  const {decNextAvailable} = usePromptStore();
   const handlePress = () => {
     navigation.navigate('Note', {prompt, isEdit: true});
   };
@@ -25,6 +26,7 @@ const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
   const unsharedInputValue = promptAnswer.replace(sharedInputValue, '');
   const handleDelete = () => {
     deleteSubmission(prompt.uid);
+    prompt.type === 'progressive' && decNextAvailable(prompt.title);
   };
   const capitalizedTitle = _.upperFirst(prompt.title);
   return (

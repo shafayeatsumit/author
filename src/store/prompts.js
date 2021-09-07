@@ -57,11 +57,20 @@ let promptStore = set => ({
       },
     })),
 
-  updateNextAvailable: (title, pageNumber) =>
+  incNextAvailable: (title, totalPages) =>
     set(state => ({
       [title]: {
         ...state[title],
-        nextAvailable: pageNumber,
+        nextAvailable: totalPages + state[title].increment,
+      },
+    })),
+
+  decNextAvailable: title =>
+    set(state => ({
+      [title]: {
+        ...state[title],
+        nextAvailable:
+          state[title].nextAvailable > 0 ? state[title].nextAvailable - 1 : 0,
       },
     })),
 });

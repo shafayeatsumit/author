@@ -22,9 +22,10 @@ TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
-  const {updatePrompt} = usePromptStore();
-  const {setSubmission, updateSubmission} = useSubmissionStore();
+  const {updatePrompt, incNextAvailable} = usePromptStore();
+  const {setSubmission, updateSubmission, submission} = useSubmissionStore();
   const inputRef = useRef();
+  const totalPages = submission.length + 1;
   const {prompt, isEdit} = route.params;
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer;
@@ -62,10 +63,15 @@ const Note = ({navigation, route}) => {
       day,
     });
     const create = !isEdit;
-    if (create) {
+    if (create && prompt.type !== 'progressive') {
       const {id, title} = prompt;
       updatePrompt(title, id, null, new Date());
       logEvent('submit');
+    }
+
+    if (prompt.type === 'progressive') {
+      const {title} = prompt;
+      incNextAvailable(title, totalPages);
     }
   };
 

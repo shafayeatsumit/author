@@ -21,9 +21,8 @@ let count = 0;
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
-  const [showPrompt, setShowPrompt] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-  const [disableMessage, setDisableMessage] = useState('');
+
   const [selectedPrompt, setSelectedPrompt] = useState('');
 
   const promptTitle = item.title;
@@ -31,15 +30,22 @@ const Prompt = ({item}) => {
 
   const promptStore = usePromptStore();
   const {submission} = useSubmissionStore();
-  console.log('submission', submission.length);
+
   const totalPages = submission.length + 1;
   const {updateProgressive} = promptStore;
-  const currentPrompt = promptStore[promptTitle];
-
-  const {isOn, firstAvailable, nextAvailable, increment} = currentPrompt;
+  const activePrompt = promptStore[promptTitle];
+  const {
+    id: lastServedId,
+    firstAvailable,
+    nextAvailable,
+    increment,
+  } = activePrompt;
+  const isServedBefore = !!lastServedId;
+  const isAnsweredBefore = !!nextAvailable;
+  const activePromptDeatil = allPrompts.find(p => p.id === lastServedId);
 
   const goToNote = () => {
-    navigation.navigate('Note', {prompt: selectedPrompt});
+    navigation.navigate('Note', {prompt: activePromptDeatil});
   };
 
   const handlePress = () => {
@@ -48,59 +54,30 @@ const Prompt = ({item}) => {
 
   const pickRandomPrompt = () => {
     const multiplePrompts = allPrompts.length > 1;
-    const firstTime = !isOn;
-    if (!firstTime && multiplePrompts) {
-      const lastServedId = currentPrompt.id;
+    if (isServedBefore && multiplePrompts) {
       allPrompts = allPrompts.filter(p => p.id !== lastServedId);
     }
     const prompt = _.sample(allPrompts);
-
     const {title, id} = prompt;
     updateProgressive(title, id);
-    setSelectedPrompt(prompt);
   };
+  let disableMessage = null;
+  let activeMessage = activePromptDeatil ? activePromptDeatil.question : '';
 
-  const serveContent = () => {
-    const canServe = totalPages >= nextAvailable;
-
-    if (canServe) {
-      pickRandomPrompt();
-    } else {
-      const msg = `This will be available at page ${nextAvailable}`;
-      setIsDisable(true);
-      setDisableMessage(msg);
-    }
-  };
-
-  const serveFirstTime = () => {
-    const canServe = totalPages >= firstAvailable;
-    console.log(
-      `${promptTitle} ==> disable ${isDisable} can serve ${canServe}`,
-    );
-    if (canServe) {
-      pickRandomPrompt();
-    } else {
-      const msg = `This will be first available at page ${firstAvailable}`;
-      setIsDisable(true);
-      setDisableMessage(msg);
-    }
-  };
-
-  useEffect(() => {
-    const servedBefore = !!currentPrompt.nextAvailable;
-
-    if (servedBefore) {
-      serveContent();
-    } else {
-      serveFirstTime();
-    }
-  }, []);
-
-  const contentQuestion = !isDisable
-    ? selectedPrompt.question + ' ' + '______'
-    : null;
-
-  console.log(`prompt title ${promptTitle} ${isDisable}`);
+  if (!isServedBefore && totalPages < firstAvailable) {
+    disableMessage = `First available will be at ${firstAvailable}`;
+  } else if (!isServedBefore && totalPages === firstAvailable) {
+    pickRandomPrompt();
+  } else if (isServedBefore && nextAvailable && totalPages < nextAvailable) {
+    disableMessage = `Next availabe at ${nextAvailable}`;
+  } else if (
+    isServedBefore &&
+    isAnsweredBefore &&
+    totalPages >= nextAvailable
+  ) {
+    pickRandomPrompt();
+  }
+  console.log(`${promptTitle} ===> ${disableMessage}`);
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -111,10 +88,10 @@ const Prompt = ({item}) => {
       <View style={styles.clockHolder}>
         <Text style={styles.title}>{promptTitle}</Text>
       </View>
-      {isDisable ? (
+      {disableMessage ? (
         <Text style={styles.text}>{disableMessage}</Text>
       ) : (
-        <Text style={styles.text}>{contentQuestion}</Text>
+        <Text style={styles.text}>{activeMessage}</Text>
       )}
     </TouchableOpacity>
   );

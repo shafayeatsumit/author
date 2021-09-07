@@ -111,6 +111,10 @@ const Prompt = ({item}) => {
 
   useEffect(() => {
     serveContent();
+  }, [currentPrompt]);
+
+  useEffect(() => {
+    serveContent();
   }, []);
 
   return (
