@@ -1,52 +1,47 @@
 export const ContentTitles = [
-  // {
-  //   id: 'title',
-  //   title: 'title',
-  //   type: 'daily',
-  //   time: 'morning',
-  // },
-  // {
-  //   id: 'plot',
-  //   title: 'plot',
-  //   type: 'daily',
-  //   time: 'morning',
-  // },
-  // {
-  //   id: 'struggle',
-  //   title: 'struggle',
-  //   type: 'daily',
-  //   time: 'morning',
-  // },
-  // {
-  //   id: 'blank',
-  //   title: 'blank',
-  //   type: 'blank',
-  //   time: 'all_time',
-  // },
-  // {
-  //   id: 'celebrate',
-  //   title: 'celebrate',
-  //   type: 'daily',
-  //   time: 'afternoon',
-  // },
-  // {
-  //   id: 'moment',
-  //   title: 'moment',
-  //   type: 'daily',
-  //   time: 'afternoon',
-  // },
-  // {
-  //   id: 'conclusion',
-  //   title: 'conclusion',
-  //   type: 'daily',
-  //   time: 'afternoon',
-  // },
+  {
+    id: 'title',
+    title: 'title',
+    type: 'daily',
+    time: 'morning',
+  },
+  {
+    id: 'plot',
+    title: 'plot',
+    type: 'daily',
+    time: 'morning',
+  },
+  {
+    id: 'struggle',
+    title: 'struggle',
+    type: 'daily',
+    time: 'morning',
+  },
   {
     id: 'blank',
     title: 'blank',
     type: 'blank',
     time: 'all_time',
   },
+  {
+    id: 'celebrate',
+    title: 'celebrate',
+    type: 'daily',
+    time: 'afternoon',
+  },
+  {
+    id: 'moment',
+    title: 'moment',
+    type: 'daily',
+    time: 'afternoon',
+  },
+  {
+    id: 'conclusion',
+    title: 'conclusion',
+    type: 'daily',
+    time: 'afternoon',
+  },
+
   {
     id: 'settings',
     title: 'settings',
@@ -58,26 +53,26 @@ export const ContentTitles = [
     type: 'progressive',
   },
 
-  // {
-  //   id: 'flashforward',
-  //   title: 'flashforward',
-  //   type: 'progressive',
-  // },
-  // {
-  //   id: 'characters',
-  //   title: 'characters',
-  //   type: 'progressive',
-  // },
-  // {
-  //   id: 'narrator',
-  //   title: 'narrator',
-  //   type: 'progressive',
-  // },
-  // {
-  //   id: 'plot_twist',
-  //   title: 'Plot Twist',
-  //   type: 'progressive',
-  // },
+  {
+    id: 'flashforward',
+    title: 'flashforward',
+    type: 'progressive',
+  },
+  {
+    id: 'characters',
+    title: 'characters',
+    type: 'progressive',
+  },
+  {
+    id: 'narrator',
+    title: 'narrator',
+    type: 'progressive',
+  },
+  {
+    id: 'plot_twist',
+    title: 'Plot Twist',
+    type: 'progressive',
+  },
 ];
 export const TITLE = [
   {
@@ -182,6 +177,20 @@ export const CONCLUSION = [
     type: 'daily',
     question: 'Today was',
   },
+  {
+    id: '4fb54734-98da-11ec-9j03-0242ac130003',
+    title: 'conclusion',
+    time: 'afternoon',
+    type: 'daily',
+    question: 'On a scale of 1 to 10, my day was a',
+  },
+  {
+    id: '4fb54734-98da-11ec-9j03-0242ac130886',
+    title: 'conclusion',
+    time: 'afternoon',
+    type: 'daily',
+    question: 'Today was important to my story because',
+  },
 ];
 
 export const BACKSTORY = [
@@ -203,6 +212,34 @@ export const BACKSTORY = [
 
   {
     id: '4fb54c0c-07da-11ec-8003-0242ac139993',
+    title: 'backstory',
+    type: 'progressive',
+    question:
+      'A past hardship that gives special meaning to this part of my story is',
+  },
+  {
+    id: '4fb54c0c-07da-11ec-8003-8u42ac139993',
+    title: 'backstory',
+    type: 'progressive',
+    question:
+      'Some important context that is important to this part of my story is',
+  },
+  {
+    id: '4fb54c0c-9999-11ec-8003-8u42ac139993',
+    title: 'backstory',
+    type: 'progressive',
+    question: "A lesson I've recently realized I had to learn the way I did is",
+  },
+
+  {
+    id: '4fb54c0c-9999-11ec-8003-8u42ac139AA3',
+    title: 'backstory',
+    type: 'progressive',
+    question:
+      'Who I was in high school is important to this part of my story because',
+  },
+  {
+    id: '4fb54c0c-9999-11ec-8003-8u42ac139BB3',
     title: 'backstory',
     type: 'progressive',
     question:
@@ -253,6 +290,18 @@ export const CHARACTERS = [
     type: 'progressive',
     question: "The next part of my story wouldn't be much fun without",
   },
+  {
+    id: '4fb54ffc-07cs-11ec-3403-0242ac130003',
+    title: 'characters',
+    type: 'progressive',
+    question: 'Lately, I feel most like myself around',
+  },
+  {
+    id: '4fb54ffc-07cs-11ec-3403-02tyvc130003',
+    title: 'characters',
+    type: 'progressive',
+    question: "I've played a big role in 's story",
+  },
 ];
 
 export const FLASHFORWARD = [
@@ -299,6 +348,27 @@ export const NARRATOR = [
     type: 'progressive',
     question: 'Our main character is about to get great advice from',
   },
+  {
+    id: '4c7c540e-0d46-11ec-9876-0242ac130003',
+    title: 'narrator',
+    type: 'progressive',
+    question:
+      'The battle our main character is fighting that no one knows about is',
+  },
+
+  {
+    id: '4c7c540e-0d46-11ec-9876-0242ac131113',
+    title: 'narrator',
+    type: 'progressive',
+    question: "One of our main character's best quality lately has been",
+  },
+  {
+    id: '4c7c540e-0d46-22ec-9876-0242ac131113',
+    title: 'narrator',
+    type: 'progressive',
+    question:
+      "A mistake that our main character will come to learn doesn't matter at all is",
+  },
 ];
 
 export const PLOT_TWIST = [
@@ -321,6 +391,13 @@ export const PLOT_TWIST = [
     type: 'progressive',
     question:
       "The person who will help you see your fears aren't as big as they seem is",
+  },
+
+  {
+    id: '4b78590e-0d46-11ec-9876-0242ac130003',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question: "I'm not supposed to , but I'm going to try it anyway",
   },
 ];
 

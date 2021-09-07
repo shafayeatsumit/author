@@ -21,9 +21,6 @@ let count = 0;
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
-  const [isDisable, setIsDisable] = useState(false);
-
-  const [selectedPrompt, setSelectedPrompt] = useState('');
 
   const promptTitle = item.title;
   let allPrompts = DailyTitles[promptTitle];
@@ -38,12 +35,11 @@ const Prompt = ({item}) => {
     id: lastServedId,
     firstAvailable,
     nextAvailable,
-    increment,
+    lastServedAt,
   } = activePrompt;
   const isServedBefore = !!lastServedId;
   const isAnsweredBefore = !!nextAvailable;
   const activePromptDeatil = allPrompts.find(p => p.id === lastServedId);
-
   const goToNote = () => {
     navigation.navigate('Note', {prompt: activePromptDeatil});
   };
@@ -59,8 +55,9 @@ const Prompt = ({item}) => {
     }
     const prompt = _.sample(allPrompts);
     const {title, id} = prompt;
-    updateProgressive(title, id);
+    updateProgressive(title, id, totalPages);
   };
+
   let disableMessage = null;
   let activeMessage = activePromptDeatil ? activePromptDeatil.question : '';
 
@@ -71,17 +68,17 @@ const Prompt = ({item}) => {
   } else if (isServedBefore && nextAvailable && totalPages < nextAvailable) {
     disableMessage = `Next availabe at ${nextAvailable}`;
   } else if (
-    isServedBefore &&
     isAnsweredBefore &&
-    totalPages >= nextAvailable
+    totalPages === nextAvailable &&
+    lastServedAt < totalPages
   ) {
     pickRandomPrompt();
   }
-  console.log(`${promptTitle} ===> ${disableMessage}`);
+
   return (
     <TouchableOpacity
       activeOpacity={1}
-      disabled={isDisable}
+      disabled={!!disableMessage}
       key={'zero'}
       style={styles.itemPrompt}
       onPress={handlePress}>
@@ -91,7 +88,7 @@ const Prompt = ({item}) => {
       {disableMessage ? (
         <Text style={styles.text}>{disableMessage}</Text>
       ) : (
-        <Text style={styles.text}>{activeMessage}</Text>
+        <Text style={styles.text}>{activeMessage + ' ' + '______'}</Text>
       )}
     </TouchableOpacity>
   );

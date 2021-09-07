@@ -13,7 +13,14 @@ import {sharedStart} from '../../helpers/utils';
 import {useSubmissionStore, usePromptStore} from '../../store';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-
+const progressive_prompts = [
+  'backstory',
+  'settings',
+  'flashforward',
+  'characters',
+  'narrator',
+  'Plot Twist',
+];
 const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
   const {deleteSubmission} = useSubmissionStore();
   const {decNextAvailable} = usePromptStore();
@@ -26,7 +33,9 @@ const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
   const unsharedInputValue = promptAnswer.replace(sharedInputValue, '');
   const handleDelete = () => {
     deleteSubmission(prompt.uid);
-    prompt.type === 'progressive' && decNextAvailable(prompt.title);
+    if (prompt.type === 'progressive') {
+      progressive_prompts.map(item => decNextAvailable(item));
+    }
   };
   const capitalizedTitle = _.upperFirst(prompt.title);
   return (
