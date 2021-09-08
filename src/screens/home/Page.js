@@ -52,18 +52,6 @@ const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
           </Text>
         </Text>
       </View>
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={handleDelete} style={styles.footerBtn}>
-          <Text style={styles.footerText}>Delete</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.footerText}>
-          {index + 1}/{totalLength}
-        </Text>
-        <TouchableOpacity style={styles.footerBtn} onPress={handleFastForward}>
-          <Text style={styles.footerText}>FastForward</Text>
-        </TouchableOpacity>
-      </View>
     </TouchableOpacity>
   );
 };

@@ -23,6 +23,7 @@ import DailyPrompt from './DailyPrompt';
 import BlankPrompt from './BlankPrompt';
 import ProgressivePrompt from './ProgressivePrompt';
 import PageHeader from './PageHeader';
+import PageFooter from './PageFooter';
 import PageRenderer from './PageRenderer';
 import {ContentTitles} from '../../helpers/contentsData';
 import {SwiperFlatList} from 'react-native-swiper-flatlist';
@@ -126,6 +127,12 @@ const Home = ({navigation}) => {
 
       {headerVisible && (
         <PageHeader submission={submission} activeIndex={scrollIndex} />
+      )}
+      {headerVisible && (
+        <PageFooter
+          handleFastForward={handleFastForward}
+          activeIndex={scrollIndex}
+        />
       )}
 
       <FlatList
