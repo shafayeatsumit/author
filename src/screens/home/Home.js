@@ -44,7 +44,6 @@ const Home = ({navigation}) => {
   const {submission} = useSubmissionStore();
 
   const scrollViewRef = useRef();
-  const isInitializedToday = checkIfToday(lastInitialized);
 
   const scrollToEnd = () => {
     scrollViewRef.current.scrollToEnd({animated: true});
@@ -81,7 +80,7 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    setTimeout(scrollToEnd, 200);
+    setTimeout(scrollToEnd, 500);
   }, []);
 
   useEffect(() => {

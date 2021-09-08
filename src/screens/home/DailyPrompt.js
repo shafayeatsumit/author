@@ -90,7 +90,7 @@ const Prompt = ({item}) => {
     const hasAnsweredBefore = !!answeredAt;
     const isAnsweredToday =
       hasAnsweredBefore && checkTodayAfterFive(answeredAt);
-    console.log(`prompt title ${promptTitle} ==> ${isAnsweredToday}`);
+
     if (isAnsweredToday) {
       setDisabled(true);
     }

@@ -22,7 +22,7 @@ const RenderPromptList = () => {
 
   return (
     <Carousel
-      loop={false}
+      loop={true}
       useScrollView={true}
       inactiveSlideOpacity={1}
       inactiveSlideScale={1}

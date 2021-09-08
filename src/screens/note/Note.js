@@ -69,7 +69,7 @@ const Note = ({navigation, route}) => {
       logEvent('submit');
     }
 
-    if (prompt.type === 'progressive') {
+    if (create && prompt.type === 'progressive') {
       const {title} = prompt;
       incNextAvailable(title, totalPages);
     }
