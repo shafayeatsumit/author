@@ -14,9 +14,12 @@ import {
 import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
 import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
+import {formatDate} from '../../helpers/date';
+import NoteHeader from './NoteHeader';
 const {height: ScreenHeight} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
+import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
 TextInput.defaultProps.selectionColor = 'white';
 
@@ -32,7 +35,7 @@ const Note = ({navigation, route}) => {
   const getAnswer = () => {
     const firstHalf = sharedStart([promptQuestion, promptAnswer]);
     const secondHalf = promptAnswer.replace(firstHalf, '');
-    return secondHalf;
+    return secondHalf + ' ';
   };
 
   const answerPart = isEdit ? getAnswer() : '';
@@ -41,7 +44,7 @@ const Note = ({navigation, route}) => {
 
   const [text, onChangeText] = React.useState(defaultText);
 
-  const dateString = moment().format('MMMM Do');
+  const dateString = isEdit ? formatDate(prompt.date) : 'Today';
 
   const logEvent = eventType => {
     analytics().logEvent(eventType, {
@@ -127,45 +130,42 @@ const Note = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    setTimeout(setCursor, 600);
+    setTimeout(setCursor, 500);
   }, []);
-  const capitalizedTitle = _.upperFirst(prompt.title);
+
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}>
-      <TouchableOpacity style={styles.xout} onPress={goBack}>
-        <Image source={require('../../../assets/xout.png')} />
-      </TouchableOpacity>
+    <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}>
+        <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
 
-      <View style={styles.questionContainer}>
-        <Text style={styles.titleText}>{capitalizedTitle}</Text>
-        <Text style={styles.dateText}>{dateString}</Text>
+        <View style={styles.questionContainer}>
+          <TextInput
+            onSubmitEditing={handleSubmit}
+            style={styles.input}
+            multiline={true}
+            onChangeText={onChangeText}
+            spellCheck={false}
+            textAlignVertical="top"
+            selectionColor={'white'}
+            ref={inputRef}>
+            <Text style={styles.boldInput}>
+              {sharedInputValue}
+              {unsharedInputValue}
+            </Text>
+          </TextInput>
+        </View>
 
-        <TextInput
-          onSubmitEditing={handleSubmit}
-          style={styles.input}
-          multiline={true}
-          onChangeText={onChangeText}
-          spellCheck={false}
-          textAlignVertical="top"
-          selectionColor={'white'}
-          ref={inputRef}>
-          <Text>
-            {sharedInputValue}
-            <Text style={styles.boldInput}>{unsharedInputValue}</Text>
-          </Text>
-        </TextInput>
-      </View>
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={isEdit ? handleEdit : handleSubmit}
-          style={styles.button}>
-          <Text style={styles.buttonText}>Save</Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={isEdit ? handleEdit : handleSubmit}
+            style={styles.button}>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 };
 export default Note;
@@ -173,35 +173,12 @@ export default Note;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#303B49',
-  },
-  dateContainer: {
-    height: 100,
-    width: 100,
-    // backgroundColor: 'red',
-  },
-  dateText: {
-    fontFamily: 'Montserrat-Regular',
-    fontSize: RFValue(14),
-    paddingBottom: 10,
-    color: 'white',
-  },
-  titleText: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: RFValue(23),
-    paddingBottom: 10,
-    color: 'white',
   },
   questionContainer: {
     padding: 30,
     paddingTop: 20,
     paddingBottom: 15,
     marginTop: 90,
-  },
-  question: {
-    fontFamily: 'georgia',
-    fontSize: RFValue(18),
-    color: 'rgba(255,255,255,0.7)',
   },
   input: {
     height: ScreenHeight / 4.5,
@@ -213,10 +190,10 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     fontSize: RFValue(19),
     color: 'rgba(255,255,255,0.6)',
-    fontFamily: 'georgia',
+    fontFamily: 'Montserrat-Bold',
   },
   boldInput: {
-    fontSize: RFValue(22),
+    fontSize: RFValue(26),
     color: 'white',
     fontFamily: 'Montserrat-Bold',
   },
@@ -229,28 +206,14 @@ const styles = StyleSheet.create({
   button: {
     height: 50,
     width: 100,
-    backgroundColor: '#3470E1',
-    borderRadius: 5,
+    backgroundColor: 'rgba(42, 98, 219, 0.5)',
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  length: {
-    paddingTop: 20,
-    paddingRight: 20,
-    fontSize: RFValue(18),
-    color: 'gray',
-  },
   buttonText: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: RFValue(26),
     color: 'white',
-  },
-  xout: {
-    height: 50,
-    width: 50,
-    alignItems: 'center',
-    position: 'absolute',
-    right: 20,
-    top: 40,
+    fontFamily: 'Montserrat-Bold',
   },
 });

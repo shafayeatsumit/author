@@ -6,38 +6,17 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import moment from 'moment';
-import _ from 'lodash';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {sharedStart} from '../../helpers/utils';
-import {useSubmissionStore, usePromptStore} from '../../store';
 
+import {RFValue} from 'react-native-responsive-fontsize';
+import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-const progressive_prompts = [
-  'backstory',
-  'settings',
-  'flashforward',
-  'characters',
-  'narrator',
-  'Plot Twist',
-];
-const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
-  const {deleteSubmission} = useSubmissionStore();
-  const {decNextAvailable} = usePromptStore();
+
+const Page = ({prompt}) => {
+  const navigation = useNavigation();
   const handlePress = () => {
     navigation.navigate('Note', {prompt, isEdit: true});
   };
-  const question = prompt.question.replace('______', '');
   const promptAnswer = prompt.answer;
-  const sharedInputValue = sharedStart([question, promptAnswer]);
-  const unsharedInputValue = promptAnswer.replace(sharedInputValue, '');
-  const handleDelete = () => {
-    deleteSubmission(prompt.uid);
-    if (prompt.type === 'progressive') {
-      progressive_prompts.map(item => decNextAvailable(item));
-    }
-  };
-  const capitalizedTitle = _.upperFirst(prompt.title);
   return (
     <TouchableOpacity
       onPress={handlePress}
@@ -57,67 +36,14 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     justifyContent: 'center',
   },
-  spacer: {
-    height: ScreenHeight / 14,
-  },
-  title: {
-    paddingTop: 15,
-    fontSize: 35,
-    textAlign: 'left',
-    paddingLeft: 30,
-    fontFamily: 'Montserrat-Bold',
-  },
-  dateText: {
-    fontFamily: 'Montserrat-Regular',
-    fontSize: RFValue(16),
-    paddingBottom: 10,
-    color: 'rgba(255,255,255,0.7)',
-  },
-  titleText: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: RFValue(23),
-    // color: 'rgba(255,255,255,0.7)',
-    paddingBottom: 10,
-    color: 'white',
-  },
   questionContainer: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 32,
     paddingBottom: 15,
-  },
-  question: {
-    fontFamily: 'georgia',
-    fontSize: RFValue(19),
-    color: 'rgba(255,255,255,0.6)',
-    paddingTop: 20,
   },
   answer: {
     fontFamily: 'Montserrat-Bold',
     fontSize: RFValue(28),
     color: 'rgba(255,255,255,0.92)',
-    letterSpacing: 1.05,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 100,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flexDirection: 'row',
-    // backgroundColor: 'red',
-  },
-  footerText: {
-    fontFamily: 'Montserrat-Regular',
-    fontSize: 14,
-    color: 'white',
-    // padding: 20,
-  },
-  footerBtn: {
-    height: 50,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: 'orange',
+    letterSpacing: 1,
   },
 });

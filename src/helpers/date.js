@@ -80,15 +80,15 @@ const formatMonth = date => {
 };
 
 export const formatDate = (date, type) => {
-  if (type === 'week') {
-    // week;
-    return formatWeek(date);
-  } else if (type === 'month') {
-    // month;
-    return formatMonth(date);
+  const isToday = checkIfToday(date);
+  if (isToday) {
+    return 'Today';
   }
-  // day;
-  return formatDay(date);
+  const isYesterday = checkIfYesterday(date);
+  if (isYesterday) {
+    return 'Yesterday';
+  }
+  return moment(date).format('dd MMMM Do');
 };
 
 export const dateFromNow = myDate => {

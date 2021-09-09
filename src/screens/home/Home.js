@@ -1,34 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
-  Text,
-  TouchableOpacity,
   Modal,
   AppState,
   Dimensions,
   FlatList,
   StyleSheet,
-  ScrollView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useUserStore, useContentStore, useSubmissionStore} from '../../store';
-import InfiniteScroll from 'react-native-infinite-looping-scroll';
-import {checkIfToday} from '../../helpers/date';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Swiper from 'react-native-swiper';
-import _ from 'lodash';
-import PushNotification from 'react-native-push-notification';
+import {useUserStore, useSubmissionStore} from '../../store';
 import Page from './Page';
-import Prompt from './Prompt';
-import DailyPrompt from './DailyPrompt';
-import BlankPrompt from './BlankPrompt';
-import ProgressivePrompt from './ProgressivePrompt';
 import PageHeader from './PageHeader';
 import PageFooter from './PageFooter';
-import PageRenderer from './PageRenderer';
-import {ContentTitles} from '../../helpers/contentsData';
-import {SwiperFlatList} from 'react-native-swiper-flatlist';
-import Carousel from 'react-native-snap-carousel';
 import RenderPromptList from './RenderPromptList';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
@@ -39,7 +22,6 @@ const Home = ({navigation}) => {
   const [loading, setLoading] = useState(true);
   const [showHeader, setShowHeader] = useState(true);
   const {setLastVisit} = useUserStore();
-  const {contents, lastInitialized, initialize} = useContentStore();
 
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
@@ -66,7 +48,6 @@ const Home = ({navigation}) => {
   const handleScroll = event => {
     let currentOffset = event.nativeEvent.contentOffset.x;
     const diff = currentOffset - offset.current;
-    const direction = currentOffset > offset.current ? 'right' : 'left';
     offset.current = currentOffset;
     if (diff > 2 && scrollIndex === submission.length - 1) {
       showHeader && setShowHeader(false);
@@ -99,16 +80,7 @@ const Home = ({navigation}) => {
   }, []);
 
   const renderPage = ({item, index}) => {
-    return (
-      <Page
-        totalLength={submission.length}
-        index={index}
-        loading={loading}
-        prompt={item}
-        handleFastForward={handleFastForward}
-        navigation={navigation}
-      />
-    );
+    return <Page prompt={item} navigation={navigation} />;
   };
 
   const keyExtractor = item => item.uid;

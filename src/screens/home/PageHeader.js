@@ -28,7 +28,9 @@ const PageHeader = ({submission, activeIndex}) => {
             key={indx}
             style={[
               styles.dot,
-              indx === activeContentIdex && {backgroundColor: 'white'},
+              indx === activeContentIdex && {
+                backgroundColor: 'rgba(255,255,255,0.7)',
+              },
             ]}
           />
         ))}
@@ -46,19 +48,20 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 150,
-    // alignItems: 'center',
+    height: 180,
     justifyContent: 'center',
   },
   dateText: {
-    fontFamily: 'Montserrat-Bold',
-    fontSize: 22,
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 16,
     paddingLeft: 35,
-    color: 'rgba(255,255,255,0.5)',
+    color: 'rgba(255,255,255,0.7)',
   },
   title: {
-    color: 'rgba(255,255,255,0.3)',
+    fontFamily: 'Montserrat-Regular',
+    color: 'rgba(255,255,255,0.4)',
     fontSize: 16,
+    paddingLeft: 4,
   },
   dotContainer: {
     height: 25,
@@ -71,11 +74,11 @@ const styles = StyleSheet.create({
     height: 7,
     width: 7,
     borderRadius: 3.5,
-    backgroundColor: 'rgba(255,255,255,0.37)',
+    backgroundColor: 'rgba(255,255,255,0.4)',
     marginLeft: 5,
   },
   emptyDot: {
-    borderColor: 'white',
+    borderColor: 'rgba(255,255,255,0.7)',
     backgroundColor: 'transparent',
     borderWidth: 0.4,
   },
