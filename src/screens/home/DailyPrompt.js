@@ -4,6 +4,7 @@ import {
   Image,
   Dimensions,
   Alert,
+  Modal,
   TouchableOpacity,
   Text,
   StyleSheet,
