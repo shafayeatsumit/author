@@ -9,6 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {checkIfMorningTime} from '../../helpers/date';
+import {RFValue} from 'react-native-responsive-fontsize';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Prompt = ({item, navigation}) => {
@@ -38,7 +39,7 @@ const Prompt = ({item, navigation}) => {
   };
 
   const contentQuestion = disableNote
-    ? item.question.replace('______', '')
+    ? item.question.replace('______.', '')
     : item.question;
 
   return (
@@ -64,7 +65,6 @@ export default Prompt;
 
 const styles = StyleSheet.create({
   itemPrompt: {
-    backgroundColor: '#303B49',
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     width: 14,
   },
   title: {
-    fontSize: 35,
+    fontSize: RFValue(30),
     color: 'white',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',

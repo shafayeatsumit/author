@@ -1,23 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
-  Image,
   Dimensions,
-  Alert,
   TouchableOpacity,
   Text,
-  ActivityIndicator,
   StyleSheet,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
-import {useUserStore, useSubmissionStore, usePromptStore} from '../../store';
+import {RFValue} from 'react-native-responsive-fontsize';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-import {DailyTitles} from '../../helpers/contentsData';
-import {checkIfToday} from '../../helpers/date';
-import moment from 'moment';
-import _ from 'lodash';
-import LinearGradient from 'react-native-linear-gradient';
+import PromptFooter from './PromptFooter';
 
 const BlankPrompt = {
   id: 'blank_prompt_id',
@@ -27,38 +19,15 @@ const BlankPrompt = {
   title: 'blank',
   time: 'all_time',
 };
-const Prompt = ({item}) => {
+const Prompt = () => {
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(true);
-
-  const isMorningTime = checkIfMorningTime();
-  const isAfternoonTime = !isMorningTime;
-  const promptTitle = item.title;
-  let allPrompts = DailyTitles[promptTitle];
-  const promptStore = usePromptStore();
-  const {submission} = useSubmissionStore();
-  const {updatePrompt} = promptStore;
-  const currentPrompt = promptStore[promptTitle];
-
   const goToNote = () => {
     navigation.navigate('Note', {prompt: BlankPrompt});
   };
-
   const handlePress = () => {
     goToNote();
   };
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 400);
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={styles.loading}>
-        {/* <ActivityIndicator size="large" color="#BBBFC2" /> */}
-      </View>
-    );
-  }
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -71,50 +40,31 @@ const Prompt = ({item}) => {
       </View>
 
       <Text style={styles.text}>__________</Text>
+      <PromptFooter />
     </TouchableOpacity>
   );
 };
 export default Prompt;
 
 const styles = StyleSheet.create({
-  loading: {
-    height: ScreenHeight,
-    width: ScreenWidth,
-    backgroundColor: '#303B49',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   itemPrompt: {
     backgroundColor: 'transparent',
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',
   },
-  clockHolder: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-  },
-  clock: {
-    marginLeft: 5,
-    height: 14,
-    width: 14,
-  },
+
   title: {
-    fontSize: 35,
-    color: 'white',
+    fontSize: RFValue(18),
+    color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Regular',
   },
   text: {
-    fontSize: 32,
-    color: '#BBBFC2',
+    fontSize: RFValue(30),
+    color: 'rgba(255,255,255,0.92)',
     textAlign: 'center',
-    fontFamily: 'georgia',
+    fontFamily: 'Montserrat-Bold',
     paddingTop: 30,
     paddingHorizontal: 30,
   },

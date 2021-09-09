@@ -19,6 +19,7 @@ import {DailyTitles} from '../../helpers/contentsData';
 import {checkIfToday} from '../../helpers/date';
 import moment from 'moment';
 import _ from 'lodash';
+import {RFValue} from 'react-native-responsive-fontsize';
 let count = 0;
 
 const Prompt = ({item}) => {
@@ -64,11 +65,11 @@ const Prompt = ({item}) => {
   let activeMessage = activePromptDeatil ? activePromptDeatil.question : '';
 
   if (!isServedBefore && totalPages < firstAvailable) {
-    disableMessage = `First available will be at ${firstAvailable}`;
+    disableMessage = `Available  at page ${firstAvailable}`;
   } else if (!isServedBefore && totalPages === firstAvailable) {
     pickRandomPrompt();
   } else if (isServedBefore && nextAvailable && totalPages < nextAvailable) {
-    disableMessage = `Next availabe at ${nextAvailable}`;
+    disableMessage = `Availabe again at page ${nextAvailable}`;
   } else if (
     isAnsweredBefore &&
     totalPages === nextAvailable &&
@@ -88,7 +89,7 @@ const Prompt = ({item}) => {
         <Text style={styles.title}>{promptTitle}</Text>
       </View>
       {disableMessage ? (
-        <Text style={styles.text}>{disableMessage}</Text>
+        <Text style={styles.disableText}>{disableMessage}</Text>
       ) : (
         <Text style={styles.text}>{activeMessage + ' ' + '______'}</Text>
       )}
@@ -117,26 +118,27 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     justifyContent: 'center',
   },
-  clockHolder: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-  },
-  clock: {
-    marginLeft: 5,
-    height: 14,
-    width: 14,
-  },
+
   title: {
-    fontSize: 35,
-    color: 'white',
+    fontSize: RFValue(18),
+    color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Regular',
   },
   text: {
-    fontSize: 32,
-    color: '#BBBFC2',
+    fontSize: RFValue(30),
+    color: 'rgba(255,255,255,0.92)',
     textAlign: 'center',
-    fontFamily: 'georgia',
+    fontFamily: 'Montserrat-Bold',
+    paddingTop: 30,
+    paddingHorizontal: 30,
+  },
+
+  disableText: {
+    fontSize: RFValue(30),
+    color: 'rgba(255,255,255,0.4)',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
     paddingTop: 30,
     paddingHorizontal: 30,
   },

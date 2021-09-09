@@ -6,18 +6,16 @@ import {
   Alert,
   TouchableOpacity,
   Text,
-  ActivityIndicator,
   StyleSheet,
 } from 'react-native';
 import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
-import {useUserStore, useSubmissionStore, usePromptStore} from '../../store';
+import {usePromptStore} from '../../store';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {DailyTitles} from '../../helpers/contentsData';
-import {checkIfToday} from '../../helpers/date';
-import moment from 'moment';
-import _ from 'lodash';
 import {useNavigation} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+import {RFValue} from 'react-native-responsive-fontsize';
+import _ from 'lodash';
+import PromptFooter from './PromptFooter';
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
@@ -28,7 +26,6 @@ const Prompt = ({item}) => {
   const promptTitle = item.title;
   let allPrompts = DailyTitles[promptTitle];
   const promptStore = usePromptStore();
-  const {submission} = useSubmissionStore();
   const {updatePrompt} = promptStore;
   const currentPrompt = promptStore[promptTitle];
 
@@ -67,9 +64,7 @@ const Prompt = ({item}) => {
     !isActive ? askAlert() : goToNote();
   };
 
-  const contentQuestion = isActive
-    ? selectedPrompt.question + ' ' + '______'
-    : selectedPrompt.question;
+  const contentQuestion = selectedPrompt.question + ' ' + '______';
 
   const capitalizedTitle = _.upperFirst(selectedPrompt.title);
 
@@ -135,10 +130,11 @@ const Prompt = ({item}) => {
         )}
       </View>
       {isDisabled ? (
-        <Text style={styles.text}>Next prompt will be available tomorrow</Text>
+        <Text style={styles.disableText}>Available again tomorrow</Text>
       ) : (
         <Text style={styles.text}>{contentQuestion}</Text>
       )}
+      <PromptFooter />
     </TouchableOpacity>
   );
 };
@@ -148,7 +144,6 @@ const styles = StyleSheet.create({
   loading: {
     height: ScreenHeight,
     width: ScreenWidth,
-    backgroundColor: '#303B49',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -171,18 +166,27 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     height: 14,
     width: 14,
+    tintColor: 'rgba(255,255,255,0.92)',
   },
   title: {
-    fontSize: 35,
-    color: 'white',
+    fontSize: RFValue(18),
+    color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Regular',
   },
   text: {
-    fontSize: 32,
-    color: '#BBBFC2',
+    fontSize: RFValue(30),
+    color: 'rgba(255,255,255,0.92)',
     textAlign: 'center',
-    fontFamily: 'georgia',
+    fontFamily: 'Montserrat-Bold',
+    paddingTop: 30,
+    paddingHorizontal: 30,
+  },
+  disableText: {
+    fontSize: RFValue(30),
+    color: 'rgba(255,255,255,0.4)',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
     paddingTop: 30,
     paddingHorizontal: 30,
   },
