@@ -10,6 +10,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {useUserStore, useContentStore, useSubmissionStore} from '../../store';
 import InfiniteScroll from 'react-native-infinite-looping-scroll';
 import {checkIfToday} from '../../helpers/date';
@@ -116,7 +117,7 @@ const Home = ({navigation}) => {
   renderCount = renderCount + 1;
 
   return (
-    <View style={styles.container}>
+    <LinearGradient colors={['#343D4C', '#131E25']} style={styles.container}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -150,7 +151,7 @@ const Home = ({navigation}) => {
         removeClippedSubviews={false}
         showsHorizontalScrollIndicator={false}
       />
-    </View>
+    </LinearGradient>
   );
 };
 export default Home;

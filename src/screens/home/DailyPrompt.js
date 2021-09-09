@@ -17,6 +17,7 @@ import {checkIfToday} from '../../helpers/date';
 import moment from 'moment';
 import _ from 'lodash';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
@@ -151,8 +152,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   itemPrompt: {
-    backgroundColor: '#303B49',
+    backgroundColor: 'transparent',
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',

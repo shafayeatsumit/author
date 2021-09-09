@@ -44,13 +44,7 @@ const Page = ({totalLength, handleFastForward, index, prompt, navigation}) => {
       activeOpacity={1}
       style={styles.container}>
       <View style={styles.questionContainer}>
-        <Text style={styles.titleText}>{capitalizedTitle}</Text>
-        <Text style={styles.question}>
-          {sharedInputValue}
-          <Text style={[styles.question, styles.answer]}>
-            {unsharedInputValue}
-          </Text>
-        </Text>
+        <Text style={styles.answer}>{promptAnswer}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -98,8 +92,9 @@ const styles = StyleSheet.create({
   },
   answer: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: RFValue(22),
-    color: 'rgba(255,255,255,1)',
+    fontSize: RFValue(28),
+    color: 'rgba(255,255,255,0.92)',
+    letterSpacing: 1.05,
   },
   footer: {
     position: 'absolute',

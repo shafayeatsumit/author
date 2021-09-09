@@ -9,6 +9,8 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+
 import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
 import {useUserStore, useSubmissionStore, usePromptStore} from '../../store';
 import {useNavigation} from '@react-navigation/native';
@@ -104,8 +106,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   itemPrompt: {
-    backgroundColor: '#303B49',
+    backgroundColor: 'transparent',
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',

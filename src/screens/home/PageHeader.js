@@ -3,6 +3,7 @@ import {View, Text, Animated, StyleSheet} from 'react-native';
 import {checkIfToday} from '../../helpers/date';
 import _ from 'lodash';
 import moment from 'moment';
+import {formatDate} from '../../helpers/date';
 
 const PageHeader = ({submission, activeIndex}) => {
   const activeContent = submission[activeIndex];
@@ -13,11 +14,13 @@ const PageHeader = ({submission, activeIndex}) => {
   const items = contentByDate[day];
   const totalItems = items.length;
   const activeContentIdex = items.findIndex(i => i.uid === itemId);
-  const dateString = moment(date).format('dddd MMMM Do');
-
+  const dateString = formatDate(date);
+  const contentTitle = _.upperFirst(activeContent.title);
   return (
     <View style={styles.container}>
-      <Animated.Text style={styles.dateText}>{dateString}</Animated.Text>
+      <Animated.Text style={styles.dateText}>
+        {dateString} <Text style={styles.title}>{contentTitle}</Text>
+      </Animated.Text>
 
       <View style={styles.dotContainer}>
         {[...Array(totalItems)].map((item, indx) => (
@@ -49,9 +52,13 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 17,
+    fontSize: 22,
     paddingLeft: 35,
-    color: 'rgba(255,255,255,0.7)',
+    color: 'rgba(255,255,255,0.5)',
+  },
+  title: {
+    color: 'rgba(255,255,255,0.3)',
+    fontSize: 16,
   },
   dotContainer: {
     height: 25,

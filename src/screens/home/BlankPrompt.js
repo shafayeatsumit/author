@@ -17,6 +17,7 @@ import {DailyTitles} from '../../helpers/contentsData';
 import {checkIfToday} from '../../helpers/date';
 import moment from 'moment';
 import _ from 'lodash';
+import LinearGradient from 'react-native-linear-gradient';
 
 const BlankPrompt = {
   id: 'blank_prompt_id',
@@ -83,8 +84,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   itemPrompt: {
-    backgroundColor: '#303B49',
+    backgroundColor: 'transparent',
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',
