@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   answer: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: RFValue(28),
+    fontSize: RFValue(26),
     color: 'rgba(255,255,255,0.92)',
     letterSpacing: 1,
   },

@@ -65,7 +65,9 @@ const Prompt = ({item}) => {
     !isActive ? askAlert() : goToNote();
   };
 
-  const contentQuestion = selectedPrompt.question + ' ' + '______';
+  const contentQuestion = isActive
+    ? selectedPrompt.question + ' ' + '______'
+    : selectedPrompt.question;
 
   const capitalizedTitle = _.upperFirst(selectedPrompt.title);
 
@@ -176,15 +178,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
   text: {
-    fontSize: RFValue(30),
+    lineHeight: 39,
+    fontSize: RFValue(28),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
-    paddingTop: 30,
+    paddingTop: 12,
+    letterSpacing: -2,
     paddingHorizontal: 30,
   },
   disableText: {
-    fontSize: RFValue(30),
+    fontSize: RFValue(28),
     color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
