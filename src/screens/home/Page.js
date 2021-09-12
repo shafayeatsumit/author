@@ -35,15 +35,16 @@ const styles = StyleSheet.create({
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   questionContainer: {
-    paddingHorizontal: 32,
-    paddingBottom: 15,
+    height: ScreenHeight / 2,
+    width: ScreenWidth - 50,
   },
   answer: {
     fontFamily: 'Montserrat-Bold',
     fontSize: RFValue(26),
     color: 'rgba(255,255,255,0.92)',
-    letterSpacing: 1,
+    letterSpacing: -2,
   },
 });
