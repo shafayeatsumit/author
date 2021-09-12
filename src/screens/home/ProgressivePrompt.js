@@ -1,26 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
-  Image,
   Dimensions,
-  Alert,
   TouchableOpacity,
   Text,
-  ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-
-import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
-import {useUserStore, useSubmissionStore, usePromptStore} from '../../store';
+import PromptFooter from './PromptFooter';
+import {useSubmissionStore, usePromptStore} from '../../store';
 import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {DailyTitles} from '../../helpers/contentsData';
-import {checkIfToday} from '../../helpers/date';
-import moment from 'moment';
 import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
-let count = 0;
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
@@ -65,11 +57,11 @@ const Prompt = ({item}) => {
   let activeMessage = activePromptDeatil ? activePromptDeatil.question : '';
 
   if (!isServedBefore && totalPages < firstAvailable) {
-    disableMessage = `Available  at page ${firstAvailable}`;
+    disableMessage = `Unlocks on page ${firstAvailable}`;
   } else if (!isServedBefore && totalPages === firstAvailable) {
     pickRandomPrompt();
   } else if (isServedBefore && nextAvailable && totalPages < nextAvailable) {
-    disableMessage = `Availabe again at page ${nextAvailable}`;
+    disableMessage = `Next available on ${nextAvailable}`;
   } else if (
     isAnsweredBefore &&
     totalPages === nextAvailable &&
@@ -93,6 +85,7 @@ const Prompt = ({item}) => {
       ) : (
         <Text style={styles.text}>{activeMessage + ' ' + '______'}</Text>
       )}
+      <PromptFooter />
     </TouchableOpacity>
   );
 };
