@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 120,
-    justifyContent: 'space-between',
+    height: 90,
+    paddingTop: 35,
     alignItems: 'center',
+    justifyContent: 'space-between',
     flexDirection: 'row',
-    // backgroundColor: 'red',
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
@@ -46,9 +46,11 @@ const styles = StyleSheet.create({
   },
   xoutContainer: {
     height: 50,
-    width: 80,
+    width: 70,
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 25,
+    // backgroundColor: 'yellow',
   },
   xout: {
     height: 16,

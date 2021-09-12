@@ -6,7 +6,6 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Image,
   Platform,
   Dimensions,
   StyleSheet,
@@ -16,7 +15,8 @@ import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
 import {formatDate} from '../../helpers/date';
 import NoteHeader from './NoteHeader';
-const {height: ScreenHeight} = Dimensions.get('window');
+import useKeyboard from '../../helpers/useKeyboard';
+const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
 import LinearGradient from 'react-native-linear-gradient';
@@ -24,6 +24,8 @@ import _ from 'lodash';
 TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
+  const keyboardHeight = useKeyboard();
+  const boxHeight = ScreenHeight - keyboardHeight - 120 - 50;
   const {setLastSubmit} = useUserStore();
   const {updatePrompt, incNextAvailable} = usePromptStore();
   const {setSubmission, updateSubmission, submission} = useSubmissionStore();
@@ -91,9 +93,6 @@ const Note = ({navigation, route}) => {
   };
 
   const handleSubmit = () => {
-    if (!text) {
-      return;
-    }
     submitAnswer();
     goBack();
     setLastSubmit();
@@ -132,15 +131,12 @@ const Note = ({navigation, route}) => {
   useEffect(() => {
     setTimeout(setCursor, 500);
   }, []);
-
+  const buttonDisabled = text === defaultText;
   return (
     <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
+      <View style={{flex: 1}}>
         <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
-
-        <View style={styles.questionContainer}>
+        <View style={[styles.questionContainer, {height: boxHeight}]}>
           <TextInput
             onSubmitEditing={handleSubmit}
             style={styles.input}
@@ -156,15 +152,21 @@ const Note = ({navigation, route}) => {
             </Text>
           </TextInput>
         </View>
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={isEdit ? handleEdit : handleSubmit}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+        {keyboardHeight ? (
+          <View style={styles.buttonContainer}>
+            <Text style={styles.pageNo}>Page {totalPages}</Text>
+            <TouchableOpacity
+              disabled={buttonDisabled}
+              onPress={isEdit ? handleEdit : handleSubmit}
+              style={[
+                styles.button,
+                buttonDisabled && {backgroundColor: '#71706E'},
+              ]}>
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+      </View>
     </LinearGradient>
   );
 };
@@ -175,18 +177,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   questionContainer: {
-    padding: 30,
-    paddingTop: 20,
-    paddingBottom: 15,
-    marginTop: 90,
+    height: 120,
+    width: ScreenWidth - 72,
+    alignSelf: 'center',
+    marginTop: 100,
   },
   input: {
-    height: ScreenHeight / 4.5,
-    paddingHorizontal: 5,
-    width: '100%',
-    alignSelf: 'center',
-    margin: 12,
-    letterSpacing: -2,
+    flex: 1,
+    alignSelf: 'flex-start',
+    marginHorizontal: 2,
+    // margin: 12,
+    letterSpacing: -1,
     borderWidth: 0,
     lineHeight: 39,
     fontSize: RFValue(28),
@@ -207,6 +208,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
   },
   button: {
+    marginTop: 10,
     height: 50,
     width: 100,
     backgroundColor: 'rgba(42, 98, 219, 0.5)',
@@ -218,5 +220,12 @@ const styles = StyleSheet.create({
     fontSize: RFValue(26),
     color: 'white',
     fontFamily: 'Montserrat-Bold',
+  },
+  pageNo: {
+    fontSize: RFValue(14),
+    lineHeight: 14,
+    color: 'rgba(255, 255, 255, 0.38)',
+    paddingRight: 24,
+    paddingTop: 35,
   },
 });
