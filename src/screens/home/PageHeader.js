@@ -50,13 +50,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 170,
+
     justifyContent: 'center',
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
-    fontSize: 18,
-    paddingLeft: 35,
-    lineHeight: 18,
+    fontSize: 16,
+    paddingLeft: 32,
+    lineHeight: 16,
     letterSpacing: -1,
     color: 'rgba(255,255,255,0.7)',
   },
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     width: 120,
     alignItems: 'center',
     flexDirection: 'row',
-    marginLeft: 35,
+    marginLeft: 32,
   },
   dot: {
     height: 4,

@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
   StyleSheet,
 } from 'react-native';
 
@@ -23,7 +24,9 @@ const Page = ({prompt}) => {
       activeOpacity={1}
       style={styles.container}>
       <View style={styles.questionContainer}>
-        <Text style={styles.answer}>{promptAnswer}</Text>
+        <ScrollView nestedScrollEnabled={true}>
+          <Text style={styles.answer}>{promptAnswer}</Text>
+        </ScrollView>
       </View>
     </TouchableOpacity>
   );
@@ -39,11 +42,12 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     height: ScreenHeight / 2,
-    width: ScreenWidth - 50,
+    width: ScreenWidth - 64,
   },
   answer: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: RFValue(26),
+    fontSize: RFValue(28),
+    lineHeight: 39.2,
     color: 'rgba(255,255,255,0.92)',
     letterSpacing: -2,
   },

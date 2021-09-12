@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
   bin: {
     height: 20,
     width: 20,
-    tintColor: 'rgba(255,255,255,0.4)',
+    tintColor: 'rgba(255,255,255,0.38)',
   },
   ff: {
     height: 20,
     width: 20,
     resizeMode: 'contain',
-    tintColor: 'rgba(255,255,255,0.4)',
+    tintColor: 'rgba(255,255,255,0.38)',
   },
   imageHolder: {
     height: 50,
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     width: 20,
   },
   text: {
-    color: 'rgba(255,255,255,0.4)',
-    fontSize: 15,
+    color: 'rgba(255,255,255,0.38)',
+    fontSize: 14,
     textAlign: 'center',
   },
 });
