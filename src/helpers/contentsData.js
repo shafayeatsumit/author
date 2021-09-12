@@ -1,46 +1,47 @@
 export const ContentTitles = [
   {
-    id: 'title',
-    title: 'title',
+    id: 'morning',
+    title: 'morning',
     type: 'daily',
     time: 'morning',
   },
   {
-    id: 'plot',
-    title: 'plot',
+    id: 'highlight',
+    title: 'highlight',
     type: 'daily',
     time: 'morning',
   },
   {
-    id: 'struggle',
-    title: 'struggle',
+    id: 'evening',
+    title: 'evening',
     type: 'daily',
     time: 'morning',
   },
-  {
-    id: 'blank',
-    title: 'blank',
-    type: 'blank',
-    time: 'all_time',
-  },
-  {
-    id: 'celebrate',
-    title: 'celebrate',
-    type: 'daily',
-    time: 'afternoon',
-  },
-  {
-    id: 'moment',
-    title: 'moment',
-    type: 'daily',
-    time: 'afternoon',
-  },
-  {
-    id: 'conclusion',
-    title: 'conclusion',
-    type: 'daily',
-    time: 'afternoon',
-  },
+
+  // {
+  //   id: 'blank',
+  //   title: 'blank',
+  //   type: 'blank',
+  //   time: 'all_time',
+  // },
+  // {
+  //   id: 'celebrate',
+  //   title: 'celebrate',
+  //   type: 'daily',
+  //   time: 'afternoon',
+  // },
+  // {
+  //   id: 'moment',
+  //   title: 'moment',
+  //   type: 'daily',
+  //   time: 'afternoon',
+  // },
+  // {
+  //   id: 'conclusion',
+  //   title: 'conclusion',
+  //   type: 'daily',
+  //   time: 'afternoon',
+  // },
 
   {
     id: 'settings',
@@ -74,6 +75,149 @@ export const ContentTitles = [
     type: 'progressive',
   },
 ];
+
+export const MORNING = [
+  {
+    id: '97d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: 'I make today important to my story by',
+  },
+  {
+    id: '17d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: 'Some actions my story needs me to complete are',
+  },
+  {
+    id: '27d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: 'Today, I am unwilling to accept',
+  },
+  {
+    id: '37d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: "An obstacle I'll overcome today is",
+  },
+  {
+    id: '47d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: 'Something that is within my control to push forward is',
+  },
+  {
+    id: '57d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: 'Today will be better than yesterday because',
+  },
+  {
+    id: '67d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'morning',
+    time: 'morning',
+    type: 'daily',
+    question: 'Today needs to start with',
+  },
+];
+
+export const HIGHLIGHT = [
+  {
+    id: '10d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'Highlight',
+    time: 'morning',
+    type: 'daily',
+    question: "Something I'll always want to remember is",
+  },
+  {
+    id: '20d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'Highlight',
+    time: 'morning',
+    type: 'daily',
+    question: 'Something that went well today was',
+  },
+  {
+    id: '30d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'Highlight',
+    time: 'morning',
+    type: 'daily',
+    question: 'A win from today was',
+  },
+  {
+    id: '40d39e5e-07d9-11ec-9a03-0242ac130003',
+    title: 'Highlight',
+    time: 'morning',
+    type: 'daily',
+    question: 'A completely carefree and lovely moment was',
+  },
+];
+
+export const EVENING = [
+  {
+    id: '10d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'One word that could summarize my day is',
+  },
+  {
+    id: '20d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'I moved my story along by',
+  },
+  {
+    id: '30d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'Something I did today that I should do more of tomorrow is',
+  },
+  {
+    id: '40d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'The strongest emotion today was',
+  },
+  {
+    id: '50d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'The most common activity today was',
+  },
+  {
+    id: '60d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'I felt most like myself when',
+  },
+  {
+    id: '70d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'A past effort that paid off today was',
+  },
+  {
+    id: '80d39e5e-07d9-11ec-9911-0242ac130003',
+    title: 'Evening',
+    time: 'Evening',
+    type: 'daily',
+    question: 'Something I did today that I should do less of tomorrow is',
+  },
+];
+
 export const TITLE = [
   {
     id: '97d39e5e-07d9-11ec-9a03-0242ac130003',
@@ -402,12 +546,15 @@ export const PLOT_TWIST = [
 ];
 
 export const DailyTitles = {
-  title: TITLE,
-  plot: PLOT,
-  struggle: STRUGGLE,
-  celebrate: CELEBRATE,
-  moment: MOMENT,
-  conclusion: CONCLUSION,
+  morning: MORNING,
+  highlight: HIGHLIGHT,
+  evening: EVENING,
+  // title: TITLE,
+  // plot: PLOT,
+  // struggle: STRUGGLE,
+  // celebrate: CELEBRATE,
+  // moment: MOMENT,
+  // conclusion: CONCLUSION,
   backstory: BACKSTORY,
   settings: SETTINGS,
   characters: CHARACTERS,

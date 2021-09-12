@@ -4,12 +4,9 @@ import moment from 'moment';
 import _ from 'lodash';
 
 let promptStore = set => ({
-  title: {},
-  plot: {},
-  struggle: {},
-  celebrate: {},
-  moment: {},
-  conclusion: {},
+  morning: {},
+  highlight: {},
+  evening: {},
   circumstance: {
     firstAvailable: 1,
     increment: 11,

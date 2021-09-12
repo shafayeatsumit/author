@@ -9,7 +9,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import {checkIfMorningTime, checkTodayAfterFive} from '../../helpers/date';
+import {checkTodayAfterFive} from '../../helpers/date';
 import {usePromptStore} from '../../store';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {DailyTitles} from '../../helpers/contentsData';
@@ -22,52 +22,21 @@ const Prompt = ({item}) => {
   const navigation = useNavigation();
   const [isDisabled, setDisabled] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState('');
-  const isMorningTime = checkIfMorningTime();
-  const isAfternoonTime = !isMorningTime;
   const promptTitle = item.title;
   let allPrompts = DailyTitles[promptTitle];
   const promptStore = usePromptStore();
   const {updatePrompt} = promptStore;
   const currentPrompt = promptStore[promptTitle];
 
-  const checkIfActive = type => {
-    if (type === 'morning') {
-      return isMorningTime;
-    }
-    if (type === 'afternoon') {
-      return isAfternoonTime;
-    }
-  };
-  const isActive = checkIfActive(item.time);
-
   const goToNote = () => {
     navigation.navigate('Note', {prompt: selectedPrompt});
   };
 
-  const askAlert = () => {
-    const isMorningPrompt = selectedPrompt.time === 'morning';
-    const whenToAnswer = isMorningPrompt ? 'early' : 'later';
-    Alert.alert(
-      'Wait',
-      `Some of these prompts are meant for ${whenToAnswer} in your day`,
-      [
-        {
-          text: 'answer now',
-          onPress: goToNote,
-          style: 'cancel',
-        },
-        {text: 'Got it', onPress: () => console.log('OK Pressed')},
-      ],
-    );
-  };
-
   const handlePress = () => {
-    !isActive ? askAlert() : goToNote();
+    goToNote();
   };
 
-  const contentQuestion = isActive
-    ? selectedPrompt.question + ' ' + '______'
-    : selectedPrompt.question;
+  const contentQuestion = selectedPrompt.question + ' ' + '______';
 
   const capitalizedTitle = _.upperFirst(selectedPrompt.title);
 
@@ -125,19 +94,12 @@ const Prompt = ({item}) => {
       onPress={handlePress}>
       <View style={styles.clockHolder}>
         <Text style={styles.title}>{capitalizedTitle}</Text>
-        {!isActive && (
-          <Image
-            style={styles.clock}
-            source={require('../../../assets/clock.png')}
-          />
-        )}
       </View>
       {isDisabled ? (
         <Text style={styles.disableText}>Available again tomorrow</Text>
       ) : (
         <Text style={styles.text}>{contentQuestion}</Text>
       )}
-      <PromptFooter />
     </TouchableOpacity>
   );
 };

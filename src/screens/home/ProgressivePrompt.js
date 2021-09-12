@@ -6,7 +6,6 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import PromptFooter from './PromptFooter';
 import {useSubmissionStore, usePromptStore} from '../../store';
 import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
@@ -69,7 +68,7 @@ const Prompt = ({item}) => {
   ) {
     pickRandomPrompt();
   }
-
+  const capitalizedTitle = _.upperFirst(promptTitle);
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -78,14 +77,13 @@ const Prompt = ({item}) => {
       style={styles.itemPrompt}
       onPress={handlePress}>
       <View style={styles.clockHolder}>
-        <Text style={styles.title}>{promptTitle}</Text>
+        <Text style={styles.title}>{capitalizedTitle}</Text>
       </View>
       {disableMessage ? (
         <Text style={styles.disableText}>{disableMessage}</Text>
       ) : (
         <Text style={styles.text}>{activeMessage + ' ' + '______'}</Text>
       )}
-      <PromptFooter />
     </TouchableOpacity>
   );
 };

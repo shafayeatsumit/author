@@ -6,6 +6,7 @@ import {ContentTitles} from '../../helpers/contentsData';
 import ProgressivePrompt from './ProgressivePrompt';
 import DailyPrompt from './DailyPrompt';
 import BlankPrompt from './BlankPrompt';
+import PromptFooter from './PromptFooter';
 
 const RenderPromptList = () => {
   const RenderSwiper = ({item, index}) => {
@@ -21,20 +22,23 @@ const RenderPromptList = () => {
   };
 
   return (
-    <Carousel
-      loop={true}
-      useScrollView={true}
-      inactiveSlideOpacity={1}
-      inactiveSlideScale={1}
-      pagingEnabled
-      data={ContentTitles}
-      vertical={true}
-      renderItem={RenderSwiper}
-      sliderHeight={ScreenHeight}
-      itemHeight={ScreenHeight}
-      removeClippedSubviews={false}
-      swipeThreshold={10}
-    />
+    <>
+      <Carousel
+        loop={true}
+        useScrollView={true}
+        inactiveSlideOpacity={1}
+        inactiveSlideScale={1}
+        pagingEnabled
+        data={ContentTitles}
+        vertical={true}
+        renderItem={RenderSwiper}
+        sliderHeight={ScreenHeight}
+        itemHeight={ScreenHeight}
+        removeClippedSubviews={false}
+        swipeThreshold={10}
+      />
+      <PromptFooter />
+    </>
   );
 };
 
