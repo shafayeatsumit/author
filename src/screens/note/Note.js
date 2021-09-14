@@ -34,6 +34,7 @@ const Note = ({navigation, route}) => {
   const {prompt, isEdit} = route.params;
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer;
+
   const getAnswer = () => {
     const firstHalf = sharedStart([promptQuestion, promptAnswer]);
     const secondHalf = promptAnswer.replace(firstHalf, '');
@@ -115,6 +116,9 @@ const Note = ({navigation, route}) => {
     });
   };
 
+  const findIndex = () =>
+    submission.findIndex(item => item.id === prompt.id) + 1;
+
   const setCursor = () => {
     inputRef.current.focus();
     inputRef.current.setNativeProps({
@@ -132,6 +136,7 @@ const Note = ({navigation, route}) => {
     setTimeout(setCursor, 500);
   }, []);
   const buttonDisabled = text === defaultText;
+  const footerPageNumber = isEdit ? findIndex() : totalPages;
   return (
     <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
       <View style={{flex: 1}}>
@@ -154,7 +159,7 @@ const Note = ({navigation, route}) => {
         </View>
         {keyboardHeight ? (
           <View style={styles.buttonContainer}>
-            <Text style={styles.pageNo}>Page {totalPages}</Text>
+            <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
             <TouchableOpacity
               disabled={buttonDisabled}
               onPress={isEdit ? handleEdit : handleSubmit}
