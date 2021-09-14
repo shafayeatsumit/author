@@ -1,57 +1,71 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import Options from './Options';
+import React, {Component, useRef, useState} from 'react';
+import {
+  AppRegistry,
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-const Start = ({navigation}) => {
-  const [showOptions, setShowOptions] = useState(false);
-  const handlePress = () => {
-    setShowOptions(true);
-  };
-  if (showOptions) {
-    return (
-      <View style={styles.container}>
-        <Options navigation={navigation} />
-      </View>
-    );
-  }
-  return (
-    <View style={styles.container}>
-      <Text style={styles.author}>Author your story</Text>
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.start}>Start</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-export default Start;
+import Swiper from 'react-native-swiper';
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {},
+  slide1: {
     flex: 1,
-    backgroundColor: '#303B49',
-    justifyContent: 'center',
-    // alignItems: 'center',
-  },
-  author: {
-    color: 'white',
-    fontSize: 28,
-    textAlign: 'left',
-    marginLeft: 34,
-    fontFamily: 'Montserrat-Bold',
-  },
-  button: {
-    position: 'absolute',
-    height: 55,
-    width: 180,
-    borderRadius: 30,
-    backgroundColor: '#6697EA',
-    bottom: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
+    backgroundColor: '#9DD6EB',
   },
-  start: {
-    color: 'white',
-    fontSize: 24,
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5',
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  button: {
+    height: 60,
+    width: 100,
+    marginTop: 100,
+    backgroundColor: 'tomato',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
+
+const SwiperComponent = () => {
+  const [pages, setPages] = useState(['First', 'Second']);
+  const swiper = useRef(null);
+  const handlePress = () => {
+    swiper.current.scrollBy(1);
+    setTimeout(() => {
+      setPages(['Second']);
+    }, 1500);
+  };
+  return (
+    <Swiper ref={swiper} style={styles.wrapper} showsButtons={true}>
+      {pages.map((item, i) => (
+        <View key={item} style={styles.slide1}>
+          <Text style={styles.text}>{item}</Text>
+          <TouchableOpacity style={styles.button} onPress={handlePress}>
+            <Text>button</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+    </Swiper>
+  );
+};
+
+export default SwiperComponent;

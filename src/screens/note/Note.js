@@ -25,7 +25,11 @@ TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
   const keyboardHeight = useKeyboard();
-  const boxHeight = ScreenHeight - keyboardHeight - 120 - 50;
+  const HeaderHeight = 90;
+  const ButtonHeight = 50;
+  const ExtraHeight = 40;
+  const boxHeight =
+    ScreenHeight - (keyboardHeight + HeaderHeight + ButtonHeight + ExtraHeight);
   const {setLastSubmit} = useUserStore();
   const {updatePrompt, incNextAvailable} = usePromptStore();
   const {setSubmission, updateSubmission, submission} = useSubmissionStore();
@@ -158,7 +162,7 @@ const Note = ({navigation, route}) => {
           </TextInput>
         </View>
         {keyboardHeight ? (
-          <View style={styles.buttonContainer}>
+          <View style={[styles.buttonContainer, {bottom: keyboardHeight + 8}]}>
             <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
             <TouchableOpacity
               disabled={buttonDisabled}
@@ -185,13 +189,12 @@ const styles = StyleSheet.create({
     height: 120,
     width: ScreenWidth - 72,
     alignSelf: 'center',
-    marginTop: 100,
+    marginTop: 90, // HeaderHeight
   },
   input: {
     flex: 1,
     alignSelf: 'flex-start',
     marginHorizontal: 2,
-    // margin: 12,
     letterSpacing: -1,
     borderWidth: 0,
     lineHeight: 39,
@@ -210,7 +213,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginHorizontal: 25,
+    marginRight: 25,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   button: {
     marginTop: 10,
