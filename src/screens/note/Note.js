@@ -162,7 +162,7 @@ const Note = ({navigation, route}) => {
           </TextInput>
         </View>
         {keyboardHeight ? (
-          <View style={[styles.buttonContainer, {bottom: keyboardHeight + 8}]}>
+          <View style={[styles.buttonContainer, {top: boxHeight + 100}]}>
             <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
             <TouchableOpacity
               disabled={buttonDisabled}
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    // bottom: 0,
   },
   button: {
     marginTop: 10,
