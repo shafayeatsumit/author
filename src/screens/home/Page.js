@@ -7,27 +7,47 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
-
+import IntroDedicate from './IntroDedicate';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
+import {useUserStore, useSubmissionStore} from '../../store';
+import IntroStart from './IntroStart';
 
-const Page = ({prompt}) => {
+const Page = ({prompt, goToSecondPage}) => {
   const navigation = useNavigation();
+  const {deleteSubmission} = useSubmissionStore();
   const handlePress = () => {
     navigation.navigate('Note', {prompt, isEdit: true});
   };
+
+  const createFirstPage = () => {
+    goToSecondPage();
+  };
+
   const promptAnswer = prompt.answer;
+  const introStart = prompt.id === 'intro_start';
+  const introTitle = prompt.id === 'intro_title';
+  const introDedicate = prompt.id === 'intro_dedicate';
+  const regularPage = prompt.type !== 'introFlow';
+  const disablePageTouch = introStart;
+  if (introDedicate) {
+    return <IntroDedicate />;
+  }
   return (
     <TouchableOpacity
       onPress={handlePress}
+      disabled={disablePageTouch}
       activeOpacity={1}
       style={styles.container}>
-      <View style={styles.questionContainer}>
-        <ScrollView nestedScrollEnabled={true}>
-          <Text style={styles.answer}>{promptAnswer}</Text>
-        </ScrollView>
-      </View>
+      {regularPage && (
+        <View style={styles.questionContainer}>
+          <ScrollView nestedScrollEnabled={true}>
+            <Text style={styles.answer}>{promptAnswer}</Text>
+          </ScrollView>
+        </View>
+      )}
+      {introStart && <IntroStart createFirstPage={createFirstPage} />}
     </TouchableOpacity>
   );
 };

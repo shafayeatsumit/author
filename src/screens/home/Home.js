@@ -58,6 +58,11 @@ const Home = ({navigation}) => {
     scrollViewRef && scrollViewRef.current.scrollToEnd({animated: true});
   };
 
+  const goToSecondPage = () => {
+    scrollViewRef &&
+      scrollViewRef.current.scrollToIndex({index: 1, animated: true});
+  };
+
   const onEndReached = () => {
     loading && setLoading(false);
   };
@@ -80,12 +85,19 @@ const Home = ({navigation}) => {
   }, []);
 
   const renderPage = ({item, index}) => {
-    return <Page prompt={item} navigation={navigation} />;
+    return (
+      <Page
+        goToSecondPage={goToSecondPage}
+        prompt={item}
+        navigation={navigation}
+      />
+    );
   };
 
   const keyExtractor = item => item.uid;
 
-  const headerVisible = scrollIndex < submission.length && showHeader;
+  const headerVisible =
+    scrollIndex < submission.length && showHeader && scrollIndex > 1;
   renderCount = renderCount + 1;
 
   return (

@@ -18,17 +18,20 @@ import PushNotification from 'react-native-push-notification';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 // TODO: comment this
-// AsyncStorage.clear();
+AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit} = useUserStore();
+  const {setIntroPages} = useSubmissionStore();
   const finishedIntroRef = useRef(null);
 
   const navigate = () => {
-    // finishedIntroRef.current
-    //   ? navigation.replace('Home')
-    //   : navigation.replace('Intro');
-    navigation.replace('Home');
+    if (finishedIntroRef.current) {
+      navigation.replace('Home');
+    } else {
+      setIntroPages();
+      navigation.replace('Home');
+    }
   };
 
   useEffect(() => {
