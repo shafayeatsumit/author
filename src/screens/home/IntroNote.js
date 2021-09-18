@@ -22,18 +22,26 @@ import analytics from '@react-native-firebase/analytics';
 import LinearGradient from 'react-native-linear-gradient';
 import _ from 'lodash';
 import {useNavigation} from '@react-navigation/native';
+
 TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({route}) => {
   const {prompt} = route.params;
   const navigation = useNavigation();
-  const {updateSubmission, skipSubmission} = useSubmissionStore();
+  const {
+    updateSubmission,
+    deleteSubmission,
+    setTitlePage,
+    submission,
+    skipSubmission,
+  } = useSubmissionStore();
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer ? ' ' + prompt.answer : ' ';
   const defaultText = promptQuestion + promptAnswer;
   const inputRef = useRef();
   const [text, onChangeText] = React.useState(defaultText);
-  const showExtraButtons = prompt.id === 'intro_dedicate';
+  const introDedicate = prompt.id === 'intro_dedicate';
+
   const setCursor = () => {
     inputRef.current.focus();
   };
@@ -62,11 +70,24 @@ const Note = ({route}) => {
   const unsharedInputValue = text.replace(sharedInputValue, '');
   const inputValue = promptQuestion + unsharedInputValue;
   const buttonDisabled = !unsharedInputValue.trim();
-
+  const addTitlePage = () => {
+    const titlePageIndex = submission.findIndex(
+      item => item.id === 'intro_title',
+    );
+    console.log('title page', titlePageIndex);
+    if (titlePageIndex === -1) {
+      setTitlePage();
+      // deleteSubmission('intro_start');
+    }
+  };
   const handleAdd = () => {
     updateSubmission(prompt.id, unsharedInputValue);
     navigation.goBack();
+    if (introDedicate) {
+      addTitlePage();
+    }
   };
+  const charLength = unsharedInputValue.length;
   useEffect(() => {
     setCursor();
   }, []);
@@ -93,22 +114,26 @@ const Note = ({route}) => {
             ref={inputRef}
             value={inputValue}
             multiline={true}
+            maxLength={promptQuestion.length + 20}
           />
         </ScrollView>
         <View style={styles.buttonHolder}>
-          {showExtraButtons && (
+          {introDedicate && (
             <TouchableOpacity
               onPress={handleFutureMe}
               style={[styles.button, styles.buttonLight]}>
               <Text style={styles.buttonTextSm}>Fuure Me</Text>
             </TouchableOpacity>
           )}
-          {showExtraButtons && (
+          {introDedicate && (
             <TouchableOpacity
               onPress={handleFamily}
               style={[styles.button, styles.buttonLight]}>
               <Text style={styles.buttonTextSm}>Family</Text>
             </TouchableOpacity>
+          )}
+          {!introDedicate && (
+            <Text style={styles.charLimit}>{charLength}/20</Text>
           )}
 
           <TouchableOpacity
@@ -182,6 +207,14 @@ const styles = StyleSheet.create({
   },
   buttonLight: {
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  },
+  charLimit: {
+    position: 'relative',
+    right: 20,
+    fontSize: RFValue(14),
+    marginTop: 40,
+    color: 'rgba(255, 255, 255, 0.38)',
+    fontFamily: 'Montserrat-Regular',
   },
   buttonText: {
     fontSize: RFValue(26),

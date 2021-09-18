@@ -3,9 +3,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment';
 
 const MonthName = moment().format('MMMM');
-const IntroTitle = {
+const TitlePage = {
   id: 'intro_title',
   type: 'introFlow',
+  uid: 'intro_title',
   month: MonthName,
   question: `If the rest of ${MonthName} was a chapter in the story of my life, I’d title it`,
 };
@@ -28,6 +29,9 @@ let submissionStore = set => ({
   submission: [],
   setIntroPages: () =>
     set(state => ({submission: [...state.submission, ...IntroPages]})),
+  setTitlePage: () =>
+    set(state => ({submission: [...state.submission, TitlePage]})),
+
   setSubmission: prompt =>
     set(state => ({submission: [...state.submission, prompt]})),
   updateSubmission: (promptId, prompt) =>

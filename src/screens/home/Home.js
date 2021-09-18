@@ -19,22 +19,26 @@ let renderCount = 0;
 
 const Home = ({navigation}) => {
   const appState = useRef(AppState.currentState);
-  const [loading, setLoading] = useState(true);
+  // TODO: change it to true
+  const [loading, setLoading] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const {setLastVisit} = useUserStore();
 
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
   const {submission} = useSubmissionStore();
+  const numberOfintroPages = submission.filter(
+    item => item.type === 'introFlow',
+  );
 
   const scrollViewRef = useRef();
 
   const scrollToEnd = () => {
-    scrollViewRef.current.scrollToEnd({animated: true});
-    submission.length && setScrollIndex(submission.length - 1);
-    setTimeout(() => {
-      loading && setLoading(false);
-    }, 1000);
+    // scrollViewRef.current.scrollToEnd({animated: true});
+    // submission.length && setScrollIndex(submission.length - 1);
+    // setTimeout(() => {
+    //   loading && setLoading(false);
+    // }, 1000);
   };
 
   const handleScrollEnd = event => {
@@ -97,7 +101,9 @@ const Home = ({navigation}) => {
   const keyExtractor = item => item.uid;
 
   const headerVisible =
-    scrollIndex < submission.length && showHeader && scrollIndex > 1;
+    scrollIndex < submission.length &&
+    showHeader &&
+    scrollIndex > numberOfintroPages - 1;
   renderCount = renderCount + 1;
 
   return (

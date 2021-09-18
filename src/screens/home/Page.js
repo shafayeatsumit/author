@@ -13,6 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useUserStore, useSubmissionStore} from '../../store';
 import IntroStart from './IntroStart';
+import IntroTitle from './IntroTitle';
 
 const Page = ({prompt, goToSecondPage}) => {
   const navigation = useNavigation();
@@ -34,6 +35,10 @@ const Page = ({prompt, goToSecondPage}) => {
   if (introDedicate) {
     return <IntroDedicate />;
   }
+  if (introTitle) {
+    return <IntroTitle />;
+  }
+
   return (
     <TouchableOpacity
       onPress={handlePress}
