@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   Dimensions,
-  ScrollView,
+  Animated,
   StyleSheet,
 } from 'react-native';
 import moment from 'moment';
@@ -16,10 +16,25 @@ import {useUserStore, useSubmissionStore} from '../../store';
 const Title = () => {
   const navigation = useNavigation();
   const {deleteSubmission, submission} = useSubmissionStore();
+  const {setFinishedIntro, finishedIntro} = useUserStore();
   const prompt = submission.find(item => item.id === 'intro_title');
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleClose = () => {
+    fadeIn();
+  };
 
   const handlePress = () => {
-    navigation.navigate('IntroNote', {prompt});
+    fadeAnim.setValue(0);
+    navigation.navigate('IntroNote', {prompt, handleClose});
   };
 
   const dateString = moment().format('MMMM YYYY');
@@ -50,6 +65,9 @@ const Title = () => {
         {showDate && <Text style={styles.date}>{dateString}</Text>}
         <Text style={styles.text}>{displayText}</Text>
       </View>
+      <Animated.View style={[styles.swipeContainer, {opacity: fadeAnim}]}>
+        <Text style={styles.swipeText}>Swipe to create{'\n'}next page</Text>
+      </Animated.View>
       <View style={styles.pageNumberHolder}>
         <Text style={styles.pageNumberText}>Page 2</Text>
       </View>
@@ -98,5 +116,21 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.38)',
     fontSize: 14,
     textAlign: 'center',
+  },
+  swipeContainer: {
+    position: 'absolute',
+    bottom: 70,
+    left: 0,
+    right: 0,
+    height: 170,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'yellow',
+  },
+  swipeText: {
+    fontFamily: 'Montserrat-Regular',
+    textAlign: 'center',
+    fontSize: RFValue(28),
+    color: 'rgba(255,255,255,0.38)',
   },
 });

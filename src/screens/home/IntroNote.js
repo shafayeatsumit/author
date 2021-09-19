@@ -27,7 +27,7 @@ import {useNavigation} from '@react-navigation/native';
 TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({route}) => {
-  const {prompt} = route.params;
+  const {prompt, handleClose} = route.params;
   const navigation = useNavigation();
   const {
     updateSubmission,
@@ -60,7 +60,9 @@ const Note = ({route}) => {
         end: text.length,
       },
     });
-    setTimeout(resetCursor, 200);
+    if (Platform.OS === 'android') {
+      setTimeout(resetCursor, 200);
+    }
   };
 
   const skip = () => {
@@ -68,6 +70,7 @@ const Note = ({route}) => {
     if (introDedicate) {
       addTitlePage();
     }
+    handleClose();
     navigation.goBack();
   };
 
@@ -103,6 +106,7 @@ const Note = ({route}) => {
   const handleAdd = () => {
     updateSubmission(prompt.id, unsharedInputValue);
     navigation.goBack();
+    handleClose();
     if (introDedicate) {
       addTitlePage();
     }
