@@ -11,6 +11,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
+import {useHeaderHeight} from '@react-navigation/stack';
 import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
 import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
@@ -42,12 +43,31 @@ const Note = ({route}) => {
   const [text, onChangeText] = React.useState(defaultText);
   const introDedicate = prompt.id === 'intro_dedicate';
 
+  const resetCursor = () => {
+    inputRef.current.setNativeProps({
+      selection: {
+        start: undefined,
+        end: undefined,
+      },
+    });
+  };
+
   const setCursor = () => {
     inputRef.current.focus();
+    inputRef.current.setNativeProps({
+      selection: {
+        start: text.length,
+        end: text.length,
+      },
+    });
+    setTimeout(resetCursor, 200);
   };
 
   const skip = () => {
     skipSubmission(prompt.id);
+    if (introDedicate) {
+      addTitlePage();
+    }
     navigation.goBack();
   };
 
@@ -89,16 +109,17 @@ const Note = ({route}) => {
   };
   const charLength = unsharedInputValue.length;
   useEffect(() => {
-    setCursor();
+    setTimeout(setCursor, 400);
   }, []);
 
   return (
-    <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
-      <KeyboardAvoidingView
-        {...(Platform.OS === 'ios'
-          ? {behavior: 'padding'}
-          : {behavior: 'height'})}
-        style={styles.container}>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={useHeaderHeight()}
+      {...(Platform.OS === 'ios'
+        ? {behavior: 'padding'}
+        : {behavior: 'height'})}
+      style={styles.container}>
+      <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
         <TouchableOpacity onPress={skip} style={styles.skipButton}>
           <Text style={styles.skipText}>Skip for now</Text>
         </TouchableOpacity>
@@ -142,8 +163,8 @@ const Note = ({route}) => {
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-    </LinearGradient>
+      </LinearGradient>
+    </KeyboardAvoidingView>
   );
 };
 export default Note;
@@ -182,11 +203,11 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     paddingHorizontal: 30,
     lineHeight: 39,
-    maxHeight: ScreenHeight / 2,
+    maxHeight: ScreenHeight / 2.0,
+    backgroundColor: 'red',
     fontSize: RFValue(28),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
-    // backgroundColor: 'red',
     marginBottom: 10,
   },
   buttonHolder: {
