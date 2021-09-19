@@ -204,11 +204,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     lineHeight: 39,
     maxHeight: ScreenHeight / 2.0,
-    backgroundColor: 'red',
     fontSize: RFValue(28),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   buttonHolder: {
     flexDirection: 'row',
