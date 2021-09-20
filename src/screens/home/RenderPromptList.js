@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Dimensions, StyleSheet} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-import {ContentTitles} from '../../helpers/contentsData';
+import {ContentTitles, ContentTitlesAtStart} from '../../helpers/contentsData';
 import {useUserStore} from '../../store';
 import ProgressivePrompt from './ProgressivePrompt';
 import DailyPrompt from './DailyPrompt';
@@ -30,6 +30,7 @@ const RenderPromptList = ({scrollIndex}) => {
     ? ContentTitles
     : [StartPromptDetail, ...ContentTitles];
 
+  const [prompts, setPrompts] = useState(PROMPTS);
   const RenderSwiper = ({item, index}) => {
     if (item.type === 'start') {
       return <StartPrompt key={item.id} scrollIndex={scrollIndex} />;
@@ -46,8 +47,9 @@ const RenderPromptList = ({scrollIndex}) => {
   };
 
   const itemsChanged = itemIndex => {
-    if (!finishedIntro && itemIndex === 9) {
+    if (!finishedIntro && itemIndex === 1) {
       setFinishedIntro();
+      setPrompts(ContentTitlesAtStart);
     }
   };
 
@@ -59,7 +61,8 @@ const RenderPromptList = ({scrollIndex}) => {
         inactiveSlideOpacity={1}
         inactiveSlideScale={1}
         pagingEnabled
-        data={PROMPTS}
+        data={prompts}
+        extraData={prompts}
         onSnapToItem={itemsChanged}
         vertical={true}
         renderItem={RenderSwiper}

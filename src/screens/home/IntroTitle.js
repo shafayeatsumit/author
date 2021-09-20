@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -56,6 +56,7 @@ const Title = () => {
   };
   const displayText = getDisplayText();
   const showDate = skippedSubmission || hasAnswer;
+
   return (
     <TouchableOpacity
       onPress={handlePress}

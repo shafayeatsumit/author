@@ -15,7 +15,12 @@ import {useUserStore, useSubmissionStore} from '../../store';
 import IntroStart from './IntroStart';
 import IntroTitle from './IntroTitle';
 
-const Page = ({prompt, goToSecondPage}) => {
+const Page = ({
+  prompt,
+  goToSecondPage,
+  enablePageScroll,
+  disablePageScroll,
+}) => {
   const navigation = useNavigation();
   const {deleteSubmission} = useSubmissionStore();
   const handlePress = () => {
@@ -33,10 +38,20 @@ const Page = ({prompt, goToSecondPage}) => {
   const regularPage = prompt.type !== 'introFlow';
   const disablePageTouch = introStart;
   if (introDedicate) {
-    return <IntroDedicate />;
+    return (
+      <IntroDedicate
+        enablePageScroll={enablePageScroll}
+        disablePageScroll={disablePageScroll}
+      />
+    );
   }
   if (introTitle) {
-    return <IntroTitle />;
+    return (
+      <IntroTitle
+        enablePageScroll={enablePageScroll}
+        disablePageScroll={disablePageScroll}
+      />
+    );
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useUserStore, useSubmissionStore} from '../../store';
 
-const Dedicate = () => {
+const Dedicate = ({enablePageScroll, disablePageScroll}) => {
   const navigation = useNavigation();
   const {deleteSubmission, submission} = useSubmissionStore();
   const {setFinishedIntro, finishedIntro} = useUserStore();
@@ -31,11 +31,13 @@ const Dedicate = () => {
       toValue: 1,
       duration: 2000,
       useNativeDriver: true,
-    }).start();
+    }).start(enablePageScroll);
   };
 
   const handleClose = () => {
-    fadeIn();
+    if (!finishedIntro) {
+      fadeIn();
+    }
   };
 
   const handlePress = () => {
@@ -54,6 +56,12 @@ const Dedicate = () => {
     return promptQuestion;
   };
   const displayText = getDisplayText();
+
+  useEffect(() => {
+    if (!finishedIntro) {
+      disablePageScroll();
+    }
+  }, []);
 
   return (
     <TouchableOpacity

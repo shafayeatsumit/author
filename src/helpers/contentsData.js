@@ -50,6 +50,58 @@ export const ContentTitles = [
   },
 ];
 
+export const ContentTitlesAtStart = [
+  {
+    id: 'plot_twist',
+    title: 'Plot Twist',
+    type: 'progressive',
+  },
+  {
+    id: 'morning',
+    title: 'morning',
+    type: 'daily',
+    time: 'morning',
+  },
+  {
+    id: 'highlight',
+    title: 'highlight',
+    type: 'daily',
+    time: 'morning',
+  },
+  {
+    id: 'evening',
+    title: 'evening',
+    type: 'daily',
+    time: 'morning',
+  },
+  {
+    id: 'settings',
+    title: 'settings',
+    type: 'progressive',
+  },
+  {
+    id: 'backstory',
+    title: 'backstory',
+    type: 'progressive',
+  },
+
+  {
+    id: 'flashforward',
+    title: 'flashforward',
+    type: 'progressive',
+  },
+  {
+    id: 'characters',
+    title: 'characters',
+    type: 'progressive',
+  },
+  {
+    id: 'narrator',
+    title: 'narrator',
+    type: 'progressive',
+  },
+];
+
 export const MORNING = [
   {
     id: '97d39e5e-07d9-11ec-9a03-0242ac130003',

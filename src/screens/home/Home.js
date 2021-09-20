@@ -22,6 +22,7 @@ const Home = ({navigation}) => {
   // TODO: change it to true
   const [loading, setLoading] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [pageScrolling, setPageScrolling] = useState(true);
   const {setLastVisit} = useUserStore();
 
   const [scrollIndex, setScrollIndex] = useState(0);
@@ -88,12 +89,24 @@ const Home = ({navigation}) => {
     });
   }, []);
 
+  const enablePageScroll = () => {
+    if (!pageScrolling) {
+      setPageScrolling(true);
+    }
+  };
+
+  const disablePageScroll = () => {
+    setPageScrolling(false);
+  };
+
   const renderPage = ({item, index}) => {
     return (
       <Page
         goToSecondPage={goToSecondPage}
         prompt={item}
         navigation={navigation}
+        enablePageScroll={enablePageScroll}
+        disablePageScroll={disablePageScroll}
       />
     );
   };
@@ -105,7 +118,7 @@ const Home = ({navigation}) => {
     showHeader &&
     scrollIndex > numberOfintroPages - 1;
   renderCount = renderCount + 1;
-
+  console.log(`page scrolling ${pageScrolling}`);
   return (
     <LinearGradient colors={['#343D4C', '#131E25']} style={styles.container}>
       <Modal
@@ -131,6 +144,7 @@ const Home = ({navigation}) => {
         bounces={false}
         onEndReached={onEndReached}
         data={submission}
+        scrollEnabled={pageScrolling}
         onScroll={handleScroll}
         onMomentumScrollEnd={handleScrollEnd}
         renderItem={renderPage}

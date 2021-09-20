@@ -30,7 +30,7 @@ const Dedicate = ({scrollIndex}) => {
   const animateCenterText = () => {
     Animated.timing(offsetY, {
       toValue: 0,
-      duration: 2000,
+      duration: 1500,
       useNativeDriver: true,
     }).start(fadeIn);
   };
