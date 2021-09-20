@@ -8,34 +8,34 @@ let promptStore = set => ({
   highlight: {},
   evening: {},
   circumstance: {
-    firstAvailable: 1,
+    firstAvailable: 3,
     increment: 11,
   },
   backstory: {
-    firstAvailable: 2,
+    firstAvailable: 4,
     increment: 11,
     // increment: 3,
   },
   settings: {
-    firstAvailable: 1,
+    firstAvailable: 3,
     increment: 11,
     // increment: 2,
   },
   flashforward: {
-    firstAvailable: 8,
+    firstAvailable: 10,
     increment: 11,
   },
   characters: {
-    firstAvailable: 7,
+    firstAvailable: 9,
     increment: 11,
   },
   narrator: {
-    firstAvailable: 3,
+    firstAvailable: 5,
     increment: 11,
   },
   'Plot Twist': {
     isOn: false,
-    firstAvailable: 11,
+    firstAvailable: 13,
     increment: 27,
   },
   updatePrompt: (title, id, servedAt, answeredAt) =>

@@ -100,7 +100,6 @@ const Note = ({route}) => {
     console.log('title page', titlePageIndex);
     if (titlePageIndex === -1) {
       setTitlePage();
-      // deleteSubmission('intro_start');
     }
   };
   const handleAdd = () => {
@@ -216,6 +215,7 @@ const styles = StyleSheet.create({
   buttonHolder: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    paddingBottom: 50,
   },
   button: {
     alignSelf: 'flex-end',

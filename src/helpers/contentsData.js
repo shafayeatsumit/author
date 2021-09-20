@@ -17,32 +17,6 @@ export const ContentTitles = [
     type: 'daily',
     time: 'morning',
   },
-
-  // {
-  //   id: 'blank',
-  //   title: 'blank',
-  //   type: 'blank',
-  //   time: 'all_time',
-  // },
-  // {
-  //   id: 'celebrate',
-  //   title: 'celebrate',
-  //   type: 'daily',
-  //   time: 'afternoon',
-  // },
-  // {
-  //   id: 'moment',
-  //   title: 'moment',
-  //   type: 'daily',
-  //   time: 'afternoon',
-  // },
-  // {
-  //   id: 'conclusion',
-  //   title: 'conclusion',
-  //   type: 'daily',
-  //   time: 'afternoon',
-  // },
-
   {
     id: 'settings',
     title: 'settings',
