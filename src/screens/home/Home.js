@@ -137,7 +137,7 @@ const Home = ({navigation}) => {
         keyExtractor={keyExtractor}
         pagingEnabled
         horizontal
-        ListFooterComponent={<RenderPromptList />}
+        ListFooterComponent={<RenderPromptList scrollIndex={scrollIndex} />}
         removeClippedSubviews={false}
         showsHorizontalScrollIndicator={false}
       />

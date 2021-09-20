@@ -12,10 +12,12 @@ import {RFValue} from 'react-native-responsive-fontsize';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useUserStore, useSubmissionStore} from '../../store';
 
-const Dedicate = () => {
+const Dedicate = ({scrollIndex}) => {
+  console.log('scrollIndex', scrollIndex);
   const {deleteSubmission, submission} = useSubmissionStore();
   const {setFinishedIntro, finishedIntro} = useUserStore();
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const offsetY = useRef(new Animated.Value(ScreenHeight)).current;
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -25,21 +27,31 @@ const Dedicate = () => {
     }).start();
   };
 
+  const animateCenterText = () => {
+    Animated.timing(offsetY, {
+      toValue: 0,
+      duration: 2000,
+      useNativeDriver: true,
+    }).start(fadeIn);
+  };
+
   useEffect(() => {
-    // deleteSubmission('intro_start');
-    if (!finishedIntro) {
-      fadeIn();
+    if (!finishedIntro && scrollIndex === 3) {
+      deleteSubmission('intro_start');
+      animateCenterText();
     }
-  }, []);
+  }, [scrollIndex]);
 
   return (
     <TouchableOpacity
       disabled={true}
       activeOpacity={1}
       style={styles.container}>
-      <View style={styles.questionContainer}>
-        <Text style={styles.text}>Story started!</Text>
-      </View>
+      <Animated.Text
+        style={[styles.text, {transform: [{translateY: offsetY}]}]}>
+        Story started!
+      </Animated.Text>
+
       <Animated.View style={[styles.swipeContainer, {opacity: fadeAnim}]}>
         <Text style={styles.swipeText}>
           Scroll up and find{'\n'}prompt for this{'\n'}page

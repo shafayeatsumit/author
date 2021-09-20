@@ -24,7 +24,7 @@ const MorningPrompt = {
   time: 'morning',
 };
 
-const RenderPromptList = () => {
+const RenderPromptList = ({scrollIndex}) => {
   const {finishedIntro, setFinishedIntro} = useUserStore();
   const PROMPTS = finishedIntro
     ? ContentTitles
@@ -32,7 +32,7 @@ const RenderPromptList = () => {
 
   const RenderSwiper = ({item, index}) => {
     if (item.type === 'start') {
-      return <StartPrompt key={item.id} />;
+      return <StartPrompt key={item.id} scrollIndex={scrollIndex} />;
     }
     if (item.type === 'progressive') {
       return <ProgressivePrompt key={item.id} item={item} />;
