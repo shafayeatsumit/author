@@ -4,10 +4,13 @@ import {useSubmissionStore} from '../../store';
 
 const PageFooter = () => {
   const {submission} = useSubmissionStore();
+  const pageTitle = submission[1].answer ? submission[1].answer : 'Add Title';
   const totalPages = submission.length + 1;
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Page {totalPages}</Text>
+      <Text style={styles.text}>
+        {pageTitle}-Page {totalPages}
+      </Text>
     </View>
   );
 };

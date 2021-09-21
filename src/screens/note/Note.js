@@ -142,27 +142,32 @@ const Note = ({navigation, route}) => {
   const buttonDisabled = text === defaultText;
   const footerPageNumber = isEdit ? findIndex() : totalPages;
   return (
-    <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
-      <View style={{flex: 1}}>
-        <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
-        <View style={[styles.questionContainer, {height: boxHeight}]}>
-          <TextInput
-            onSubmitEditing={handleSubmit}
-            style={styles.input}
-            multiline={true}
-            onChangeText={onChangeText}
-            spellCheck={false}
-            textAlignVertical="top"
-            selectionColor={'white'}
-            ref={inputRef}>
-            <Text style={styles.boldInput}>
-              {sharedInputValue}
-              {unsharedInputValue}
-            </Text>
-          </TextInput>
-        </View>
-        {keyboardHeight ? (
-          <View style={[styles.buttonContainer, {top: boxHeight + 100}]}>
+    <KeyboardAvoidingView
+      {...(Platform.OS === 'ios'
+        ? {behavior: 'padding'}
+        : {behavior: 'height'})}
+      style={styles.container}>
+      <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
+        <View style={{flex: 1}}>
+          <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
+          <View style={[styles.questionContainer, {height: boxHeight}]}>
+            <TextInput
+              onSubmitEditing={handleSubmit}
+              style={styles.input}
+              multiline={true}
+              onChangeText={onChangeText}
+              spellCheck={false}
+              textAlignVertical="top"
+              selectionColor={'white'}
+              ref={inputRef}>
+              <Text style={styles.boldInput}>
+                {sharedInputValue}
+                {unsharedInputValue}
+              </Text>
+            </TextInput>
+          </View>
+
+          <View style={[styles.buttonContainer]}>
             <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
             <TouchableOpacity
               disabled={buttonDisabled}
@@ -174,9 +179,9 @@ const Note = ({navigation, route}) => {
               <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
           </View>
-        ) : null}
-      </View>
-    </LinearGradient>
+        </View>
+      </LinearGradient>
+    </KeyboardAvoidingView>
   );
 };
 export default Note;
@@ -212,12 +217,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginRight: 25,
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    // bottom: 0,
+    paddingBottom: 50,
   },
   button: {
     marginTop: 10,
@@ -239,5 +239,6 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.38)',
     paddingRight: 24,
     paddingTop: 35,
+    // paddingBottom: 50,
   },
 });

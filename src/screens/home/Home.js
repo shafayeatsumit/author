@@ -18,28 +18,30 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 let renderCount = 0;
 
 const Home = ({navigation}) => {
+  const {setLastVisit, finishedIntro} = useUserStore();
+  const loadingState = finishedIntro ? true : false;
   const appState = useRef(AppState.currentState);
-  // TODO: change it to true
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(loadingState);
   const [showHeader, setShowHeader] = useState(true);
   const [pageScrolling, setPageScrolling] = useState(true);
-  const {setLastVisit} = useUserStore();
 
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
   const {submission, deleteSubmission} = useSubmissionStore();
   const numberOfintroPages = submission.filter(
     item => item.type === 'introFlow',
-  );
+  ).length;
 
   const scrollViewRef = useRef();
 
   const scrollToEnd = () => {
-    // scrollViewRef.current.scrollToEnd({animated: true});
-    // submission.length && setScrollIndex(submission.length - 1);
-    // setTimeout(() => {
-    //   loading && setLoading(false);
-    // }, 1000);
+    if (finishedIntro) {
+      scrollViewRef.current.scrollToEnd({animated: true});
+      submission.length && setScrollIndex(submission.length - 1);
+      setTimeout(() => {
+        loading && setLoading(false);
+      }, 1000);
+    }
   };
 
   const handleScrollEnd = event => {
