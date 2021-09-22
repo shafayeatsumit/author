@@ -30,7 +30,7 @@ const Loading = ({navigation}) => {
       navigation.replace('Home');
     } else {
       setIntroPages();
-      navigation.replace('Home');
+      navigation.replace('Start');
     }
   };
 

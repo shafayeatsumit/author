@@ -12,11 +12,11 @@ const TitlePage = {
 };
 
 const IntroPages = [
-  {
-    id: 'intro_start',
-    uid: 'intro_start',
-    type: 'introFlow',
-  },
+  // {
+  //   id: 'intro_start',
+  //   uid: 'intro_start',
+  //   type: 'introFlow',
+  // },
   {
     id: 'intro_dedicate',
     uid: 'intro_dedicate',

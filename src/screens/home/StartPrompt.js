@@ -36,7 +36,7 @@ const Dedicate = ({scrollIndex}) => {
   };
 
   useEffect(() => {
-    if (!finishedIntro && scrollIndex === 3) {
+    if (!finishedIntro && scrollIndex === 2) {
       // deleteSubmission('intro_start')
       animateCenterText();
     }

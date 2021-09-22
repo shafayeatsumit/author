@@ -1,71 +1,55 @@
-import React, {Component, useRef, useState} from 'react';
-import {
-  AppRegistry,
-  Button,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-
-import Swiper from 'react-native-swiper';
+import React from 'react';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import LinearGradient from 'react-native-linear-gradient';
+const IntroStart = ({navigation}) => (
+  <LinearGradient colors={['#343D4C', '#131E25']} style={{flex: 1}}>
+    <View style={styles.container}>
+      <Text style={styles.title}>It’s your story</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Home')}
+        style={styles.button}>
+        <Text style={styles.buttonText}>Create</Text>
+      </TouchableOpacity>
+    </View>
+  </LinearGradient>
+);
+export default IntroStart;
 
 const styles = StyleSheet.create({
-  wrapper: {},
-  slide1: {
+  container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
+    // alignItems: 'center',
   },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
+  title: {
+    fontFamily: 'Montserrat-Bold',
+    textAlign: 'left',
+    fontSize: RFValue(28),
+    lineHeight: 39.2,
+    color: 'rgba(255,255,255,0.92)',
+    letterSpacing: -2,
+    marginLeft: 35,
+    // marginLeft: -105,
+    // paddingLeft: 48,
   },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
+  buttonText: {
+    fontFamily: 'Montserrat-Bold',
+    textAlign: 'center',
+    fontSize: RFValue(28),
+    lineHeight: 39.2,
+    color: 'rgba(255,255,255,0.92)',
+    letterSpacing: -2,
   },
   button: {
-    height: 60,
-    width: 100,
-    marginTop: 100,
-    backgroundColor: 'tomato',
+    position: 'absolute',
+    bottom: 84,
+    alignSelf: 'center',
+    height: 52,
+    width: 300,
+    backgroundColor: '#2A62DB',
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 8,
   },
 });
-
-const SwiperComponent = () => {
-  const [pages, setPages] = useState(['First', 'Second']);
-  const swiper = useRef(null);
-  const handlePress = () => {
-    swiper.current.scrollBy(1);
-    setTimeout(() => {
-      setPages(['Second']);
-    }, 1500);
-  };
-  return (
-    <Swiper ref={swiper} style={styles.wrapper} showsButtons={true}>
-      {pages.map((item, i) => (
-        <View key={item} style={styles.slide1}>
-          <Text style={styles.text}>{item}</Text>
-          <TouchableOpacity style={styles.button} onPress={handlePress}>
-            <Text>button</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-    </Swiper>
-  );
-};
-
-export default SwiperComponent;

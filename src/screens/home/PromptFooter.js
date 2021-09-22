@@ -4,7 +4,7 @@ import {useSubmissionStore} from '../../store';
 
 const PageFooter = () => {
   const {submission} = useSubmissionStore();
-  const pageTitle = submission[1].answer ? submission[1].answer : 'Add Title';
+  const pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
   const totalPages = submission.length + 1;
   return (
     <View style={styles.container}>
