@@ -1,15 +1,17 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useSubmissionStore} from '../../store';
+import _ from 'lodash';
 
 const PageFooter = () => {
   const {submission} = useSubmissionStore();
-  const pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
+  let pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
   const totalPages = submission.length + 1;
+  pageTitle = _.upperFirst(pageTitle);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        {pageTitle}-Page {totalPages}
+        {pageTitle} • Page {totalPages}
       </Text>
     </View>
   );
@@ -31,5 +33,11 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.4)',
     fontSize: 15,
     textAlign: 'center',
+  },
+  dot: {
+    color: 'rgba(255,255,255,0.4)',
+    fontSize: 15,
+    textAlign: 'center',
+    // paddingBottom: 5,
   },
 });

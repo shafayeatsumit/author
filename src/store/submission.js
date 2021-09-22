@@ -23,6 +23,13 @@ const IntroPages = [
     type: 'introFlow',
     question: 'I dedicate this story to',
   },
+  {
+    id: 'intro_title',
+    type: 'introFlow',
+    uid: 'intro_title',
+    month: MonthName,
+    question: `If the rest of ${MonthName} was a chapter in the story of my life, I’d title it`,
+  },
 ];
 
 let submissionStore = set => ({

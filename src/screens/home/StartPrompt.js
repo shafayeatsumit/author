@@ -54,7 +54,7 @@ const Dedicate = ({scrollIndex}) => {
 
       <Animated.View style={[styles.swipeContainer, {opacity: fadeAnim}]}>
         <Text style={styles.swipeText}>
-          Scroll up and find{'\n'}prompt for this{'\n'}page
+          Scroll up and find{'\n'}a prompt for this{'\n'}page
         </Text>
       </Animated.View>
     </TouchableOpacity>

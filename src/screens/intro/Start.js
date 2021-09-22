@@ -5,11 +5,11 @@ import LinearGradient from 'react-native-linear-gradient';
 const IntroStart = ({navigation}) => (
   <LinearGradient colors={['#343D4C', '#131E25']} style={{flex: 1}}>
     <View style={styles.container}>
-      <Text style={styles.title}>It’s your story</Text>
+      <Text style={styles.title}>Create your story</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate('Home')}
         style={styles.button}>
-        <Text style={styles.buttonText}>Create</Text>
+        <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>
     </View>
   </LinearGradient>

@@ -82,11 +82,11 @@ const Note = ({route}) => {
   };
 
   const handleFutureMe = () => {
-    onChangeText('I dedicate this story to future me.');
+    onChangeText('I dedicate this story to future me');
   };
 
   const handleFamily = () => {
-    onChangeText('I dedicate this story to family.');
+    onChangeText('I dedicate this story to family');
   };
 
   const sharedInputValue = sharedStart([promptQuestion, text]);
@@ -146,7 +146,7 @@ const Note = ({route}) => {
             <TouchableOpacity
               onPress={handleFutureMe}
               style={[styles.button, styles.buttonLight]}>
-              <Text style={styles.buttonTextSm}>Fuure Me</Text>
+              <Text style={styles.buttonTextSm}>Future me</Text>
             </TouchableOpacity>
           )}
           {introDedicate && (
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   disableButton: {
-    backgroundColor: '#71706E',
+    backgroundColor: '#1E4686',
   },
   skipButton: {
     position: 'absolute',
@@ -205,9 +205,9 @@ const styles = StyleSheet.create({
     letterSpacing: -1,
     borderWidth: 0,
     paddingHorizontal: 30,
-    lineHeight: 39,
+    lineHeight: 47,
     maxHeight: ScreenHeight / 2.0,
-    fontSize: RFValue(28),
+    fontSize: RFValue(34),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
     // marginBottom: 10,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     height: 50,
     width: 100,
-    backgroundColor: 'rgba(42, 98, 219, 0.5)',
+    backgroundColor: '#0D60D6',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   buttonTextSm: {
-    fontSize: RFValue(16),
+    fontSize: RFValue(13.5),
     color: 'white',
     fontFamily: 'Montserrat-Regular',
   },

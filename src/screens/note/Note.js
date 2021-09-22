@@ -174,7 +174,7 @@ const Note = ({navigation, route}) => {
               onPress={isEdit ? handleEdit : handleSubmit}
               style={[
                 styles.button,
-                buttonDisabled && {backgroundColor: '#71706E'},
+                buttonDisabled && {backgroundColor: '#1E4686'},
               ]}>
               <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>
@@ -202,8 +202,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     letterSpacing: -1,
     borderWidth: 0,
-    lineHeight: 39,
-    fontSize: RFValue(28),
+    lineHeight: 47,
+    fontSize: RFValue(34),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
   },
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 50,
     width: 100,
-    backgroundColor: 'rgba(42, 98, 219, 0.5)',
+    backgroundColor: '#0D60D6',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',

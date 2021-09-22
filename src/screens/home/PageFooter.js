@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {useSubmissionStore, usePromptStore} from '../../store';
+import _ from 'lodash';
 const progressive_prompts = [
   'backstory',
   'settings',
@@ -12,8 +13,8 @@ const progressive_prompts = [
 
 const PageFooter = ({activeIndex, handleFastForward}) => {
   const {deleteSubmission, submission} = useSubmissionStore();
-  const pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
-
+  let pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
+  pageTitle = _.upperFirst(pageTitle);
   const {decNextAvailable} = usePromptStore();
   const totalPages = submission.length + 1;
   const pageNumber = activeIndex + 1;
@@ -32,7 +33,7 @@ const PageFooter = ({activeIndex, handleFastForward}) => {
       </TouchableOpacity>
 
       <Text style={styles.text}>
-        {pageTitle}-page {pageNumber} of {totalPages}
+        {pageTitle} • Page {pageNumber} of {totalPages}
       </Text>
       <TouchableOpacity onPress={handleFastForward} style={styles.imageHolder}>
         <Image style={styles.ff} source={require('../../../assets/bin.png')} />
