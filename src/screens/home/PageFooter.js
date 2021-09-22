@@ -14,7 +14,7 @@ const progressive_prompts = [
 const PageFooter = ({activeIndex, handleFastForward}) => {
   const {deleteSubmission, submission} = useSubmissionStore();
   let pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
-  pageTitle = _.upperFirst(pageTitle);
+  pageTitle = _.upperFirst(pageTitle.trim());
   const {decNextAvailable} = usePromptStore();
   const totalPages = submission.length + 1;
   const pageNumber = activeIndex + 1;

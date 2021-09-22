@@ -7,7 +7,8 @@ const PageFooter = () => {
   const {submission} = useSubmissionStore();
   let pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
   const totalPages = submission.length + 1;
-  pageTitle = _.upperFirst(pageTitle);
+  pageTitle = _.upperFirst(pageTitle.trim());
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
