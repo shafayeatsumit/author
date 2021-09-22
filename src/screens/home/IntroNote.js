@@ -67,9 +67,6 @@ const Note = ({route}) => {
 
   const skip = () => {
     skipSubmission(prompt.id);
-    if (introDedicate) {
-      addTitlePage();
-    }
     handleClose();
     navigation.goBack();
   };
@@ -93,22 +90,11 @@ const Note = ({route}) => {
   const unsharedInputValue = text.replace(sharedInputValue, '');
   const inputValue = promptQuestion + unsharedInputValue;
   const buttonDisabled = !unsharedInputValue.trim();
-  const addTitlePage = () => {
-    const titlePageIndex = submission.findIndex(
-      item => item.id === 'intro_title',
-    );
-    console.log('title page', titlePageIndex);
-    if (titlePageIndex === -1) {
-      setTitlePage();
-    }
-  };
+
   const handleAdd = () => {
     updateSubmission(prompt.id, unsharedInputValue);
     navigation.goBack();
     handleClose();
-    if (introDedicate) {
-      addTitlePage();
-    }
   };
   const charLength = unsharedInputValue.length;
   useEffect(() => {
