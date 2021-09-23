@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 const PageFooter = () => {
   const {submission} = useSubmissionStore();
-  let pageTitle = submission[0].answer ? submission[0].answer : 'Add Title';
+  let pageTitle = submission[1].answer ? submission[1].answer : 'Add Title';
   const totalPages = submission.length + 1;
   pageTitle = _.upperFirst(pageTitle.trim());
 

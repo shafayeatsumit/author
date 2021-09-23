@@ -17,6 +17,7 @@ const Dedicate = ({enablePageScroll, disablePageScroll}) => {
   const navigation = useNavigation();
   const {deleteSubmission, submission} = useSubmissionStore();
   const {setFinishedIntro, finishedIntro} = useUserStore();
+  const finishedIntroRef = useRef(null);
   const prompt = submission.find(item => item.id === 'intro_dedicate');
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -35,7 +36,7 @@ const Dedicate = ({enablePageScroll, disablePageScroll}) => {
   };
 
   const handleClose = () => {
-    if (!finishedIntro) {
+    if (!finishedIntroRef.current) {
       fadeIn();
     }
   };
@@ -62,6 +63,13 @@ const Dedicate = ({enablePageScroll, disablePageScroll}) => {
       disablePageScroll();
     }
   }, []);
+
+  useEffect(() => {
+    finishedIntroRef.current = finishedIntro;
+    if (finishedIntroRef.current) {
+      fadeAnim.setValue(0);
+    }
+  }, [finishedIntro]);
 
   return (
     <TouchableOpacity

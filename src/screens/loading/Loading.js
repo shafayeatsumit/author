@@ -1,24 +1,8 @@
 import React, {useEffect, useRef} from 'react';
-import {
-  View,
-  Text,
-  AppState,
-  SafeAreaView,
-  TouchableOpacity,
-  Dimensions,
-  FlatList,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import {useUserStore, useContentStore, useSubmissionStore} from '../../store';
-import {checkIfToday} from '../../helpers/date';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import LinearGradient from 'react-native-linear-gradient';
-import PushNotification from 'react-native-push-notification';
+import {View, AsyncStorage, StyleSheet} from 'react-native';
+import {useUserStore, useSubmissionStore} from '../../store';
 
-const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-// TODO: comment this
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit} = useUserStore();

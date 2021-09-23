@@ -7,7 +7,7 @@ const IntroStart = ({navigation}) => (
     <View style={styles.container}>
       <Text style={styles.title}>Create your story</Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Home')}
+        onPress={() => navigation.replace('Home')}
         style={styles.button}>
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>

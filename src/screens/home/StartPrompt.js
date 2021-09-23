@@ -10,12 +10,10 @@ import {
 
 import {RFValue} from 'react-native-responsive-fontsize';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-import {useUserStore, useSubmissionStore} from '../../store';
+import {useUserStore} from '../../store';
 
 const Dedicate = ({scrollIndex}) => {
-  console.log('scrollIndex', scrollIndex);
-  const {deleteSubmission, submission} = useSubmissionStore();
-  const {setFinishedIntro, finishedIntro} = useUserStore();
+  const {finishedIntro} = useUserStore();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const offsetY = useRef(new Animated.Value(ScreenHeight)).current;
 

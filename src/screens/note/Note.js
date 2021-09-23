@@ -148,37 +148,34 @@ const Note = ({navigation, route}) => {
         : {behavior: 'height'})}
       style={styles.container}>
       <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
-        <View style={{flex: 1}}>
-          <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
-          <View style={[styles.questionContainer, {height: boxHeight}]}>
-            <TextInput
-              onSubmitEditing={handleSubmit}
-              style={styles.input}
-              multiline={true}
-              onChangeText={onChangeText}
-              spellCheck={false}
-              textAlignVertical="top"
-              selectionColor={'white'}
-              ref={inputRef}>
-              <Text style={styles.boldInput}>
-                {sharedInputValue}
-                {unsharedInputValue}
-              </Text>
-            </TextInput>
-          </View>
-
-          <View style={[styles.buttonContainer]}>
-            <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
-            <TouchableOpacity
-              disabled={buttonDisabled}
-              onPress={isEdit ? handleEdit : handleSubmit}
-              style={[
-                styles.button,
-                buttonDisabled && {backgroundColor: '#1E4686'},
-              ]}>
-              <Text style={styles.buttonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
+        <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
+        <View style={styles.inputContainer}>
+          <TextInput
+            onSubmitEditing={handleSubmit}
+            style={styles.input}
+            multiline={true}
+            onChangeText={onChangeText}
+            spellCheck={false}
+            textAlignVertical="top"
+            selectionColor={'white'}
+            ref={inputRef}>
+            <Text style={styles.boldInput}>
+              {sharedInputValue}
+              {unsharedInputValue}
+            </Text>
+          </TextInput>
+        </View>
+        <View style={[styles.buttonContainer]}>
+          <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
+          <TouchableOpacity
+            disabled={buttonDisabled}
+            onPress={isEdit ? handleEdit : handleSubmit}
+            style={[
+              styles.button,
+              buttonDisabled && {backgroundColor: '#1E4686'},
+            ]}>
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableOpacity>
         </View>
       </LinearGradient>
     </KeyboardAvoidingView>
@@ -196,20 +193,25 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 90, // HeaderHeight
   },
+  inputContainer: {
+    paddingHorizontal: 25,
+    marginTop: 100,
+    flex: 1,
+  },
   input: {
     flex: 1,
     alignSelf: 'flex-start',
     marginHorizontal: 2,
     letterSpacing: -1,
     borderWidth: 0,
-    lineHeight: 47,
-    fontSize: RFValue(34),
+    lineHeight: 41,
+    fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
   },
   boldInput: {
-    fontSize: RFValue(28),
-    lineHeight: 39,
+    fontSize: RFValue(30),
+    lineHeight: 41,
     letterSpacing: -2,
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
@@ -217,7 +219,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingBottom: 50,
+    paddingBottom: 60,
+    paddingRight: 30,
   },
   button: {
     marginTop: 10,

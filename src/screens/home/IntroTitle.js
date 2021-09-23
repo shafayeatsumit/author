@@ -17,6 +17,7 @@ const Title = () => {
   const navigation = useNavigation();
   const {deleteSubmission, submission} = useSubmissionStore();
   const {setFinishedIntro, finishedIntro} = useUserStore();
+  const finishedIntroRef = useRef(null);
   const prompt = submission.find(item => item.id === 'intro_title');
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -57,6 +58,12 @@ const Title = () => {
   const displayText = getDisplayText();
   const showDate = skippedSubmission || hasAnswer;
 
+  useEffect(() => {
+    finishedIntroRef.current = finishedIntro;
+    if (finishedIntroRef.current) {
+      fadeAnim.setValue(0);
+    }
+  }, [finishedIntro]);
   return (
     <TouchableOpacity
       onPress={handlePress}

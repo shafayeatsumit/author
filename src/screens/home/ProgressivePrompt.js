@@ -33,6 +33,7 @@ const Prompt = ({item}) => {
   } = activePrompt;
   const isServedBefore = !!lastServedId;
   const isAnsweredBefore = !!nextAvailable;
+
   const activePromptDeatil = allPrompts.find(p => p.id === lastServedId);
   const goToNote = () => {
     navigation.navigate('Note', {prompt: activePromptDeatil});

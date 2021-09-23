@@ -1,42 +1,27 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
-import _ from 'lodash';
 
 let promptStore = set => ({
   morning: {},
   highlight: {},
   evening: {},
-  circumstance: {
-    firstAvailable: 3,
-    increment: 11,
-  },
   backstory: {
-    firstAvailable: 4,
-    increment: 11,
-    // increment: 3,
-  },
-  settings: {
-    firstAvailable: 3,
-    increment: 11,
-    // increment: 2,
+    firstAvailable: 5,
+    increment: 4,
   },
   flashforward: {
-    firstAvailable: 10,
-    increment: 11,
+    firstAvailable: 7,
+    increment: 2,
   },
-  characters: {
-    firstAvailable: 9,
-    increment: 11,
-  },
+
   narrator: {
-    firstAvailable: 5,
-    increment: 11,
+    firstAvailable: 4,
+    increment: 5,
   },
   'Plot Twist': {
     isOn: false,
-    firstAvailable: 13,
-    increment: 27,
+    firstAvailable: 12,
+    increment: 3,
   },
   updatePrompt: (title, id, servedAt, answeredAt) =>
     set(state => ({

@@ -28,6 +28,7 @@ const Home = ({navigation}) => {
   const [scrollIndex, setScrollIndex] = useState(0);
   const offset = useRef(0);
   const {submission, deleteSubmission} = useSubmissionStore();
+
   const numberOfintroPages = submission.filter(
     item => item.type === 'introFlow',
   ).length;

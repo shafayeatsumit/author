@@ -12,11 +12,6 @@ const TitlePage = {
 };
 
 const IntroPages = [
-  // {
-  //   id: 'intro_start',
-  //   uid: 'intro_start',
-  //   type: 'introFlow',
-  // },
   {
     id: 'intro_dedicate',
     uid: 'intro_dedicate',
@@ -34,8 +29,7 @@ const IntroPages = [
 
 let submissionStore = set => ({
   submission: [],
-  setIntroPages: () =>
-    set(state => ({submission: [...state.submission, ...IntroPages]})),
+  setIntroPages: () => set(state => ({submission: [...IntroPages]})),
   setTitlePage: () =>
     set(state => ({submission: [...state.submission, TitlePage]})),
 

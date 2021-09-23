@@ -14,7 +14,6 @@ import IntroNoteScreen from '../screens/home/IntroNote';
 import StartScreen from '../screens/intro/Start';
 
 const Stack = createStackNavigator();
-console.log(Stack);
 class Nav extends Component {
   render() {
     return (
