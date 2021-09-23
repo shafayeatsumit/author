@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
   CardStyleInterpolators,
+  TransitionPresets,
 } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/home/Home';
@@ -24,6 +25,23 @@ class Nav extends Component {
             headerMode="none"
             screenOptions={{
               gestureEnabled: false,
+              cardStyle: {backgroundColor: 'transparent'},
+              cardOverlayEnabled: true,
+              cardStyleInterpolator: ({current: {progress}}) => ({
+                cardStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 0.5, 0.9, 1],
+                    outputRange: [0, 0.25, 0.7, 1],
+                  }),
+                },
+                overlayStyle: {
+                  opacity: progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 0.5],
+                    extrapolate: 'clamp',
+                  }),
+                },
+              }),
             }}>
             <Stack.Screen name="Loading" component={LoadingScreen} />
             <Stack.Screen name="Start" component={StartScreen} />
