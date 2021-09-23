@@ -50,6 +50,7 @@ const Prompt = ({item}) => {
     const prompt = _.sample(allPrompts);
     const {title, id} = prompt;
     updatePrompt(title, id, new Date());
+
     setSelectedPrompt(prompt);
   };
 
@@ -63,12 +64,14 @@ const Prompt = ({item}) => {
       setDisabled(true);
     }
     const prompt = allPrompts.find(p => p.id === promptId);
+
     setSelectedPrompt(prompt);
   };
 
   const serveContent = () => {
     const {servedAt} = currentPrompt;
-    const isServedToday = checkTodayAfterFive(servedAt);
+    const isServedToday = servedAt && checkTodayAfterFive(servedAt);
+
     if (isServedToday) {
       serveForToday();
     } else {
@@ -140,8 +143,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
   text: {
-    lineHeight: 39,
-    fontSize: RFValue(28),
+    lineHeight: 41.6,
+    fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
@@ -150,7 +153,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   disableText: {
-    fontSize: RFValue(28),
+    lineHeight: 41.6,
+    fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',

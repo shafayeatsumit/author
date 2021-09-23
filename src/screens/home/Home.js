@@ -117,9 +117,7 @@ const Home = ({navigation}) => {
   const keyExtractor = item => item.uid;
 
   const headerVisible =
-    scrollIndex < submission.length &&
-    showHeader &&
-    scrollIndex > numberOfintroPages - 1;
+    scrollIndex < submission.length && showHeader && scrollIndex > 1;
   renderCount = renderCount + 1;
   console.log(`page scrolling ${pageScrolling}`);
   return (

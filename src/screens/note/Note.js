@@ -165,7 +165,11 @@ const Note = ({navigation, route}) => {
             </Text>
           </TextInput>
         </View>
-        <View style={[styles.buttonContainer]}>
+        <View
+          style={[
+            styles.buttonContainer,
+            Platform.OS === 'ios' && buttonContainerIOS,
+          ]}>
           <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
           <TouchableOpacity
             disabled={buttonDisabled}
@@ -204,14 +208,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     letterSpacing: -1,
     borderWidth: 0,
-    lineHeight: 41,
+    lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
   },
   boldInput: {
+    lineHeight: 41.6,
     fontSize: RFValue(30),
-    lineHeight: 41,
     letterSpacing: -2,
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
@@ -219,9 +223,17 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingBottom: 60,
     paddingRight: 30,
+    ...Platform.select({
+      ios: {
+        paddingBottom: 15,
+      },
+      android: {
+        paddingBottom: 60,
+      },
+    }),
   },
+
   button: {
     marginTop: 10,
     height: 50,
@@ -242,6 +254,5 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.38)',
     paddingRight: 24,
     paddingTop: 35,
-    // paddingBottom: 50,
   },
 });

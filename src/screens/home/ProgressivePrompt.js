@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
   text: {
+    lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'center',
@@ -127,6 +128,7 @@ const styles = StyleSheet.create({
   },
 
   disableText: {
+    lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',

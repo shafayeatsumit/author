@@ -13,15 +13,13 @@ import {
 } from 'react-native';
 import {useHeaderHeight} from '@react-navigation/stack';
 import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
-import uuid from 'react-native-uuid';
+
 import {sharedStart} from '../../helpers/utils';
-import {formatDate} from '../../helpers/date';
-import useKeyboard from '../../helpers/useKeyboard';
 const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
-import analytics from '@react-native-firebase/analytics';
+
 import LinearGradient from 'react-native-linear-gradient';
-import _ from 'lodash';
+
 import {useNavigation} from '@react-navigation/native';
 
 TextInput.defaultProps.selectionColor = 'white';
@@ -174,7 +172,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 5,
-    // backgroundColor: 'tomato',
   },
   skipText: {
     fontSize: RFValue(18),
@@ -191,17 +188,23 @@ const styles = StyleSheet.create({
     letterSpacing: -1,
     borderWidth: 0,
     paddingHorizontal: 30,
-    lineHeight: 47,
     maxHeight: ScreenHeight / 2.0,
-    fontSize: RFValue(34),
+    lineHeight: 41.6,
+    fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-Bold',
-    // marginBottom: 10,
   },
   buttonHolder: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    paddingBottom: 50,
+    ...Platform.select({
+      ios: {
+        paddingBottom: 15,
+      },
+      android: {
+        paddingBottom: 50,
+      },
+    }),
   },
   button: {
     alignSelf: 'flex-end',

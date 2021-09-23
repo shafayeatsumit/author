@@ -102,10 +102,10 @@ const styles = StyleSheet.create({
     width: ScreenWidth - 64,
   },
   text: {
+    lineHeight: 41.6,
+    fontSize: RFValue(30),
     fontFamily: 'Montserrat-Bold',
     textAlign: 'center',
-    fontSize: RFValue(28),
-    lineHeight: 39.2,
     color: 'rgba(255,255,255,0.92)',
     letterSpacing: -2,
   },
