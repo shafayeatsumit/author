@@ -19,7 +19,7 @@ export const checkIfToday = date => {
 
 export const checkTodayAfterFive = date => {
   const fiveAM = moment().hours(5).startOf('hour');
-  return date > fiveAM;
+  return moment(date) > fiveAM;
 };
 
 export const checkIfYesterday = date => {
