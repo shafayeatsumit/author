@@ -2,12 +2,17 @@ import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
+import {triggerHaptic} from '../../helpers/haptics';
+
 const IntroStart = ({navigation}) => (
   <LinearGradient colors={['#343D4C', '#131E25']} style={{flex: 1}}>
     <View style={styles.container}>
       <Text style={styles.title}>Create your story</Text>
       <TouchableOpacity
-        onPress={() => navigation.replace('Home')}
+        onPress={() => {
+          triggerHaptic();
+          navigation.replace('Home');
+        }}
         style={styles.button}>
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>

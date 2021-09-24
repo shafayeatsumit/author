@@ -1,15 +1,20 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import _ from 'lodash';
+import {triggerHaptic} from '../../helpers/haptics';
 
 const NoteHeader = ({date, title, goBack}) => {
   const noteTitle = _.upperFirst(title);
+  const handleBack = () => {
+    triggerHaptic();
+    goBack();
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.dateText}>
         {date} <Text style={styles.title}>{noteTitle}</Text>
       </Text>
-      <TouchableOpacity onPress={goBack} style={styles.xoutContainer}>
+      <TouchableOpacity onPress={handleBack} style={styles.xoutContainer}>
         <Image
           style={styles.xout}
           source={require('../../../assets/x_out.png')}

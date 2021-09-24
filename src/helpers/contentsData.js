@@ -90,48 +90,6 @@ export const MORNING = [
     type: 'daily',
     question: 'I make today important to my story by',
   },
-  {
-    id: '17d39e5e-07d9-11ec-9a03-0242ac130003',
-    title: 'morning',
-    time: 'morning',
-    type: 'daily',
-    question: 'Some actions my story needs me to complete are',
-  },
-  {
-    id: '27d39e5e-07d9-11ec-9a03-0242ac130003',
-    title: 'morning',
-    time: 'morning',
-    type: 'daily',
-    question: 'Today, I am unwilling to accept',
-  },
-  {
-    id: '37d39e5e-07d9-11ec-9a03-0242ac130003',
-    title: 'morning',
-    time: 'morning',
-    type: 'daily',
-    question: "An obstacle I'll overcome today is",
-  },
-  {
-    id: '47d39e5e-07d9-11ec-9a03-0242ac130003',
-    title: 'morning',
-    time: 'morning',
-    type: 'daily',
-    question: 'Something that is within my control to push forward is',
-  },
-  {
-    id: '57d39e5e-07d9-11ec-9a03-0242ac130003',
-    title: 'morning',
-    time: 'morning',
-    type: 'daily',
-    question: 'Today will be better than yesterday because',
-  },
-  {
-    id: '67d39e5e-07d9-11ec-9a03-0242ac130003',
-    title: 'morning',
-    time: 'morning',
-    type: 'daily',
-    question: 'Today needs to start with',
-  },
 ];
 
 export const HIGHLIGHT = [
@@ -163,6 +121,13 @@ export const HIGHLIGHT = [
     type: 'daily',
     question: 'A completely carefree and lovely moment was',
   },
+  {
+    id: '40d39e5e-07d9-11ec-100-0242ac130003',
+    title: 'highlight',
+    time: 'morning',
+    type: 'daily',
+    question: 'The moment that tells the story of today was',
+  },
 ];
 
 export const EVENING = [
@@ -180,13 +145,7 @@ export const EVENING = [
     type: 'daily',
     question: 'I moved my story along by',
   },
-  {
-    id: '30d39e5e-07d9-11ec-9911-0242ac130003',
-    title: 'evening',
-    time: 'evening',
-    type: 'daily',
-    question: 'Something I did today that I should do more of tomorrow is',
-  },
+
   {
     id: '40d39e5e-07d9-11ec-9911-0242ac130003',
     title: 'evening',
@@ -194,33 +153,13 @@ export const EVENING = [
     type: 'daily',
     question: 'The strongest emotion today was',
   },
-  {
-    id: '50d39e5e-07d9-11ec-9911-0242ac130003',
-    title: 'evening',
-    time: 'evening',
-    type: 'daily',
-    question: 'The most common activity today was',
-  },
+
   {
     id: '60d39e5e-07d9-11ec-9911-0242ac130003',
     title: 'evening',
     time: 'evening',
     type: 'daily',
     question: 'I felt most like myself when',
-  },
-  {
-    id: '70d39e5e-07d9-11ec-9911-0242ac130003',
-    title: 'evening',
-    time: 'evening',
-    type: 'daily',
-    question: 'A past effort that paid off today was',
-  },
-  {
-    id: '80d39e5e-07d9-11ec-9911-0242ac130003',
-    title: 'evening',
-    time: 'evening',
-    type: 'daily',
-    question: 'Something I did today that I should do less of tomorrow is',
   },
 ];
 
@@ -314,7 +253,14 @@ export const FLASHFORWARD = [
     id: '4b5c47de-0d46-11ec-82a8-0277ac130003',
     title: 'flashforward',
     type: 'progressive',
-    question: "Future me's advice for today would be",
+    question:
+      "Something from this part of my story that I'll look back fondly on is",
+  },
+  {
+    id: '4b5c47de-0d46-11EE-82a8-0277ac130003',
+    title: 'flashforward',
+    type: 'progressive',
+    question: "A current obstacle I'll get past and learn from is",
   },
 ];
 
@@ -338,28 +284,46 @@ export const NARRATOR = [
     id: '4b5c540e-0d46-11ec-9876-0242ac130003',
     title: 'narrator',
     type: 'progressive',
-    question: 'Our main character is about to get great advice from',
+    question: 'Something going on in the world is',
   },
   {
     id: '4c7c540e-0d46-11ec-9876-0242ac130003',
     title: 'narrator',
     type: 'progressive',
     question:
-      'The battle our main character is fighting that no one knows about is',
+      "To understand our main character's actions lately, you'd need to know",
   },
 
   {
     id: '4c7c540e-0d46-11ec-9876-0242ac131113',
     title: 'narrator',
     type: 'progressive',
-    question: "One of our main character's best quality lately has been",
+    question: "Something unique in our main character's world is",
   },
   {
     id: '4c7c540e-0d46-22ec-9876-0242ac131113',
     title: 'narrator',
     type: 'progressive',
     question:
-      "A mistake that our main character will come to learn doesn't matter at all is",
+      "An ordinary object that's playing a crucial role in the story is",
+  },
+  {
+    id: '4c7c540e-0d46-22ec-9876-0242ac132223',
+    title: 'narrator',
+    type: 'progressive',
+    question: 'The best supporting actress or actor has been',
+  },
+  {
+    id: '4c7c540e-0d46-22ec-9876-0242ac132993',
+    title: 'narrator',
+    type: 'progressive',
+    question: 'One person this part of the story owes a thank you to is',
+  },
+  {
+    id: '4c7c540e-0D46-22ec-9876-0242ac132993',
+    title: 'narrator',
+    type: 'progressive',
+    question: 'Lately, our main character has feel most like themself around',
   },
 ];
 
@@ -389,7 +353,34 @@ export const PLOT_TWIST = [
     id: '4b78590e-0d46-11ec-9876-0242ac130003',
     title: 'Plot Twist',
     type: 'progressive',
+    question: 'If I remove my story will get better',
+  },
+  {
+    id: '4b78590e-0d46-11ec-9876-0242ac188883',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question:
+      "An obligation I don't want and will try ignoring to see what happens is",
+  },
+  {
+    id: '4b78590e-0DD6-11ec-9876-0242ac188883',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question:
+      'An assumption about the future my story needs me to challenge is',
+  },
+
+  {
+    id: '4b78590e-0DEE-11ec-9876-0242ac188883',
+    title: 'Plot Twist',
+    type: 'progressive',
     question: "I'm not supposed to , but I'm going to try it anyway",
+  },
+  {
+    id: '4b78590e-0DEE-11ec-9876-0242ac109883',
+    title: 'Plot Twist',
+    type: 'progressive',
+    question: "The tough conversation I'm going to have is",
   },
 ];
 

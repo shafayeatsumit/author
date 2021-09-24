@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import {useSubmissionStore, usePromptStore} from '../../store';
 import _ from 'lodash';
+import {triggerHaptic} from '../../helpers/haptics';
 const progressive_prompts = [
   'backstory',
   'settings',
@@ -19,7 +20,14 @@ const PageFooter = ({activeIndex, handleFastForward}) => {
   const totalPages = submission.length + 1;
   const pageNumber = activeIndex + 1;
   const pageContent = submission[activeIndex];
+
+  const handleFF = () => {
+    triggerHaptic();
+    handleFastForward();
+  };
+
   const handleDelete = () => {
+    triggerHaptic();
     deleteSubmission(pageContent.uid);
     if (pageContent.type === 'progressive') {
       progressive_prompts.map(item => decNextAvailable(item));
@@ -35,7 +43,7 @@ const PageFooter = ({activeIndex, handleFastForward}) => {
       <Text style={styles.text}>
         {pageTitle} • Page {pageNumber} of {totalPages}
       </Text>
-      <TouchableOpacity onPress={handleFastForward} style={styles.imageHolder}>
+      <TouchableOpacity onPress={handleFF} style={styles.imageHolder}>
         <Image style={styles.ff} source={require('../../../assets/bin.png')} />
       </TouchableOpacity>
     </View>

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {useHeaderHeight} from '@react-navigation/stack';
 import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
-
+import {triggerHaptic} from '../../helpers/haptics';
 import {sharedStart} from '../../helpers/utils';
 const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -64,6 +64,7 @@ const Note = ({route}) => {
   };
 
   const skip = () => {
+    triggerHaptic();
     skipSubmission(prompt.id);
     handleClose();
     navigation.goBack();
@@ -77,10 +78,12 @@ const Note = ({route}) => {
   };
 
   const handleFutureMe = () => {
+    triggerHaptic();
     onChangeText('I dedicate this story to future me');
   };
 
   const handleFamily = () => {
+    triggerHaptic();
     onChangeText('I dedicate this story to family');
   };
 
@@ -92,6 +95,7 @@ const Note = ({route}) => {
   const handleAdd = () => {
     updateSubmission(prompt.id, unsharedInputValue);
     navigation.goBack();
+    triggerHaptic();
     handleClose();
   };
   const charLength = unsharedInputValue.length;

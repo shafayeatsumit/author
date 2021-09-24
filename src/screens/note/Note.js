@@ -16,6 +16,7 @@ import {sharedStart} from '../../helpers/utils';
 import {formatDate} from '../../helpers/date';
 import NoteHeader from './NoteHeader';
 import useKeyboard from '../../helpers/useKeyboard';
+import {triggerHaptic} from '../../helpers/haptics';
 const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
@@ -24,12 +25,6 @@ import _ from 'lodash';
 TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
-  const keyboardHeight = useKeyboard();
-  const HeaderHeight = 90;
-  const ButtonHeight = 50;
-  const ExtraHeight = 40;
-  const boxHeight =
-    ScreenHeight - (keyboardHeight + HeaderHeight + ButtonHeight + ExtraHeight);
   const {setLastSubmit} = useUserStore();
   const {updatePrompt, incNextAvailable} = usePromptStore();
   const {setSubmission, updateSubmission, submission} = useSubmissionStore();
@@ -101,9 +96,11 @@ const Note = ({navigation, route}) => {
     submitAnswer();
     goBack();
     setLastSubmit();
+    triggerHaptic();
   };
 
   const handleEdit = () => {
+    triggerHaptic();
     editAnswer();
     goBack();
   };

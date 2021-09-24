@@ -1,11 +1,17 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {triggerHaptic} from '../../helpers/haptics';
 
 const IntroStart = ({createFirstPage}) => (
   <View style={styles.container}>
     <Text style={styles.title}>It’s your story</Text>
-    <TouchableOpacity onPress={createFirstPage} style={styles.button}>
+    <TouchableOpacity
+      onPress={() => {
+        triggerHaptic();
+        createFirstPage();
+      }}
+      style={styles.button}>
       <Text style={styles.buttonText}>Create</Text>
     </TouchableOpacity>
   </View>
