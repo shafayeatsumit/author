@@ -110,7 +110,7 @@ const Note = ({route}) => {
         <TouchableOpacity onPress={skip} style={styles.skipButton}>
           <Text style={styles.skipText}>Skip for now</Text>
         </TouchableOpacity>
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.inputContainer}>
           <TextInput
             style={[styles.input]}
             onChangeText={onChangeText}
@@ -124,7 +124,7 @@ const Note = ({route}) => {
             multiline={true}
             maxLength={promptQuestion.length + 20}
           />
-        </ScrollView>
+        </View>
         <View style={styles.buttonHolder}>
           {introDedicate && (
             <TouchableOpacity
@@ -179,16 +179,15 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     fontFamily: 'Montserrat-Regular',
   },
-  scrollView: {
-    flex: 1,
+  inputContainer: {
+    height: ScreenHeight / 3.0,
     marginTop: 100,
   },
   input: {
     flex: 1,
     letterSpacing: -1,
     borderWidth: 0,
-    paddingHorizontal: 30,
-    maxHeight: ScreenHeight / 2.0,
+    paddingHorizontal: 25,
     lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',

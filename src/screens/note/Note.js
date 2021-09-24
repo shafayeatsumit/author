@@ -165,11 +165,7 @@ const Note = ({navigation, route}) => {
             </Text>
           </TextInput>
         </View>
-        <View
-          style={[
-            styles.buttonContainer,
-            Platform.OS === 'ios' && buttonContainerIOS,
-          ]}>
+        <View style={styles.buttonContainer}>
           <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
           <TouchableOpacity
             disabled={buttonDisabled}
@@ -200,7 +196,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingHorizontal: 25,
     marginTop: 100,
-    flex: 1,
+    height: ScreenHeight / 3.0,
   },
   input: {
     flex: 1,
@@ -224,14 +220,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     paddingRight: 30,
-    ...Platform.select({
-      ios: {
-        paddingBottom: 15,
-      },
-      android: {
-        paddingBottom: 60,
-      },
-    }),
+    // ...Platform.select({
+    //   ios: {
+    //     paddingBottom: 15,
+    //   },
+    //   android: {
+    //     paddingBottom: 60,
+    //   },
+    // }),
   },
 
   button: {

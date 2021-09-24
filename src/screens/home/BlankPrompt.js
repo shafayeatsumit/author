@@ -39,7 +39,7 @@ const Prompt = () => {
         <Text style={styles.title}>Blank</Text>
       </View>
 
-      <Text style={styles.text}>__________</Text>
+      <Text style={styles.text}>______</Text>
       <PromptFooter />
     </TouchableOpacity>
   );

@@ -40,7 +40,7 @@ const Title = () => {
 
   const dateString = moment().format('MMMM YYYY');
   const month = moment().format('MMMM');
-  const promptQuestion = `If the rest of ${month} was a chapter in the story of my life, I’d title it ______.`;
+  const promptQuestion = `If the rest of ${month} was a chapter in the story of my life, I’d title it ______`;
   const skipText = 'Add Title';
   const skippedSubmission = prompt.skip;
   const hasAnswer = !!prompt.answer;

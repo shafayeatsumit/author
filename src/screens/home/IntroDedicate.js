@@ -22,7 +22,7 @@ const Dedicate = ({enablePageScroll, disablePageScroll}) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const promptPrefix = 'I dedicate this story to';
-  const promptQuestion = 'I dedicate this story to __________.';
+  const promptQuestion = 'I dedicate this story to ______';
   const skipText = 'I will dedicate this story later.';
   const skippedSubmission = prompt.skip;
   const hasAnswer = !!prompt.answer;
