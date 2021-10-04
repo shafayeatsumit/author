@@ -71,6 +71,14 @@ const Home = ({navigation}) => {
       scrollViewRef.current.scrollToIndex({index: 1, animated: true});
   };
 
+  const goToLastPage = () => {
+    scrollViewRef &&
+      scrollViewRef.current.scrollToIndex({
+        index: submission.length - 1,
+        animated: true,
+      });
+  };
+
   const onEndReached = () => {
     loading && setLoading(false);
   };
@@ -119,7 +127,7 @@ const Home = ({navigation}) => {
   const headerVisible =
     scrollIndex < submission.length && showHeader && scrollIndex > 1;
   renderCount = renderCount + 1;
-  console.log(`page scrolling ${pageScrolling}`);
+
   return (
     <LinearGradient colors={['#343D4C', '#131E25']} style={styles.container}>
       <Modal
@@ -152,7 +160,12 @@ const Home = ({navigation}) => {
         keyExtractor={keyExtractor}
         pagingEnabled
         horizontal
-        ListFooterComponent={<RenderPromptList scrollIndex={scrollIndex} />}
+        ListFooterComponent={
+          <RenderPromptList
+            goToLastPage={goToLastPage}
+            scrollIndex={scrollIndex}
+          />
+        }
         removeClippedSubviews={false}
         showsHorizontalScrollIndicator={false}
       />

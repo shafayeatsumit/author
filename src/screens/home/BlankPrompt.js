@@ -9,7 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-import PromptFooter from './PromptFooter';
+import PromptHeader from './PromptHeader';
 
 const BlankPrompt = {
   id: 'blank_prompt_id',

@@ -50,12 +50,6 @@ const Prompt = ({item, navigation}) => {
       onPress={handlePress}>
       <View style={styles.clockHolder}>
         <Text style={styles.title}>{item.type}</Text>
-        {disableNote && (
-          <Image
-            style={styles.clock}
-            source={require('../../../assets/clock.png')}
-          />
-        )}
       </View>
       <Text style={styles.text}>{contentQuestion}</Text>
     </TouchableOpacity>

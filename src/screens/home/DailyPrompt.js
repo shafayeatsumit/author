@@ -16,7 +16,7 @@ import {DailyTitles} from '../../helpers/contentsData';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import _ from 'lodash';
-import PromptFooter from './PromptFooter';
+import PromptHeader from './PromptHeader';
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
@@ -95,14 +95,11 @@ const Prompt = ({item}) => {
       key={selectedPrompt.id}
       style={styles.itemPrompt}
       onPress={handlePress}>
-      <View style={styles.clockHolder}>
+      <View style={styles.titleHolder}>
         <Text style={styles.title}>{capitalizedTitle}</Text>
       </View>
-      {isDisabled ? (
-        <Text style={styles.disableText}>Available again tomorrow</Text>
-      ) : (
-        <Text style={styles.text}>{contentQuestion}</Text>
-      )}
+
+      <Text style={styles.text}>{contentQuestion}</Text>
     </TouchableOpacity>
   );
 };
@@ -122,19 +119,16 @@ const styles = StyleSheet.create({
   },
   itemPrompt: {
     backgroundColor: 'transparent',
-    height: ScreenHeight,
+    height: ScreenHeight / 3,
     width: ScreenWidth,
     justifyContent: 'center',
+    borderBottomColor: 'white',
+    borderBottomWidth: 0.2,
+    paddingVertical: 20,
   },
-  clockHolder: {
+  titleHolder: {
     flexDirection: 'row',
-    alignSelf: 'center',
-  },
-  clock: {
-    marginLeft: 5,
-    height: 14,
-    width: 14,
-    tintColor: 'rgba(255,255,255,0.92)',
+    marginLeft: 25,
   },
   title: {
     fontSize: RFValue(18),
@@ -144,13 +138,13 @@ const styles = StyleSheet.create({
   },
   text: {
     lineHeight: 41.6,
-    fontSize: RFValue(30),
+    fontSize: RFValue(32),
     color: 'rgba(255,255,255,0.92)',
-    textAlign: 'center',
-    fontFamily: 'Montserrat-Bold',
+    textAlign: 'left',
+    fontFamily: 'Montserrat-Regular',
     paddingTop: 12,
     letterSpacing: -2,
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
   },
   disableText: {
     lineHeight: 41.6,

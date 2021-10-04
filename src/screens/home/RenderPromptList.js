@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Dimensions, StyleSheet} from 'react-native';
+import {View, FlatList, Text, Dimensions, StyleSheet} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {ContentTitles, ContentTitlesAtStart} from '../../helpers/contentsData';
@@ -7,30 +7,12 @@ import {useUserStore} from '../../store';
 import ProgressivePrompt from './ProgressivePrompt';
 import DailyPrompt from './DailyPrompt';
 import BlankPrompt from './BlankPrompt';
-import PromptFooter from './PromptFooter';
+import PromptHeader from './PromptHeader';
 import StartPrompt from './StartPrompt';
 
-const StartPromptDetail = {
-  id: 'start_prompt',
-  title: 'morning',
-  type: 'start',
-  time: 'morning',
-};
+const RenderPromptList = ({scrollIndex, goToLastPage}) => {
+  const [prompts, setPrompts] = useState(ContentTitles);
 
-const MorningPrompt = {
-  id: 'morning',
-  title: 'morning',
-  type: 'daily',
-  time: 'morning',
-};
-
-const RenderPromptList = ({scrollIndex}) => {
-  const {finishedIntro, setFinishedIntro} = useUserStore();
-  const PROMPTS = finishedIntro
-    ? ContentTitles
-    : [StartPromptDetail, ...ContentTitles];
-
-  const [prompts, setPrompts] = useState(PROMPTS);
   const RenderSwiper = ({item, index}) => {
     if (item.type === 'start') {
       return <StartPrompt key={item.id} scrollIndex={scrollIndex} />;
@@ -41,37 +23,19 @@ const RenderPromptList = ({scrollIndex}) => {
     if (item.type === 'daily') {
       return <DailyPrompt key={item.id} item={item} />;
     }
-    if (item.type === 'blank') {
-      return <BlankPrompt key={item.id} item={item} />;
-    }
   };
 
-  const itemsChanged = itemIndex => {
-    if (!finishedIntro && itemIndex === 1) {
-      setFinishedIntro();
-      setPrompts(ContentTitlesAtStart);
-    }
-  };
+  const keyExtractor = item => item.id;
 
   return (
     <>
-      <Carousel
-        loop={true}
-        useScrollView={true}
-        inactiveSlideOpacity={1}
-        inactiveSlideScale={1}
-        pagingEnabled
+      <FlatList
+        contentContainerStyle={styles.flatlist}
         data={prompts}
-        extraData={prompts}
-        onSnapToItem={itemsChanged}
-        vertical={true}
         renderItem={RenderSwiper}
-        sliderHeight={ScreenHeight}
-        itemHeight={ScreenHeight}
-        removeClippedSubviews={false}
-        swipeThreshold={10}
+        keyExtractor={keyExtractor}
+        ListHeaderComponent={<PromptHeader goToLastPage={goToLastPage} />}
       />
-      <PromptFooter />
     </>
   );
 };
@@ -79,6 +43,9 @@ const RenderPromptList = ({scrollIndex}) => {
 export default RenderPromptList;
 
 const styles = StyleSheet.create({
+  flatlist: {
+    paddingBottom: 100,
+  },
   container: {
     flex: 1,
     alignItems: 'center',

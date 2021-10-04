@@ -106,9 +106,12 @@ const styles = StyleSheet.create({
   },
   itemPrompt: {
     backgroundColor: 'transparent',
-    height: ScreenHeight,
+    borderBottomColor: 'white',
+    borderBottomWidth: 0.2,
+    height: ScreenHeight / 3,
     width: ScreenWidth,
     justifyContent: 'center',
+    paddingVertical: 20,
   },
 
   title: {
@@ -121,15 +124,16 @@ const styles = StyleSheet.create({
     lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
-    textAlign: 'center',
-    fontFamily: 'Montserrat-Bold',
+    textAlign: 'left',
+    fontFamily: 'Montserrat-Regular',
+
     paddingTop: 30,
     paddingHorizontal: 30,
   },
 
   disableText: {
     lineHeight: 41.6,
-    fontSize: RFValue(30),
+    fontSize: RFValue(25),
     color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
     fontFamily: 'Montserrat-Bold',
