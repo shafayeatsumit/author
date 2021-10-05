@@ -2,16 +2,25 @@ import React, {useState} from 'react';
 import {View, FlatList, Text, Dimensions, StyleSheet} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
+import {checkIfToday} from '../../helpers/date';
 import {ContentTitles, ContentTitlesAtStart} from '../../helpers/contentsData';
-import {useUserStore} from '../../store';
+import {useUserStore, useSubmissionStore} from '../../store';
 import ProgressivePrompt from './ProgressivePrompt';
 import DailyPrompt from './DailyPrompt';
-import BlankPrompt from './BlankPrompt';
 import PromptHeader from './PromptHeader';
 import StartPrompt from './StartPrompt';
 
 const RenderPromptList = ({scrollIndex, goToLastPage}) => {
-  const [prompts, setPrompts] = useState(ContentTitles);
+  const {submission} = useSubmissionStore();
+  const answeredToday = submission
+    .filter(item => item.type === 'daily' && checkIfToday(item.date))
+    .map(item => item.title);
+
+  const prompts = ContentTitles.filter(
+    item => !answeredToday.includes(item.title),
+  );
+
+  console.log('submission length', submission.length);
 
   const RenderSwiper = ({item, index}) => {
     if (item.type === 'start') {
