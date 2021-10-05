@@ -29,10 +29,6 @@ const Home = ({navigation}) => {
   const offset = useRef(0);
   const {submission, deleteSubmission} = useSubmissionStore();
 
-  const numberOfintroPages = submission.filter(
-    item => item.type === 'introFlow',
-  ).length;
-
   const scrollViewRef = useRef();
 
   const scrollToEnd = () => {

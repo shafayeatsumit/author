@@ -91,7 +91,7 @@ const Prompt = ({item}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      disabled={isDisabled}
+      // disabled={isDisabled}
       key={selectedPrompt.id}
       style={styles.itemPrompt}
       onPress={handlePress}>

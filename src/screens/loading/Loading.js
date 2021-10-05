@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {View, AsyncStorage, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 
-// AsyncStorage.clear();
+AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit} = useUserStore();
