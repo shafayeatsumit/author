@@ -4,8 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
   CardStyleInterpolators,
-  TransitionPresets,
 } from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../screens/home/Home';
 import LoadingScreen from '../screens/loading/Loading';
@@ -14,7 +14,31 @@ import IntroScreen from '../screens/intro/Start';
 import IntroNoteScreen from '../screens/home/IntroNote';
 import StartScreen from '../screens/intro/Start';
 
+import PromptScreen from '../screens/prompts';
+import PageScreen from '../screens/pages';
+
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function Home() {
+  return (
+    <Tab.Navigator
+      initialRouteName="Prompt"
+      tabBarOptions={{
+        activeTintColor: 'rgba(255, 255, 255, 0.92)',
+        inactiveTintColor: 'rgba(255, 255, 255, 0.38)',
+        activeBackgroundColor: 'black',
+        inactiveBackgroundColor: 'black',
+        style: {
+          backgroundColor: 'black',
+        },
+      }}>
+      <Tab.Screen name="Page" component={PageScreen} />
+      <Tab.Screen name="Prompt" component={PromptScreen} />
+    </Tab.Navigator>
+  );
+}
+
 class Nav extends Component {
   render() {
     return (
@@ -45,13 +69,7 @@ class Nav extends Component {
             }}>
             <Stack.Screen name="Loading" component={LoadingScreen} />
             <Stack.Screen name="Start" component={StartScreen} />
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-              }}
-            />
+            <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Intro" component={IntroScreen} />
             <Stack.Screen name="IntroNote" component={IntroNoteScreen} />
             <Stack.Screen name="Note" component={NoteScreen} />

@@ -10,13 +10,6 @@ const PageHeader = ({goToLastPage}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButtonHolder} onPress={goToLastPage}>
-        <Image
-          resizeMode="contain"
-          style={styles.backButton}
-          source={require('../../../assets/back_button.png')}
-        />
-      </TouchableOpacity>
       <Text style={styles.text}>{pageTitle}</Text>
     </View>
   );

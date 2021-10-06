@@ -7,17 +7,46 @@ import ProgressivePrompt from './ProgressivePrompt';
 import DailyPrompt from './DailyPrompt';
 import PromptHeader from './PromptHeader';
 
-const JOMA = props => (
-  <View style={styles.container}>
-    <Text>JOMA</Text>
-  </View>
-);
-export default JOMA;
+const Prompts = () => {
+  const {submission} = useSubmissionStore();
+  const answeredToday = submission
+    .filter(item => item.type === 'daily' && checkIfToday(item.date))
+    .map(item => item.title);
+
+  const prompts = ContentTitles.filter(
+    item => !answeredToday.includes(item.title),
+  );
+
+  const RenderSwiper = ({item, index}) => {
+    if (item.type === 'progressive') {
+      return <ProgressivePrompt key={item.id} item={item} />;
+    }
+    if (item.type === 'daily') {
+      return <DailyPrompt key={item.id} item={item} />;
+    }
+  };
+
+  const keyExtractor = item => item.id;
+  return (
+    <View style={styles.container}>
+      <FlatList
+        contentContainerStyle={styles.flatlist}
+        data={prompts}
+        renderItem={RenderSwiper}
+        keyExtractor={keyExtractor}
+        ListHeaderComponent={<PromptHeader />}
+      />
+    </View>
+  );
+};
+export default Prompts;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'black',
+  },
+  flatlist: {
+    paddingBottom: 100,
   },
 });
