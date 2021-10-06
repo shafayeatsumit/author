@@ -10,12 +10,13 @@ const Loading = ({navigation}) => {
   const finishedIntroRef = useRef(null);
 
   const navigate = () => {
-    if (finishedIntroRef.current) {
-      navigation.replace('Home');
-    } else {
-      setIntroPages();
-      navigation.replace('Start');
-    }
+    navigation.replace('Home');
+    // if (finishedIntroRef.current) {
+    //   navigation.replace('Home');
+    // } else {
+    //   setIntroPages();
+    //   navigation.replace('Start');
+    // }
   };
 
   useEffect(() => {
