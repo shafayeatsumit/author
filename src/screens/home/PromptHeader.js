@@ -5,7 +5,7 @@ import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
 const PageHeader = ({goToLastPage}) => {
   const {submission} = useSubmissionStore();
-  let pageTitle = submission[1].answer ? submission[1].answer : 'Add Title';
+  let pageTitle = submission[1] ? submission[1].answer : 'Add Title';
   pageTitle = _.upperFirst(pageTitle.trim());
 
   return (

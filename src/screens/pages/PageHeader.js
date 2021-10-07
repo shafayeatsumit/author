@@ -1,42 +1,14 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {View, Text, Animated, Dimensions, StyleSheet} from 'react-native';
-import {checkIfToday} from '../../helpers/date';
-import _ from 'lodash';
-import moment from 'moment';
+import React from 'react';
+import {View, Animated, StyleSheet} from 'react-native';
 import {formatDate} from '../../helpers/date';
-const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const PageHeader = ({submission, activeIndex}) => {
   const activeContent = submission[activeIndex];
-  const isToday = checkIfToday(activeContent.date);
-  const {uid: itemId, day, date} = activeContent;
-  const contentByDate = _.groupBy(submission, 'day');
-
-  const items = contentByDate[day];
-  const totalItems = items.length;
-  const activeContentIdex = items.findIndex(i => i.uid === itemId);
+  const {date} = activeContent;
   const dateString = formatDate(date);
-  const contentTitle = _.upperFirst(activeContent.title);
   return (
     <View style={styles.container}>
-      <Animated.Text style={styles.dateText}>
-        {dateString} <Text style={styles.title}>{contentTitle}</Text>
-      </Animated.Text>
-
-      <View style={styles.dotContainer}>
-        {[...Array(totalItems)].map((item, indx) => (
-          <View
-            key={indx}
-            style={[
-              styles.dot,
-              indx === activeContentIdex && {
-                backgroundColor: 'rgba(255,255,255,0.7)',
-              },
-            ]}
-          />
-        ))}
-        {isToday && <View style={[styles.dot, styles.emptyDot]} />}
-      </View>
+      <Animated.Text style={styles.dateText}>{dateString}</Animated.Text>
     </View>
   );
 };

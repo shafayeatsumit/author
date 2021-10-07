@@ -68,10 +68,10 @@ class Nav extends Component {
               }),
             }}>
             <Stack.Screen name="Loading" component={LoadingScreen} />
-            <Stack.Screen name="Start" component={StartScreen} />
+            {/* <Stack.Screen name="Start" component={StartScreen} /> */}
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Intro" component={IntroScreen} />
-            <Stack.Screen name="IntroNote" component={IntroNoteScreen} />
+            {/* <Stack.Screen name="Intro" component={IntroScreen} />
+            <Stack.Screen name="IntroNote" component={IntroNoteScreen} /> */}
             <Stack.Screen name="Note" component={NoteScreen} />
           </Stack.Navigator>
         </NavigationContainer>

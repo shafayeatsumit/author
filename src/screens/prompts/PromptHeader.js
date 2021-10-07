@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {useSubmissionStore} from '../../store';
 import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
-const PageHeader = ({goToLastPage}) => {
+const PageHeader = () => {
   const {submission} = useSubmissionStore();
-  let pageTitle = submission[1].answer ? submission[1].answer : 'Add Title';
+  let pageTitle = submission[1] ? submission[1].answer : 'Add Title';
   pageTitle = _.upperFirst(pageTitle.trim());
 
   return (

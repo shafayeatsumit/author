@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
-import {View, AsyncStorage, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 AsyncStorage.clear();
 
@@ -10,7 +11,7 @@ const Loading = ({navigation}) => {
   const finishedIntroRef = useRef(null);
 
   const navigate = () => {
-    navigation.replace('Home');
+    navigation.navigate('Home');
     // if (finishedIntroRef.current) {
     //   navigation.replace('Home');
     // } else {
