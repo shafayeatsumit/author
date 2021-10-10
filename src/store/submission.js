@@ -7,6 +7,7 @@ export const IntroPages = [
     uid: 'intro_dedicate',
     type: 'introFlow',
     question: 'I dedicate this story to',
+    date: new Date(),
   },
 ];
 

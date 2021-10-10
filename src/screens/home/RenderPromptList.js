@@ -20,8 +20,6 @@ const RenderPromptList = ({scrollIndex, goToLastPage}) => {
     item => !answeredToday.includes(item.title),
   );
 
-  console.log('submission length', submission.length);
-
   const RenderSwiper = ({item, index}) => {
     if (item.type === 'start') {
       return <StartPrompt key={item.id} scrollIndex={scrollIndex} />;

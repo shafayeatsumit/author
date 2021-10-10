@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   containerStyle: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
   },
 });

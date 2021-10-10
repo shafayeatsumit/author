@@ -34,6 +34,7 @@ const Prompts = () => {
         data={prompts}
         renderItem={RenderSwiper}
         keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={<PromptHeader />}
       />
     </View>

@@ -54,11 +54,6 @@ const IntroNote = () => {
     }
   };
 
-  const setTitle = () => {
-    setPrompt(TitlePrompt);
-    onChangeText(defaultText);
-  };
-
   const skip = () => {
     triggerHaptic();
     // handleClose();
