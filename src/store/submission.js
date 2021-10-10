@@ -1,38 +1,20 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
 
-const MonthName = moment().format('MMMM');
-const TitlePage = {
-  id: 'intro_title',
-  type: 'introFlow',
-  uid: 'intro_title',
-  month: MonthName,
-  question: `If the rest of ${MonthName} was a chapter in the story of my life, I’d title it`,
-};
-
-const IntroPages = [
+export const IntroPages = [
   {
     id: 'intro_dedicate',
     uid: 'intro_dedicate',
     type: 'introFlow',
     question: 'I dedicate this story to',
   },
-  {
-    id: 'intro_title',
-    type: 'introFlow',
-    uid: 'intro_title',
-    month: MonthName,
-    question: `If the rest of ${MonthName} was a chapter in the story of my life, I’d title it`,
-  },
 ];
 
 let submissionStore = set => ({
   submission: [],
+  title: '',
   setIntroPages: () => set(state => ({submission: [...IntroPages]})),
-  setTitlePage: () =>
-    set(state => ({submission: [...state.submission, TitlePage]})),
-
+  setTitle: newTitle => set(state => ({title: newTitle})),
   setSubmission: prompt =>
     set(state => ({submission: [...state.submission, prompt]})),
   updateSubmission: (promptId, prompt) =>

@@ -16,21 +16,24 @@ import {sharedStart} from '../../helpers/utils';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
-import {IntroPages} from '../../store/submission';
 
 const {height: ScreenHeight} = Dimensions.get('window');
 TextInput.defaultProps.selectionColor = 'white';
 
-const IntroNote = () => {
+const Dedicate = ({route}) => {
   const navigation = useNavigation();
-  const [prompt, setPrompt] = useState(IntroPages[0]);
-  const {updateSubmission, skipSubmission} = useSubmissionStore();
+  const {isEdit} = route.params;
+  const {updateSubmission, submission} = useSubmissionStore();
+  const prompt = submission[0];
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer ? ' ' + prompt.answer : ' ';
   const defaultText = promptQuestion + promptAnswer;
   const inputRef = useRef();
-  const [text, onChangeText] = React.useState(defaultText);
-  const introDedicate = prompt.id === 'intro_dedicate';
+  const [text, onChangeText] = useState(defaultText);
+
+  const goToTitle = () => {
+    isEdit ? navigation.navigate('Home') : navigation.navigate('Title');
+  };
 
   const resetCursor = () => {
     inputRef.current.setNativeProps({
@@ -54,15 +57,9 @@ const IntroNote = () => {
     }
   };
 
-  const setTitle = () => {
-    setPrompt(TitlePrompt);
-    onChangeText(defaultText);
-  };
-
   const skip = () => {
     triggerHaptic();
-    // handleClose();
-    navigation.goBack();
+    goToTitle();
   };
 
   const handleKeyPress = ({nativeEvent}) => {
@@ -89,11 +86,10 @@ const IntroNote = () => {
 
   const handleAdd = () => {
     updateSubmission(prompt.id, unsharedInputValue);
-    navigation.goBack();
     triggerHaptic();
-    // handleClose();
+    goToTitle();
   };
-  const charLength = unsharedInputValue.length;
+
   useEffect(() => {
     setTimeout(setCursor, 400);
   }, []);
@@ -125,23 +121,17 @@ const IntroNote = () => {
           />
         </View>
         <View style={styles.buttonHolder}>
-          {introDedicate && (
-            <TouchableOpacity
-              onPress={handleFutureMe}
-              style={[styles.button, styles.buttonLight]}>
-              <Text style={styles.buttonTextSm}>Future me</Text>
-            </TouchableOpacity>
-          )}
-          {introDedicate && (
-            <TouchableOpacity
-              onPress={handleFamily}
-              style={[styles.button, styles.buttonLight]}>
-              <Text style={styles.buttonTextSm}>Family</Text>
-            </TouchableOpacity>
-          )}
-          {!introDedicate && (
-            <Text style={styles.charLimit}>{charLength}/20</Text>
-          )}
+          <TouchableOpacity
+            onPress={handleFutureMe}
+            style={[styles.button, styles.buttonLight]}>
+            <Text style={styles.buttonTextSm}>Future me</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleFamily}
+            style={[styles.button, styles.buttonLight]}>
+            <Text style={styles.buttonTextSm}>Family</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={handleAdd}
@@ -153,7 +143,7 @@ const IntroNote = () => {
     </KeyboardAvoidingView>
   );
 };
-export default IntroNote;
+export default Dedicate;
 
 const styles = StyleSheet.create({
   container: {

@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit} = useUserStore();
@@ -11,13 +11,12 @@ const Loading = ({navigation}) => {
   const finishedIntroRef = useRef(null);
 
   const navigate = () => {
-    navigation.navigate('Home');
-    // if (finishedIntroRef.current) {
-    //   navigation.replace('Home');
-    // } else {
-    //   setIntroPages();
-    //   navigation.replace('Start');
-    // }
+    if (finishedIntroRef.current) {
+      navigation.replace('Home');
+    } else {
+      setIntroPages();
+      navigation.replace('Start');
+    }
   };
 
   useEffect(() => {

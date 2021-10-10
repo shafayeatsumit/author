@@ -16,7 +16,12 @@ import {formatDate} from '../../helpers/date';
 const Page = ({prompt}) => {
   const navigation = useNavigation();
   const {deleteSubmission} = useSubmissionStore();
+  const isDedicationPage = prompt.id === 'intro_dedicate';
   const handlePress = () => {
+    if (isDedicationPage) {
+      navigation.navigate('Dedicate', {isEdit: true});
+      return;
+    }
     navigation.navigate('Note', {prompt, isEdit: true});
   };
 
@@ -61,10 +66,13 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.37)',
   },
   answer: {
-    fontFamily: 'Montserrat-Bold',
-    lineHeight: 41.6,
-    fontSize: RFValue(30),
+    fontSize: RFValue(32),
     color: 'rgba(255,255,255,0.92)',
+    textAlign: 'left',
+    fontFamily: 'Montserrat-Regular',
+
+    lineHeight: 41.6,
+
     letterSpacing: -2,
   },
 });

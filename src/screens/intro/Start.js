@@ -11,7 +11,7 @@ const IntroStart = ({navigation}) => (
       <TouchableOpacity
         onPress={() => {
           triggerHaptic();
-          navigation.replace('Home');
+          navigation.replace('Dedicate', {isEdit: false});
         }}
         style={styles.button}>
         <Text style={styles.buttonText}>Get Started</Text>

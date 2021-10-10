@@ -16,21 +16,20 @@ import {sharedStart} from '../../helpers/utils';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
-import {IntroPages} from '../../store/submission';
+import moment from 'moment';
 
 const {height: ScreenHeight} = Dimensions.get('window');
 TextInput.defaultProps.selectionColor = 'white';
 
 const IntroNote = () => {
   const navigation = useNavigation();
-  const [prompt, setPrompt] = useState(IntroPages[0]);
-  const {updateSubmission, skipSubmission} = useSubmissionStore();
-  const promptQuestion = prompt.question;
-  const promptAnswer = prompt.answer ? ' ' + prompt.answer : ' ';
+  const MonthName = moment().format('MMMM');
+  const {updateSubmission, setTitle, title} = useSubmissionStore();
+  const promptQuestion = `If the rest of ${MonthName} was a chapter in the story of my life, I’d title it`;
+  const promptAnswer = title ? ' ' + title : ' ';
   const defaultText = promptQuestion + promptAnswer;
   const inputRef = useRef();
   const [text, onChangeText] = React.useState(defaultText);
-  const introDedicate = prompt.id === 'intro_dedicate';
 
   const resetCursor = () => {
     inputRef.current.setNativeProps({
@@ -54,15 +53,10 @@ const IntroNote = () => {
     }
   };
 
-  const setTitle = () => {
-    setPrompt(TitlePrompt);
-    onChangeText(defaultText);
-  };
-
   const skip = () => {
     triggerHaptic();
     // handleClose();
-    navigation.goBack();
+    navigation.navigate('Home');
   };
 
   const handleKeyPress = ({nativeEvent}) => {
@@ -72,27 +66,17 @@ const IntroNote = () => {
     }
   };
 
-  const handleFutureMe = () => {
-    triggerHaptic();
-    onChangeText('I dedicate this story to future me');
-  };
-
-  const handleFamily = () => {
-    triggerHaptic();
-    onChangeText('I dedicate this story to family');
-  };
-
   const sharedInputValue = sharedStart([promptQuestion, text]);
   const unsharedInputValue = text.replace(sharedInputValue, '');
   const inputValue = promptQuestion + unsharedInputValue;
   const buttonDisabled = !unsharedInputValue.trim();
 
   const handleAdd = () => {
-    updateSubmission(prompt.id, unsharedInputValue);
-    navigation.goBack();
+    setTitle(unsharedInputValue);
+    navigation.navigate('Home');
     triggerHaptic();
-    // handleClose();
   };
+
   const charLength = unsharedInputValue.length;
   useEffect(() => {
     setTimeout(setCursor, 400);
@@ -125,23 +109,7 @@ const IntroNote = () => {
           />
         </View>
         <View style={styles.buttonHolder}>
-          {introDedicate && (
-            <TouchableOpacity
-              onPress={handleFutureMe}
-              style={[styles.button, styles.buttonLight]}>
-              <Text style={styles.buttonTextSm}>Future me</Text>
-            </TouchableOpacity>
-          )}
-          {introDedicate && (
-            <TouchableOpacity
-              onPress={handleFamily}
-              style={[styles.button, styles.buttonLight]}>
-              <Text style={styles.buttonTextSm}>Family</Text>
-            </TouchableOpacity>
-          )}
-          {!introDedicate && (
-            <Text style={styles.charLimit}>{charLength}/20</Text>
-          )}
+          <Text style={styles.charLimit}>{charLength}/20</Text>
 
           <TouchableOpacity
             onPress={handleAdd}

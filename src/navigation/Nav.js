@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StatusBar, View} from 'react-native';
+import {StatusBar, Image, View, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   createStackNavigator,
@@ -7,7 +7,8 @@ import {
 } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import HomeScreen from '../screens/home/Home';
+import DedicateScreen from '../screens/intro/Dedicate';
+import TitleScreen from '../screens/intro/Title';
 import LoadingScreen from '../screens/loading/Loading';
 import NoteScreen from '../screens/note/Note';
 import IntroScreen from '../screens/intro/Start';
@@ -25,16 +26,40 @@ function Home() {
     <Tab.Navigator
       initialRouteName="Prompt"
       tabBarOptions={{
+        showLabel: false,
         activeTintColor: 'rgba(255, 255, 255, 0.92)',
-        inactiveTintColor: 'rgba(255, 255, 255, 0.38)',
-        activeBackgroundColor: 'black',
-        inactiveBackgroundColor: 'black',
+        activeBackgroundColor: '#191919',
+        inactiveBackgroundColor: '#191919',
         style: {
-          backgroundColor: 'black',
+          backgroundColor: '#191919',
         },
       }}>
-      <Tab.Screen name="Page" component={PageScreen} />
-      <Tab.Screen name="Prompt" component={PromptScreen} />
+      <Tab.Screen
+        name="Page"
+        component={PageScreen}
+        options={{
+          tabBarIcon: ({color}) => (
+            <Image
+              style={[styles.icon, {tintColor: color}]}
+              resizeMode="contain"
+              source={require('../../assets/page_icon.png')}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Prompt"
+        component={PromptScreen}
+        resizeMode="contain"
+        options={{
+          tabBarIcon: ({color}) => (
+            <Image
+              style={[styles.icon, {tintColor: color}]}
+              source={require('../../assets/prompt_icon.png')}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -68,10 +93,12 @@ class Nav extends Component {
               }),
             }}>
             <Stack.Screen name="Loading" component={LoadingScreen} />
-            {/* <Stack.Screen name="Start" component={StartScreen} /> */}
+            <Stack.Screen name="Start" component={StartScreen} />
             <Stack.Screen name="Home" component={Home} />
-            {/* <Stack.Screen name="Intro" component={IntroScreen} />
-            <Stack.Screen name="IntroNote" component={IntroNoteScreen} /> */}
+            <Stack.Screen name="Dedicate" component={DedicateScreen} />
+            <Stack.Screen name="Intro" component={IntroScreen} />
+            <Stack.Screen name="Title" component={TitleScreen} />
+            <Stack.Screen name="IntroNote" component={IntroNoteScreen} />
             <Stack.Screen name="Note" component={NoteScreen} />
           </Stack.Navigator>
         </NavigationContainer>
@@ -81,3 +108,10 @@ class Nav extends Component {
 }
 
 export default Nav;
+
+const styles = StyleSheet.create({
+  icon: {
+    height: 20,
+    width: 20,
+  },
+});
