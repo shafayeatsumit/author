@@ -89,7 +89,7 @@ const IntroNote = () => {
         ? {behavior: 'padding'}
         : {behavior: 'height'})}
       style={styles.container}>
-      <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
+      <View style={styles.container}>
         <TouchableOpacity onPress={skip} style={styles.skipButton}>
           <Text style={styles.skipText}>Skip for now</Text>
         </TouchableOpacity>
@@ -117,7 +117,7 @@ const IntroNote = () => {
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -126,6 +126,7 @@ export default IntroNote;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'black',
   },
   disableButton: {
     backgroundColor: '#1E4686',
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Regular',
   },
   buttonHolder: {
     flexDirection: 'row',

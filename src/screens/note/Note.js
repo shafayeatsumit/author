@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   Dimensions,
+  Image,
   StyleSheet,
 } from 'react-native';
 import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
@@ -15,19 +16,27 @@ import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
 import {formatDate} from '../../helpers/date';
 import NoteHeader from './NoteHeader';
-import useKeyboard from '../../helpers/useKeyboard';
 import {triggerHaptic} from '../../helpers/haptics';
 const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
-import LinearGradient from 'react-native-linear-gradient';
-import _ from 'lodash';
 TextInput.defaultProps.selectionColor = 'white';
+
+const progressive_prompts = [
+  'backstory',
+  'settings',
+  'flashforward',
+  'characters',
+  'narrator',
+  'Plot Twist',
+];
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
-  const {updatePrompt, incNextAvailable} = usePromptStore();
-  const {setSubmission, updateSubmission, submission} = useSubmissionStore();
+  const {updatePrompt, decNextAvailable, incNextAvailable} = usePromptStore();
+  const {setSubmission, deleteSubmission, updateSubmission, submission} =
+    useSubmissionStore();
+
   const inputRef = useRef();
   const totalPages = submission.length + 1;
   const {prompt, isEdit} = route.params;
@@ -99,6 +108,15 @@ const Note = ({navigation, route}) => {
     triggerHaptic();
   };
 
+  const handleDelete = () => {
+    triggerHaptic();
+    deleteSubmission(prompt.uid);
+    if (prompt.type === 'progressive') {
+      progressive_prompts.map(item => decNextAvailable(item));
+    }
+    goBack();
+  };
+
   const handleEdit = () => {
     triggerHaptic();
     editAnswer();
@@ -136,6 +154,7 @@ const Note = ({navigation, route}) => {
   useEffect(() => {
     setTimeout(setCursor, 500);
   }, []);
+
   const buttonDisabled = text === defaultText;
   const footerPageNumber = isEdit ? findIndex() : totalPages;
   return (
@@ -144,7 +163,7 @@ const Note = ({navigation, route}) => {
         ? {behavior: 'padding'}
         : {behavior: 'height'})}
       style={styles.container}>
-      <LinearGradient style={styles.container} colors={['#343D4C', '#131E25']}>
+      <View style={styles.container}>
         <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
         <View style={styles.inputContainer}>
           <TextInput
@@ -163,7 +182,15 @@ const Note = ({navigation, route}) => {
           </TextInput>
         </View>
         <View style={styles.buttonContainer}>
-          <Text style={styles.pageNo}>Page {footerPageNumber}</Text>
+          <TouchableOpacity
+            style={styles.deleteConainer}
+            onPress={handleDelete}>
+            <Image
+              style={styles.delete}
+              source={require('../../../assets/ff.png')}
+            />
+          </TouchableOpacity>
+          {/* <Text style={styles.pageNo}>Page {footerPageNumber}</Text> */}
           <TouchableOpacity
             disabled={buttonDisabled}
             onPress={isEdit ? handleEdit : handleSubmit}
@@ -171,10 +198,12 @@ const Note = ({navigation, route}) => {
               styles.button,
               buttonDisabled && {backgroundColor: '#1E4686'},
             ]}>
-            <Text style={styles.buttonText}>Add</Text>
+            <Text style={styles.buttonText}>
+              {isEdit ? 'Update' : 'Add page'}
+            </Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -183,6 +212,7 @@ export default Note;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'black',
   },
   questionContainer: {
     height: 120,
@@ -195,6 +225,21 @@ const styles = StyleSheet.create({
     marginTop: 100,
     height: ScreenHeight / 3.0,
   },
+  deleteConainer: {
+    height: 40,
+    width: 40,
+    marginLeft: 35,
+    paddingTop: 20,
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  delete: {
+    height: 20,
+    width: 20,
+    resizeMode: 'contain',
+    tintColor: 'rgba(255,255,255,0.38)',
+  },
   input: {
     flex: 1,
     alignSelf: 'flex-start',
@@ -204,40 +249,33 @@ const styles = StyleSheet.create({
     lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Regular',
   },
   boldInput: {
     lineHeight: 41.6,
     fontSize: RFValue(30),
     letterSpacing: -2,
     color: 'rgba(255,255,255,0.92)',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Montserrat-Regular',
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     paddingRight: 30,
-    // ...Platform.select({
-    //   ios: {
-    //     paddingBottom: 15,
-    //   },
-    //   android: {
-    //     paddingBottom: 60,
-    //   },
-    // }),
+    // backgroundColor: 'orange',
   },
 
   button: {
     marginTop: 10,
     height: 50,
-    width: 100,
-    backgroundColor: '#0D60D6',
+    width: 130,
+    backgroundColor: '#2A62DB',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
-    fontSize: RFValue(26),
+    fontSize: RFValue(18),
     color: 'white',
     fontFamily: 'Montserrat-Bold',
   },
@@ -245,7 +283,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(14),
     lineHeight: 14,
     color: 'rgba(255, 255, 255, 0.38)',
-    paddingRight: 24,
+    // paddingRight: 24,
     paddingTop: 35,
   },
 });
