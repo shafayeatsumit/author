@@ -24,9 +24,7 @@ TextInput.defaultProps.selectionColor = 'white';
 
 const progressive_prompts = [
   'backstory',
-  'settings',
   'flashforward',
-  'characters',
   'narrator',
   'Plot Twist',
 ];
@@ -182,14 +180,18 @@ const Note = ({navigation, route}) => {
           </TextInput>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.deleteConainer}
-            onPress={handleDelete}>
-            <Image
-              style={styles.delete}
-              source={require('../../../assets/ff.png')}
-            />
-          </TouchableOpacity>
+          {isEdit ? (
+            <TouchableOpacity
+              style={styles.deleteConainer}
+              onPress={handleDelete}>
+              <Image
+                style={styles.delete}
+                source={require('../../../assets/ff.png')}
+              />
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.deleteConainer} />
+          )}
           {/* <Text style={styles.pageNo}>Page {footerPageNumber}</Text> */}
           <TouchableOpacity
             disabled={buttonDisabled}

@@ -1,31 +1,20 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Modal,
-  AppState,
-  Text,
-  Dimensions,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {View, AppState, FlatList, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 import Page from './Page';
+import PromptHeader from '../prompts/PromptHeader';
 
 const Pages = ({navigation}) => {
   const {setLastVisit, finishedIntro} = useUserStore();
   const appState = useRef(AppState.currentState);
   const {submission, deleteSubmission} = useSubmissionStore();
   const flatlistRef = useRef();
+
   const renderPage = ({item, index}) => {
     return <Page prompt={item} />;
   };
 
   const keyExtractor = item => item.uid;
-
-  const onEndReached = () => {
-    console.log('reched end');
-  };
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
@@ -57,16 +46,15 @@ const Pages = ({navigation}) => {
     <View style={styles.container}>
       <FlatList
         contentContainerStyle={styles.containerStyle}
-        bounces={false}
+        // bounces={false}
         ref={flatlistRef}
-        onEndReached={onEndReached}
         data={submission}
         renderItem={renderPage}
         showsVerticalScrollIndicator={false}
         keyExtractor={keyExtractor}
-        removeClippedSubviews={false}
         showsHorizontalScrollIndicator={false}
         inverted
+        ListFooterComponent={<PromptHeader />}
       />
     </View>
   );
@@ -81,5 +69,6 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexGrow: 1,
     justifyContent: 'flex-end',
+    paddingTop: 100,
   },
 });

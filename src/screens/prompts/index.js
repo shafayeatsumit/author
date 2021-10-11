@@ -20,9 +20,8 @@ const Prompts = () => {
   );
 
   const scrollToTop = () => {
-    console.log('scrolling to top');
     flatlistRef.current &&
-      flatlistRef.current.scrollToIndex({animated: true, index: 0});
+      flatlistRef.current.scrollToIndex({animated: false, index: 0});
   };
 
   const RenderSwiper = ({item, index}) => {
@@ -49,6 +48,7 @@ const Prompts = () => {
       appState.current = nextAppState;
     });
   }, []);
+
   return (
     <View style={styles.container}>
       <FlatList

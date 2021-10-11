@@ -85,18 +85,20 @@ const Prompt = ({item}) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      // disabled={isDisabled}
-      key={selectedPrompt.id}
-      style={styles.itemPrompt}
-      onPress={handlePress}>
-      <View style={styles.titleHolder}>
-        <Text style={styles.title}>{capitalizedTitle}</Text>
-      </View>
-
-      <Text style={styles.text}>{contentQuestion}</Text>
-    </TouchableOpacity>
+    <>
+      <TouchableOpacity
+        activeOpacity={1}
+        // disabled={isDisabled}
+        key={selectedPrompt.id}
+        style={styles.itemPrompt}
+        onPress={handlePress}>
+        <View style={styles.titleHolder}>
+          <Text style={styles.title}>{capitalizedTitle}</Text>
+        </View>
+        <Text style={styles.text}>{contentQuestion}</Text>
+      </TouchableOpacity>
+      <View style={styles.divider} />
+    </>
   );
 };
 export default Prompt;
@@ -115,16 +117,21 @@ const styles = StyleSheet.create({
   },
   itemPrompt: {
     backgroundColor: 'transparent',
-    height: ScreenHeight / 3,
+    height: ScreenHeight / 2.7,
     width: ScreenWidth,
     justifyContent: 'center',
-    borderBottomColor: 'white',
-    borderBottomWidth: 0.2,
     paddingVertical: 20,
   },
   titleHolder: {
     flexDirection: 'row',
     marginLeft: 25,
+    // backgroundColor: 'tomato',
+  },
+  divider: {
+    height: 1,
+    width: ScreenWidth * 0.8,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignSelf: 'center',
   },
   title: {
     fontSize: RFValue(18),
@@ -138,7 +145,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
     fontFamily: 'Montserrat-Regular',
-    paddingTop: 12,
+    paddingTop: 4,
     letterSpacing: -2,
     paddingHorizontal: 25,
   },

@@ -24,45 +24,48 @@ const Page = ({prompt}) => {
     }
     navigation.navigate('Note', {prompt, isEdit: true});
   };
-
   const dateString = formatDate(prompt.date);
-
   const promptAnswer = prompt.answer;
-
+  if (isDedicationPage) {
+    return (
+      <>
+        <TouchableOpacity
+          onPress={handlePress}
+          activeOpacity={1}
+          style={styles.dedicattionPage}>
+          <Text style={styles.dateText}>{dateString}</Text>
+          <Text style={styles.answer}>{promptAnswer}</Text>
+        </TouchableOpacity>
+      </>
+    );
+  }
   return (
-    <TouchableOpacity
-      onPress={handlePress}
-      activeOpacity={1}
-      style={styles.container}>
-      <View style={styles.questionContainer}>
+    <>
+      <View style={styles.divider} />
+      <TouchableOpacity
+        onPress={handlePress}
+        activeOpacity={1}
+        style={styles.container}>
         <Text style={styles.dateText}>{dateString}</Text>
         <Text style={styles.answer}>{promptAnswer}</Text>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </>
   );
 };
 export default Page;
 
 const styles = StyleSheet.create({
   container: {
-    height: ScreenHeight / 2.5,
+    height: ScreenHeight / 2.7,
     width: ScreenWidth,
     justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: 'red',
-    borderBottomWidth: 0.4,
-    borderBottomColor: 'rgba(255,255,255,0.4)',
-  },
-  questionContainer: {
-    paddingHorizontal: 30,
-    // height: ScreenHeight / 2,
-    width: ScreenWidth,
+    paddingHorizontal: 25,
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
-    lineHeight: 41.6,
     textAlign: 'right',
     fontSize: RFValue(18),
+    paddingRight: 10,
     color: 'rgba(255,255,255,0.37)',
   },
   answer: {
@@ -70,9 +73,22 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
     fontFamily: 'Montserrat-Regular',
-
     lineHeight: 41.6,
-
     letterSpacing: -2,
+    paddingTop: 4,
+    paddingBottom: 24,
+  },
+  divider: {
+    height: 1,
+    width: ScreenWidth * 0.8,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignSelf: 'center',
+  },
+  dedicattionPage: {
+    height: ScreenHeight / 3,
+    justifyContent: 'center',
+    marginHorizontal: 30,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
   },
 });

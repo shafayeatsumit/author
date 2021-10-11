@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Dimensions, Text, StyleSheet} from 'react-native';
 import {useSubmissionStore} from '../../store';
 import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
+const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
+
 const PageHeader = () => {
   const {submission, title} = useSubmissionStore();
   let pageTitle = title ? title : 'Add Title';
@@ -19,8 +21,7 @@ export default PageHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
-
+    height: ScreenHeight / 10,
     paddingTop: 30,
     justifyContent: 'center',
     alignItems: 'center',

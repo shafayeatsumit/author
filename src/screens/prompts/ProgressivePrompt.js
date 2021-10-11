@@ -73,21 +73,24 @@ const Prompt = ({item}) => {
   }
   const capitalizedTitle = _.upperFirst(promptTitle);
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      disabled={!!disableMessage}
-      key={'zero'}
-      style={styles.itemPrompt}
-      onPress={handlePress}>
-      <View style={styles.clockHolder}>
-        <Text style={styles.title}>{capitalizedTitle}</Text>
-      </View>
-      {disableMessage ? (
-        <Text style={styles.disableText}>{disableMessage}</Text>
-      ) : (
-        <Text style={styles.text}>{activeMessage + ' ' + '______'}</Text>
-      )}
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity
+        activeOpacity={1}
+        disabled={!!disableMessage}
+        key={'zero'}
+        style={styles.itemPrompt}
+        onPress={handlePress}>
+        <View style={styles.clockHolder}>
+          <Text style={styles.title}>{capitalizedTitle}</Text>
+        </View>
+        {disableMessage ? (
+          <Text style={styles.disableText}>{disableMessage}</Text>
+        ) : (
+          <Text style={styles.text}>{activeMessage + ' ' + '______'}</Text>
+        )}
+      </TouchableOpacity>
+      <View style={styles.divider} />
+    </View>
   );
 };
 
@@ -106,13 +109,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  divider: {
+    height: 1,
+    width: ScreenWidth * 0.8,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignSelf: 'center',
+  },
   itemPrompt: {
     backgroundColor: 'transparent',
-    borderBottomColor: 'white',
-    borderBottomWidth: 0.2,
-    height: ScreenHeight / 3,
+    height: ScreenHeight / 2.7,
     width: ScreenWidth,
     justifyContent: 'center',
+
     paddingVertical: 20,
   },
 
