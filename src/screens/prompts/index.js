@@ -25,9 +25,6 @@ const Prompts = () => {
   };
 
   const RenderSwiper = ({item, index}) => {
-    if (item.type === 'progressive') {
-      return <ProgressivePrompt key={item.id} item={item} />;
-    }
     if (item.type === 'daily') {
       return <DailyPrompt key={item.id} item={item} />;
     }

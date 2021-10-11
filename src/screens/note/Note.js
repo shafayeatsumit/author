@@ -200,7 +200,8 @@ const Note = ({navigation, route}) => {
               styles.button,
               buttonDisabled && {backgroundColor: '#1E4686'},
             ]}>
-            <Text style={styles.buttonText}>
+            <Text
+              style={[styles.buttonText, buttonDisabled && styles.disableText]}>
               {isEdit ? 'Update' : 'Add page'}
             </Text>
           </TouchableOpacity>
@@ -225,7 +226,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     paddingHorizontal: 25,
     marginTop: 100,
-    height: ScreenHeight / 3.0,
+    height: ScreenHeight / 2.9,
+  },
+  disableText: {
+    color: 'rgba(255, 255, 255, 0.38)',
   },
   deleteConainer: {
     height: 40,
@@ -237,10 +241,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   delete: {
-    height: 20,
-    width: 20,
+    height: 25,
+    width: 25,
     resizeMode: 'contain',
-    tintColor: 'rgba(255,255,255,0.38)',
+    tintColor: 'rgba(255,255,255,0.7)',
   },
   input: {
     flex: 1,

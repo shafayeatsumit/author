@@ -12,6 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useUserStore, useSubmissionStore} from '../../store';
 import {formatDate} from '../../helpers/date';
+import {triggerHaptic} from '../../helpers/haptics';
 
 const Page = ({prompt}) => {
   const navigation = useNavigation();
@@ -23,6 +24,7 @@ const Page = ({prompt}) => {
       return;
     }
     navigation.navigate('Note', {prompt, isEdit: true});
+    triggerHaptic();
   };
   const dateString = formatDate(prompt.date);
   const promptAnswer = prompt.answer;

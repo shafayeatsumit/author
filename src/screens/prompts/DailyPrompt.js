@@ -13,6 +13,7 @@ import {DailyTitles} from '../../helpers/contentsData';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import _ from 'lodash';
+import {triggerHaptic} from '../../helpers/haptics';
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
@@ -25,6 +26,7 @@ const Prompt = ({item}) => {
   const currentPrompt = promptStore[promptTitle];
 
   const goToNote = () => {
+    triggerHaptic();
     navigation.navigate('Note', {prompt: selectedPrompt});
   };
 

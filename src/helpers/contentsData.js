@@ -17,27 +17,6 @@ export const ContentTitles = [
     type: 'daily',
     time: 'morning',
   },
-  {
-    id: 'narrator',
-    title: 'narrator',
-    type: 'progressive',
-  },
-  {
-    id: 'flashforward',
-    title: 'flashforward',
-    type: 'progressive',
-  },
-
-  {
-    id: 'backstory',
-    title: 'backstory',
-    type: 'progressive',
-  },
-  {
-    id: 'plot_twist',
-    title: 'Plot Twist',
-    type: 'progressive',
-  },
 ];
 
 export const ContentTitlesAtStart = [

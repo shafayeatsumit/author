@@ -10,7 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useHeaderHeight} from '@react-navigation/stack';
-import {useSubmissionStore} from '../../store';
+import {useSubmissionStore, useUserStore} from '../../store';
 import {triggerHaptic} from '../../helpers/haptics';
 import {sharedStart} from '../../helpers/utils';
 import {useNavigation} from '@react-navigation/native';
@@ -25,6 +25,7 @@ const IntroNote = () => {
   const navigation = useNavigation();
   const MonthName = moment().format('MMMM');
   const {updateSubmission, setTitle, title} = useSubmissionStore();
+  const {setFinishedIntro} = useUserStore();
   const promptQuestion = `If the rest of ${MonthName} was a chapter in the story of my life, I’d title it`;
   const promptAnswer = title ? ' ' + title : ' ';
   const defaultText = promptQuestion + promptAnswer;
@@ -57,6 +58,7 @@ const IntroNote = () => {
     triggerHaptic();
     // handleClose();
     navigation.navigate('Home');
+    setFinishedIntro();
   };
 
   const handleKeyPress = ({nativeEvent}) => {
@@ -75,6 +77,7 @@ const IntroNote = () => {
     setTitle(unsharedInputValue);
     navigation.navigate('Home');
     triggerHaptic();
+    setFinishedIntro();
   };
 
   const charLength = unsharedInputValue.length;
