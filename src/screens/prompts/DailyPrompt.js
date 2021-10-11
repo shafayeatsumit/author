@@ -34,7 +34,7 @@ const Prompt = ({item}) => {
     goToNote();
   };
 
-  const contentQuestion = selectedPrompt.question + ' ' + '______';
+  const contentQuestion = selectedPrompt.question;
 
   const capitalizedTitle = _.upperFirst(selectedPrompt.title);
 
@@ -45,6 +45,7 @@ const Prompt = ({item}) => {
       const lastServedId = currentPrompt.id;
       allPrompts = allPrompts.filter(p => p.id !== lastServedId);
     }
+
     const prompt = _.sample(allPrompts);
     const {title, id} = prompt;
     updatePrompt(title, id, new Date());
@@ -53,16 +54,8 @@ const Prompt = ({item}) => {
   };
 
   const serveForToday = () => {
-    const {id: promptId, answeredAt} = currentPrompt;
-    const hasAnsweredBefore = !!answeredAt;
-    const isAnsweredToday =
-      hasAnsweredBefore && checkTodayAfterFive(answeredAt);
-
-    if (isAnsweredToday) {
-      setDisabled(true);
-    }
+    const {id: promptId} = currentPrompt;
     const prompt = allPrompts.find(p => p.id === promptId);
-
     setSelectedPrompt(prompt);
   };
 
@@ -94,10 +87,12 @@ const Prompt = ({item}) => {
         key={selectedPrompt.id}
         style={styles.itemPrompt}
         onPress={handlePress}>
-        <View style={styles.titleHolder}>
+        {/* <View style={styles.titleHolder}>
           <Text style={styles.title}>{capitalizedTitle}</Text>
-        </View>
-        <Text style={styles.text}>{contentQuestion}</Text>
+        </View> */}
+        {contentQuestion && (
+          <Text style={styles.text}>{contentQuestion + ' ' + '______'}</Text>
+        )}
       </TouchableOpacity>
       <View style={styles.divider} />
     </>

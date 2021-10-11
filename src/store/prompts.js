@@ -5,24 +5,10 @@ let promptStore = set => ({
   morning: {},
   highlight: {},
   evening: {},
-  backstory: {
-    firstAvailable: 5,
-    increment: 4,
-  },
-  flashforward: {
-    firstAvailable: 7,
-    increment: 2,
-  },
+  backstory: {},
+  flashforward: {},
+  narrator: {},
 
-  narrator: {
-    firstAvailable: 4,
-    increment: 5,
-  },
-  'Plot Twist': {
-    isOn: false,
-    firstAvailable: 12,
-    increment: 3,
-  },
   updatePrompt: (title, id, servedAt, answeredAt) =>
     set(state => ({
       [title]: {

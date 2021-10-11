@@ -55,7 +55,6 @@ const Pages = ({navigation}) => {
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
         inverted
-        // ListFooterComponent={<PromptHeader />}
       />
     </View>
   );

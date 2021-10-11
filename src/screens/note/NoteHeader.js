@@ -11,9 +11,7 @@ const NoteHeader = ({date, title, goBack}) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.dateText}>
-        {date} <Text style={styles.title}>{noteTitle}</Text>
-      </Text>
+      <Text style={styles.dateText}>{date}</Text>
       <TouchableOpacity onPress={handleBack} style={styles.xoutContainer}>
         <Image
           style={styles.xout}
