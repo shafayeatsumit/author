@@ -1,14 +1,18 @@
 import React from 'react';
-import {View, Animated, StyleSheet} from 'react-native';
-import {formatDate} from '../../helpers/date';
+import {View, Dimensions, Text, Animated, StyleSheet} from 'react-native';
+import {useSubmissionStore} from '../../store';
+import {RFValue} from 'react-native-responsive-fontsize';
 
-const PageHeader = ({submission, activeIndex}) => {
-  const activeContent = submission[activeIndex];
-  const {date} = activeContent;
-  const dateString = formatDate(date);
+import _ from 'lodash';
+const {height: ScreenHeight} = Dimensions.get('window');
+
+const PageHeader = () => {
+  const {submission, title} = useSubmissionStore();
+  let pageTitle = title ? title : 'Add Title';
+  pageTitle = _.upperFirst(pageTitle.trim());
   return (
     <View style={styles.container}>
-      <Animated.Text style={styles.dateText}>{dateString}</Animated.Text>
+      <Text style={styles.text}>{pageTitle}</Text>
     </View>
   );
 };
@@ -21,45 +25,18 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 144,
-    // backgroundColor: 'red',
-    marginTop: 50,
+    paddingTop: 15,
+    height: ScreenHeight / 10,
     justifyContent: 'center',
-  },
-  dateText: {
-    fontFamily: 'Montserrat-Regular',
-    paddingTop: 10,
-    fontSize: 16,
-    paddingLeft: 32,
-    lineHeight: 16,
-    letterSpacing: -1,
-    color: 'rgba(255,255,255,0.7)',
-  },
-  title: {
-    fontFamily: 'Montserrat-Regular',
-    color: 'rgba(255,255,255,0.38)',
-    fontSize: 16,
-    lineHeight: 16,
-    letterSpacing: -1,
-    paddingLeft: 4,
-  },
-  dotContainer: {
-    height: 10,
-    width: 120,
     alignItems: 'center',
     flexDirection: 'row',
-    marginLeft: 32,
+    backgroundColor: 'black',
+    zIndex: 5,
   },
-  dot: {
-    height: 3,
-    width: 3,
-    borderRadius: 1.5,
-    backgroundColor: 'rgba(255,255,255,0.38)',
-    marginLeft: 5,
-  },
-  emptyDot: {
-    borderColor: 'rgba(255,255,255,0.7)',
-    backgroundColor: 'transparent',
-    borderWidth: 0.4,
+  text: {
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: RFValue(18),
+    fontFamily: 'Montserrat-Regular',
+    textAlign: 'center',
   },
 });

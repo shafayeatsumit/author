@@ -1,15 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, AppState, FlatList, StyleSheet} from 'react-native';
+import {View, AppState, Dimensions, FlatList, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 import Page from './Page';
-import PromptHeader from '../prompts/PromptHeader';
+import PromptHeader from './PageHeader';
+const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Pages = ({navigation}) => {
   const {setLastVisit, finishedIntro} = useUserStore();
   const appState = useRef(AppState.currentState);
   const {submission, deleteSubmission} = useSubmissionStore();
   const flatlistRef = useRef();
-
+  const totalSubmission = submission.length;
   const renderPage = ({item, index}) => {
     return <Page prompt={item} />;
   };
@@ -44,9 +45,9 @@ const Pages = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <PromptHeader />
       <FlatList
         contentContainerStyle={styles.containerStyle}
-        // bounces={false}
         ref={flatlistRef}
         data={submission}
         renderItem={renderPage}
@@ -54,7 +55,7 @@ const Pages = ({navigation}) => {
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
         inverted
-        ListFooterComponent={<PromptHeader />}
+        // ListFooterComponent={<PromptHeader />}
       />
     </View>
   );
@@ -69,6 +70,6 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexGrow: 1,
     justifyContent: 'flex-end',
-    paddingTop: 100,
+    paddingBottom: ScreenHeight / 10,
   },
 });

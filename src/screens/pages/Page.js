@@ -34,7 +34,7 @@ const Page = ({prompt}) => {
           activeOpacity={1}
           style={styles.dedicattionPage}>
           <Text style={styles.dateText}>{dateString}</Text>
-          <Text style={styles.answer}>{promptAnswer}</Text>
+          <Text style={styles.answer}>I dedicate this to {promptAnswer}</Text>
         </TouchableOpacity>
       </>
     );

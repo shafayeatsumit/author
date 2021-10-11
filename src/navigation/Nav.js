@@ -30,9 +30,7 @@ function Home() {
         activeTintColor: 'rgba(255, 255, 255, 0.92)',
         activeBackgroundColor: '#191919',
         inactiveBackgroundColor: '#191919',
-        style: {
-          backgroundColor: '#191919',
-        },
+        style: styles.tabbar,
       }}>
       <Tab.Screen
         name="Page"
@@ -113,5 +111,11 @@ const styles = StyleSheet.create({
   icon: {
     height: 20,
     width: 20,
+  },
+  tabbar: {
+    backgroundColor: '#191919',
+    borderColor: '#191919',
+    borderTopWidth: 0,
+    elevation: 0,
   },
 });

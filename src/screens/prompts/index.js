@@ -59,6 +59,7 @@ const Prompts = () => {
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<PromptHeader />}
+        stickyHeaderIndices={[0]}
       />
     </View>
   );
