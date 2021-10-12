@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     justifyContent: 'center',
     paddingVertical: 20,
+    paddingHorizontal: 15,
   },
   titleHolder: {
     flexDirection: 'row',
