@@ -26,12 +26,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Montserrat-Bold',
-    textAlign: 'left',
+    textAlign: 'center',
     fontSize: RFValue(28),
     lineHeight: 39.2,
     color: 'rgba(255,255,255,0.92)',
     letterSpacing: -2,
-    marginLeft: 35,
+    // marginLeft: 35,
+
     // marginLeft: -105,
     // paddingLeft: 48,
   },
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     bottom: 84,
+
     alignSelf: 'center',
     height: 52,
     width: 300,
