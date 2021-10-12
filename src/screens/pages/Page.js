@@ -32,6 +32,7 @@ const Page = ({prompt}) => {
     return (
       <>
         <TouchableOpacity
+          delayPressIn={50}
           onPress={handlePress}
           activeOpacity={1}
           style={styles.dedicattionPage}>
@@ -45,6 +46,7 @@ const Page = ({prompt}) => {
     <>
       <View style={styles.divider} />
       <TouchableOpacity
+        delayPressIn={50}
         onPress={handlePress}
         activeOpacity={1}
         style={styles.container}>
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
     fontFamily: 'Montserrat-Regular',
-    lineHeight: 41.6,
+    lineHeight: 44.8,
     letterSpacing: -2,
     paddingTop: 4,
     paddingBottom: 24,

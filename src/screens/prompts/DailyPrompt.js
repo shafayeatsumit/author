@@ -83,6 +83,7 @@ const Prompt = ({item}) => {
     <>
       <TouchableOpacity
         activeOpacity={1}
+        delayPressIn={50}
         // disabled={isDisabled}
         key={selectedPrompt.id}
         style={styles.itemPrompt}
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
   text: {
-    lineHeight: 41.6,
+    lineHeight: 44.8,
     fontSize: RFValue(32),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
