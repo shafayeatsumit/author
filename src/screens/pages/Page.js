@@ -60,10 +60,10 @@ export default Page;
 
 const styles = StyleSheet.create({
   container: {
-    height: ScreenHeight / 2.7,
+    minHeight: ScreenHeight / 2.7,
     width: ScreenWidth,
     justifyContent: 'center',
-    paddingHorizontal: 25,
+    paddingHorizontal: 35,
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',

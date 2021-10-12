@@ -115,10 +115,10 @@ const styles = StyleSheet.create({
   },
   itemPrompt: {
     backgroundColor: 'transparent',
-    height: ScreenHeight / 2.7,
+    minHeight: ScreenHeight / 2.7,
     width: ScreenWidth,
     justifyContent: 'center',
-    paddingVertical: 20,
+    paddingVertical: 60,
     paddingHorizontal: 15,
   },
   titleHolder: {

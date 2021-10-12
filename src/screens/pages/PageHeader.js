@@ -1,18 +1,32 @@
 import React from 'react';
-import {View, Dimensions, Text, Animated, StyleSheet} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Text,
+  StyleSheet,
+} from 'react-native';
 import {useSubmissionStore} from '../../store';
 import {RFValue} from 'react-native-responsive-fontsize';
-
+import {useNavigation} from '@react-navigation/native';
 import _ from 'lodash';
 const {height: ScreenHeight} = Dimensions.get('window');
 
 const PageHeader = () => {
   const {submission, title} = useSubmissionStore();
+  const navigation = useNavigation();
   let pageTitle = title ? title : 'Add Title';
   pageTitle = _.upperFirst(pageTitle.trim());
+
+  const handlePress = () => {
+    navigation.navigate('Title');
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{pageTitle}</Text>
+      <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <Text style={styles.text}>{pageTitle}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -32,6 +46,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'black',
     zIndex: 5,
+  },
+  button: {
+    padding: 10,
+    paddingHorizontal: 20,
   },
   text: {
     color: 'rgba(255,255,255,0.7)',
