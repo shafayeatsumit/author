@@ -3,6 +3,7 @@ import {View, AppState, Dimensions, FlatList, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 import Page from './Page';
 import PromptHeader from './PageHeader';
+import analytics from '@react-native-firebase/analytics';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Pages = ({navigation}) => {
@@ -25,10 +26,15 @@ const Pages = ({navigation}) => {
       ) {
         setLastVisit();
         console.log('App has come to the foreground!');
+        analytics().logEvent('app_foreground');
       }
       appState.current = nextAppState;
     });
   }, []);
+
+  const handleScrollEnd = () => {
+    analytics().logEvent('scrolling');
+  };
 
   const scrollToTop = () => {
     flatlistRef.current && flatlistRef.current.scrollToEnd({animated: true});
@@ -55,6 +61,7 @@ const Pages = ({navigation}) => {
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
         inverted
+        onMomentumScrollEnd={handleScrollEnd}
       />
     </View>
   );

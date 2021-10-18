@@ -13,6 +13,7 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useUserStore, useSubmissionStore} from '../../store';
 import {formatDate} from '../../helpers/date';
 import {triggerHaptic} from '../../helpers/haptics';
+import analytics from '@react-native-firebase/analytics';
 
 const Page = ({prompt}) => {
   const navigation = useNavigation();
@@ -25,6 +26,9 @@ const Page = ({prompt}) => {
     }
     navigation.navigate('Note', {prompt, isEdit: true});
     triggerHaptic();
+    analytics().logEvent('button_push', {
+      name: 'tap to edit',
+    });
   };
   const dateString = formatDate(prompt.date);
   const promptAnswer = prompt.answer;
@@ -64,6 +68,7 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     justifyContent: 'center',
     paddingHorizontal: 35,
+    paddingVertical: 60,
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',

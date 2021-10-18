@@ -9,6 +9,7 @@ import {
 import {useSubmissionStore} from '../../store';
 import _ from 'lodash';
 import {RFValue} from 'react-native-responsive-fontsize';
+import analytics from '@react-native-firebase/analytics';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 
@@ -20,6 +21,9 @@ const PageHeader = () => {
 
   const handlePress = () => {
     navigation.navigate('Title');
+    analytics().logEvent('button_push', {
+      name: 'go edit title',
+    });
   };
 
   return (

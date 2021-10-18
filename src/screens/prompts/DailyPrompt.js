@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import _ from 'lodash';
 import {triggerHaptic} from '../../helpers/haptics';
+import analytics from '@react-native-firebase/analytics';
 
 const Prompt = ({item}) => {
   const navigation = useNavigation();
@@ -24,11 +25,6 @@ const Prompt = ({item}) => {
   const promptStore = usePromptStore();
   const {updatePrompt} = promptStore;
   const currentPrompt = promptStore[promptTitle];
-
-  const goToNote = () => {
-    triggerHaptic();
-    navigation.navigate('Note', {prompt: selectedPrompt});
-  };
 
   const handlePress = () => {
     goToNote();
@@ -69,6 +65,14 @@ const Prompt = ({item}) => {
       // all prompts filter then pick one,
       pickRandomPrompt();
     }
+  };
+
+  const goToNote = () => {
+    triggerHaptic();
+    navigation.navigate('Note', {prompt: selectedPrompt});
+    analytics().logEvent('button_push', {
+      name: contentQuestion,
+    });
   };
 
   useEffect(() => {

@@ -48,19 +48,12 @@ const Note = ({navigation, route}) => {
   };
 
   const answerPart = isEdit ? getAnswer() : '';
-
   const defaultText = promptQuestion + ' ' + answerPart;
-
   const [text, onChangeText] = React.useState(defaultText);
-
   const dateString = isEdit ? formatDate(prompt.date) : 'Today';
 
-  const logEvent = eventType => {
-    analytics().logEvent(eventType, {
-      q: `${prompt.question}`,
-      a: `${text}`,
-    });
-  };
+  const sharedInputValue = sharedStart([promptQuestion, text]);
+  const unsharedInputValue = text.replace(sharedInputValue, '');
 
   const submitAnswer = () => {
     const date = moment();
@@ -74,28 +67,23 @@ const Note = ({navigation, route}) => {
       date: new Date(),
       day,
     });
-    const create = !isEdit;
-    if (create && prompt.type !== 'progressive') {
-      const {id, title} = prompt;
-      updatePrompt(title, id, null, new Date());
-      logEvent('submit');
-    }
-
-    if (create && prompt.type === 'progressive') {
-      const {title} = prompt;
-      incNextAvailable(title, totalPages);
-    }
+    analytics().logEvent('button_push', {
+      name: 'add page',
+      length: unsharedInputValue.length,
+    });
   };
 
   const editAnswer = () => {
     updateSubmission(prompt.id, text);
-    logEvent('edit');
+    analytics().logEvent('button_push', {
+      name: 'update page',
+    });
   };
 
   const goBack = () => {
     navigation.goBack();
     analytics().logEvent('button_push', {
-      name: 'exit',
+      name: 'pressed exit',
     });
   };
 
@@ -120,9 +108,6 @@ const Note = ({navigation, route}) => {
     editAnswer();
     goBack();
   };
-
-  const sharedInputValue = sharedStart([promptQuestion, text]);
-  const unsharedInputValue = text.replace(sharedInputValue, '');
 
   const resetCursor = () => {
     inputRef.current.setNativeProps({

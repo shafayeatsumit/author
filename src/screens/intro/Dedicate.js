@@ -16,6 +16,7 @@ import {sharedStart} from '../../helpers/utils';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
+import analytics from '@react-native-firebase/analytics';
 
 const {height: ScreenHeight} = Dimensions.get('window');
 TextInput.defaultProps.selectionColor = 'white';
@@ -60,6 +61,9 @@ const Dedicate = ({route}) => {
   const skip = () => {
     triggerHaptic();
     goToTitle();
+    analytics().logEvent('button_push', {
+      name: 'skipped dedication',
+    });
   };
 
   const handleKeyPress = ({nativeEvent}) => {
@@ -88,6 +92,9 @@ const Dedicate = ({route}) => {
     updateSubmission(prompt.id, unsharedInputValue);
     triggerHaptic();
     goToTitle();
+    analytics().logEvent('button_push', {
+      name: 'add dedication',
+    });
   };
 
   useEffect(() => {

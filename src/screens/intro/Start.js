@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {triggerHaptic} from '../../helpers/haptics';
+import analytics from '@react-native-firebase/analytics';
 
 const IntroStart = ({navigation}) => (
   <View style={styles.container}>
@@ -10,6 +11,9 @@ const IntroStart = ({navigation}) => (
       onPress={() => {
         triggerHaptic();
         navigation.replace('Dedicate', {isEdit: false});
+        analytics().logEvent('button_push', {
+          name: 'Get Started',
+        });
       }}
       style={styles.button}>
       <Text style={styles.buttonText}>Get Started</Text>

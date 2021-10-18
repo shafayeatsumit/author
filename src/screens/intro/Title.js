@@ -17,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
+import analytics from '@react-native-firebase/analytics';
 
 const {height: ScreenHeight} = Dimensions.get('window');
 TextInput.defaultProps.selectionColor = 'white';
@@ -59,6 +60,9 @@ const IntroNote = () => {
     // handleClose();
     navigation.navigate('Home');
     setFinishedIntro();
+    analytics().logEvent('button_push', {
+      name: 'skipped title',
+    });
   };
 
   const handleKeyPress = ({nativeEvent}) => {
@@ -78,6 +82,9 @@ const IntroNote = () => {
     navigation.navigate('Home');
     triggerHaptic();
     setFinishedIntro();
+    analytics().logEvent('button_push', {
+      name: 'add title',
+    });
   };
 
   const charLength = unsharedInputValue.length;

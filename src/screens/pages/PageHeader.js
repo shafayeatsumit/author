@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 import {useSubmissionStore} from '../../store';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useNavigation} from '@react-navigation/native';
@@ -20,6 +21,9 @@ const PageHeader = () => {
 
   const handlePress = () => {
     navigation.navigate('Title');
+    analytics().logEvent('button_push', {
+      name: 'go edit title',
+    });
   };
 
   return (

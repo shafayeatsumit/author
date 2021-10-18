@@ -1,5 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {View, FlatList, AppState, Dimensions, StyleSheet} from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 import {checkIfToday} from '../../helpers/date';
 import {ContentTitles} from '../../helpers/contentsData';
 import {useSubmissionStore} from '../../store';
@@ -24,6 +25,10 @@ const Prompts = () => {
       flatlistRef.current.scrollToIndex({animated: false, index: 0});
   };
 
+  const handleScrollEnd = () => {
+    analytics().logEvent('scrolling');
+  };
+
   const RenderSwiper = ({item, index}) => {
     if (item.type === 'daily') {
       return <DailyPrompt key={item.id} item={item} />;
@@ -41,6 +46,7 @@ const Prompts = () => {
         // App has come to the foreground!
         console.log('app has come to fore ground!!!!');
         scrollToTop();
+        analytics().logEvent('app_foreground');
       }
       appState.current = nextAppState;
     });
@@ -57,6 +63,7 @@ const Prompts = () => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={<PromptHeader />}
         stickyHeaderIndices={[0]}
+        onMomentumScrollEnd={handleScrollEnd}
       />
     </View>
   );
