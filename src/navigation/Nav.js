@@ -19,48 +19,6 @@ import PromptScreen from '../screens/prompts';
 import PageScreen from '../screens/pages';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
-function Home() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Prompt"
-      tabBarOptions={{
-        showLabel: false,
-        activeTintColor: 'rgba(255, 255, 255, 0.92)',
-        activeBackgroundColor: '#191919',
-        inactiveBackgroundColor: '#191919',
-        style: styles.tabbar,
-      }}>
-      <Tab.Screen
-        name="Page"
-        component={PageScreen}
-        options={{
-          tabBarIcon: ({color}) => (
-            <Image
-              style={[styles.icon, {tintColor: color}]}
-              resizeMode="contain"
-              source={require('../../assets/page_icon.png')}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Prompt"
-        component={PromptScreen}
-        resizeMode="contain"
-        options={{
-          tabBarIcon: ({color}) => (
-            <Image
-              style={[styles.icon, {tintColor: color}]}
-              source={require('../../assets/prompt_icon.png')}
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 class Nav extends Component {
   render() {
@@ -92,7 +50,7 @@ class Nav extends Component {
             }}>
             <Stack.Screen name="Loading" component={LoadingScreen} />
             <Stack.Screen name="Start" component={StartScreen} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Home" component={PageScreen} />
             <Stack.Screen name="Dedicate" component={DedicateScreen} />
             <Stack.Screen name="Intro" component={IntroScreen} />
             <Stack.Screen name="Title" component={TitleScreen} />
