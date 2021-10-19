@@ -1,5 +1,8 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
+const date = moment();
+const dedicate_day = date.format('YYYY-MM-DD');
 
 export const IntroPages = [
   {
@@ -8,6 +11,7 @@ export const IntroPages = [
     type: 'introFlow',
     question: 'I dedicate this story to',
     date: new Date(),
+    day: dedicate_day,
   },
 ];
 

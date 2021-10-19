@@ -30,7 +30,7 @@ const Page = ({prompt}) => {
       name: 'tap to edit',
     });
   };
-  const dateString = formatDate(prompt.date);
+  const dateString = prompt.date ? formatDate(prompt.date) : null;
   const promptAnswer = prompt.answer;
   if (isDedicationPage) {
     return (
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
-    textAlign: 'right',
+    textAlign: 'center',
     fontSize: RFValue(18),
     paddingRight: 10,
     color: 'rgba(255,255,255,0.37)',

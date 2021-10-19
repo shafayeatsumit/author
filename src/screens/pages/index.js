@@ -71,7 +71,15 @@ const Pages = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
   const submissionReverse = [...submission].reverse();
-  const data = [...prompts, ...submissionReverse];
+  const submissionDateAdjusted = submissionReverse.map((item, index) => {
+    const previousValue = submissionReverse[index - 1];
+    if (previousValue && previousValue.day === item.day) {
+      return {...item, date: null};
+    }
+    return item;
+  });
+
+  const data = [...prompts, ...submissionDateAdjusted];
 
   return (
     <View style={styles.container}>
