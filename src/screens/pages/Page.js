@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     width: ScreenWidth,
     justifyContent: 'center',
     paddingHorizontal: 35,
-    paddingVertical: 60,
+    paddingVertical: 72,
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',

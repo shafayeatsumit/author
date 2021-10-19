@@ -123,6 +123,7 @@ const IntroNote = () => {
 
           <TouchableOpacity
             onPress={handleAdd}
+            disabled={buttonDisabled}
             style={[styles.button, buttonDisabled && styles.disableButton]}>
             <Text style={styles.buttonText}>Add</Text>
           </TouchableOpacity>

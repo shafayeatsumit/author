@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     minHeight: ScreenHeight / 2.7,
     width: ScreenWidth,
     justifyContent: 'center',
-    paddingVertical: 60,
+    paddingVertical: 72,
     paddingHorizontal: 15,
   },
   titleHolder: {
