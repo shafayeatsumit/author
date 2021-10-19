@@ -48,7 +48,7 @@ const Page = ({prompt}) => {
   }
   return (
     <>
-      <View style={styles.divider} />
+      {/* <View style={styles.divider} /> */}
       <TouchableOpacity
         delayPressIn={50}
         onPress={handlePress}
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     height: ScreenHeight / 3,
     justifyContent: 'center',
     marginHorizontal: 30,
-    borderBottomWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+    // borderBottomWidth: 1,
+    // borderColor: 'rgba(255,255,255,0.2)',
   },
 });

@@ -99,7 +99,7 @@ const Prompt = ({item}) => {
           <Text style={styles.text}>{contentQuestion + ' ' + '______'}</Text>
         )}
       </TouchableOpacity>
-      <View style={styles.divider} />
+      {/* <View style={styles.divider} /> */}
     </>
   );
 };

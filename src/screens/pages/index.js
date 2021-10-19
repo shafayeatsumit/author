@@ -1,9 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, AppState, Dimensions, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  AppState,
+  Dimensions,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 import Page from './Page';
 import PromptHeader from './PageHeader';
+import DailyPrompt from '../../screens/prompts/DailyPrompt';
 import analytics from '@react-native-firebase/analytics';
+import {ContentTitles} from '../../helpers/contentsData';
+import {checkIfToday} from '../../helpers/date';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Pages = ({navigation}) => {
@@ -11,12 +21,24 @@ const Pages = ({navigation}) => {
   const appState = useRef(AppState.currentState);
   const {submission, deleteSubmission} = useSubmissionStore();
   const flatlistRef = useRef();
-  const totalSubmission = submission.length;
+
+  const answeredToday = submission
+    .filter(item => item.type === 'daily' && checkIfToday(item.date))
+    .map(item => item.title);
+
+  const prompts = ContentTitles.filter(
+    item => !answeredToday.includes(item.title),
+  );
+
   const renderPage = ({item, index}) => {
-    return <Page prompt={item} />;
+    if (item.uid) {
+      return <Page prompt={item} />;
+    }
+
+    return <DailyPrompt item={item} />;
   };
 
-  const keyExtractor = item => item.uid;
+  const keyExtractor = item => (item.uid ? item.uid : item.id);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextAppState => {
@@ -48,6 +70,8 @@ const Pages = ({navigation}) => {
     // Return the function to unsubscribe from the event so it gets removed on unmount
     return unsubscribe;
   }, [navigation]);
+  const submissionReverse = [...submission].reverse();
+  const data = [...prompts, ...submissionReverse];
 
   return (
     <View style={styles.container}>
@@ -55,12 +79,11 @@ const Pages = ({navigation}) => {
       <FlatList
         contentContainerStyle={styles.containerStyle}
         ref={flatlistRef}
-        data={submission}
+        data={data}
         renderItem={renderPage}
         showsVerticalScrollIndicator={false}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
-        inverted
         onMomentumScrollEnd={handleScrollEnd}
       />
     </View>
@@ -75,7 +98,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flexGrow: 1,
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
     paddingBottom: ScreenHeight / 10,
   },
 });
