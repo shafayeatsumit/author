@@ -35,7 +35,7 @@ const Pages = ({navigation}) => {
       return <Page prompt={item} />;
     }
 
-    return <DailyPrompt item={item} />;
+    return <DailyPrompt item={item} scrollToTop={scrollToTop} />;
   };
 
   const keyExtractor = item => (item.uid ? item.uid : item.id);
@@ -59,7 +59,8 @@ const Pages = ({navigation}) => {
   };
 
   const scrollToTop = () => {
-    flatlistRef.current && flatlistRef.current.scrollToEnd({animated: true});
+    flatlistRef.current &&
+      flatlistRef.current.scrollToIndex({animated: false, index: 0});
   };
 
   React.useEffect(() => {

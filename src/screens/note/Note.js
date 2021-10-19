@@ -31,13 +31,13 @@ const progressive_prompts = [
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
-  const {updatePrompt, decNextAvailable, incNextAvailable} = usePromptStore();
+  const {decNextAvailable} = usePromptStore();
   const {setSubmission, deleteSubmission, updateSubmission, submission} =
     useSubmissionStore();
 
   const inputRef = useRef();
   const totalPages = submission.length + 1;
-  const {prompt, isEdit} = route.params;
+  const {prompt, scrollToTop, isEdit} = route.params;
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer;
 
@@ -88,6 +88,7 @@ const Note = ({navigation, route}) => {
   };
 
   const handleSubmit = () => {
+    scrollToTop();
     submitAnswer();
     goBack();
     setLastSubmit();

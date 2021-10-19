@@ -16,7 +16,7 @@ import _ from 'lodash';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
-const Prompt = ({item}) => {
+const Prompt = ({item, scrollToTop}) => {
   const navigation = useNavigation();
   const [isDisabled, setDisabled] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState('');
@@ -69,7 +69,8 @@ const Prompt = ({item}) => {
 
   const goToNote = () => {
     triggerHaptic();
-    navigation.navigate('Note', {prompt: selectedPrompt});
+    //TODO: add here.
+    navigation.navigate('Note', {prompt: selectedPrompt, scrollToTop});
     analytics().logEvent('button_push', {
       name: contentQuestion,
     });
