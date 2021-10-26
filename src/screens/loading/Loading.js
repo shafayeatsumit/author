@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import {useUserStore, useSubmissionStore} from '../../store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit} = useUserStore();

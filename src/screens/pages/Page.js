@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     textAlign: 'center',
     fontSize: RFValue(18),
-    paddingRight: 10,
+    // paddingRight: 10,
+    paddingBottom: 25,
     color: 'rgba(255,255,255,0.37)',
   },
   answer: {
