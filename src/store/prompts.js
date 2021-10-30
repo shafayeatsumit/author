@@ -1,51 +1,21 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {allPrompts} from '../helpers/constants';
 
 let promptStore = set => ({
-  morning: {},
-  highlight: {},
-  evening: {},
-  backstory: {},
-  flashforward: {},
-  narrator: {},
-
-  updatePrompt: (title, id, servedAt, answeredAt) =>
+  allPrompts: [],
+  initPrompts: () =>
     set(state => ({
-      [title]: {
-        ...state[title],
-        ...(id && {id: id}),
-        ...(servedAt && {servedAt}),
-        ...(answeredAt && {answeredAt}),
-      },
+      allPrompts: allPrompts,
     })),
-  updateProgressive: (title, id, lastServedAt) =>
-    set(state => ({
-      [title]: {
-        ...state[title],
-        ...(id && {id: id}),
-        ...(!state[title].isOn && {isOn: true}),
-        lastServedAt,
-      },
-    })),
-
-  incNextAvailable: (title, totalPages) =>
-    set(state => ({
-      [title]: {
-        ...state[title],
-        nextAvailable: totalPages + state[title].increment,
-      },
-    })),
-
-  decNextAvailable: title =>
-    set(state => ({
-      [title]: {
-        ...state[title],
-        nextAvailable:
-          state[title].nextAvailable > 0 ? state[title].nextAvailable - 1 : 0,
-        lastServedAt:
-          state[title].lastServedAt > 0 ? state[title].lastServedAt - 1 : 0,
-      },
-    })),
+  updatePrompts: () =>
+    set(state => {
+      const promptsCopy = [...state.allPrompts];
+      promptsCopy.push(promptsCopy.shift());
+      return {
+        allPrompts: promptsCopy,
+      };
+    }),
 });
 
 promptStore = persist(promptStore, {

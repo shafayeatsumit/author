@@ -40,11 +40,11 @@ export default PageHeader;
 const styles = StyleSheet.create({
   container: {
     height: ScreenHeight / 10,
-    paddingTop: 30,
+    // paddingTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: 'black',
+    // flexDirection: 'row',
+    backgroundColor: 'red',
   },
   button: {
     padding: 10,

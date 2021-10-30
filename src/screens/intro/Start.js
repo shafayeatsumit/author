@@ -1,25 +1,30 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {useUserStore} from '../../store';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
-const IntroStart = ({navigation}) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>Create your story</Text>
-    <TouchableOpacity
-      onPress={() => {
-        triggerHaptic();
-        navigation.replace('Dedicate', {isEdit: false});
-        analytics().logEvent('button_push', {
-          name: 'Get Started',
-        });
-      }}
-      style={styles.button}>
-      <Text style={styles.buttonText}>Get Started</Text>
-    </TouchableOpacity>
-  </View>
-);
+const IntroStart = ({navigation}) => {
+  const {setFinishedIntro} = useUserStore();
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Compose</Text>
+      <TouchableOpacity
+        onPress={() => {
+          triggerHaptic();
+          setFinishedIntro();
+          navigation.replace('Home');
+          analytics().logEvent('button_push', {
+            name: 'Get Started',
+          });
+        }}
+        style={styles.button}>
+        <Text style={styles.buttonText}>Get Started</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 export default IntroStart;
 
 const styles = StyleSheet.create({
@@ -31,14 +36,10 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Montserrat-Bold',
     textAlign: 'center',
-    fontSize: RFValue(28),
+    fontSize: RFValue(36),
     lineHeight: 39.2,
     color: 'rgba(255,255,255,0.92)',
     letterSpacing: -2,
-    // marginLeft: 35,
-
-    // marginLeft: -105,
-    // paddingLeft: 48,
   },
   buttonText: {
     fontFamily: 'Montserrat-Bold',

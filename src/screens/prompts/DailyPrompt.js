@@ -16,91 +16,43 @@ import _ from 'lodash';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
-const Prompt = ({item, scrollToTop}) => {
+const Prompt = ({item, updateContent}) => {
   const navigation = useNavigation();
-  const [isDisabled, setDisabled] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState('');
-  const promptTitle = item.title;
-  let allPrompts = DailyTitles[promptTitle];
-  const promptStore = usePromptStore();
-  const {updatePrompt} = promptStore;
-  const currentPrompt = promptStore[promptTitle];
 
   const handlePress = () => {
     goToNote();
   };
 
-  const contentQuestion = selectedPrompt.question;
-
-  const capitalizedTitle = _.upperFirst(selectedPrompt.title);
-
-  const pickRandomPrompt = () => {
-    const servedBefore = _.has(promptStore, `${promptTitle}.date`);
-    const multiplePrompts = allPrompts.length > 1;
-    if (servedBefore && multiplePrompts) {
-      const lastServedId = currentPrompt.id;
-      allPrompts = allPrompts.filter(p => p.id !== lastServedId);
-    }
-
-    const prompt = _.sample(allPrompts);
-    const {title, id} = prompt;
-    updatePrompt(title, id, new Date());
-
-    setSelectedPrompt(prompt);
-  };
-
-  const serveForToday = () => {
-    const {id: promptId} = currentPrompt;
-    const prompt = allPrompts.find(p => p.id === promptId);
-    setSelectedPrompt(prompt);
-  };
-
-  const serveContent = () => {
-    const {servedAt} = currentPrompt;
-    const isServedToday = servedAt && checkTodayAfterFive(servedAt);
-
-    if (isServedToday) {
-      serveForToday();
-    } else {
-      // all prompts filter then pick one,
-      pickRandomPrompt();
-    }
+  const contentQuestion = item.question;
+  const updatePrompts = () => {
+    updateContent(item);
   };
 
   const goToNote = () => {
     triggerHaptic();
     //TODO: add here.
-    navigation.navigate('Note', {prompt: selectedPrompt, scrollToTop});
+    navigation.navigate('Note', {
+      prompt: item,
+      scrollToTop: updatePrompts,
+    });
     analytics().logEvent('button_push', {
       name: contentQuestion,
     });
   };
-
-  useEffect(() => {
-    serveContent();
-  }, [currentPrompt]);
-
-  useEffect(() => {
-    serveContent();
-  }, []);
 
   return (
     <>
       <TouchableOpacity
         activeOpacity={1}
         delayPressIn={50}
-        // disabled={isDisabled}
         key={selectedPrompt.id}
         style={styles.itemPrompt}
         onPress={handlePress}>
-        {/* <View style={styles.titleHolder}>
-          <Text style={styles.title}>{capitalizedTitle}</Text>
-        </View> */}
         {contentQuestion && (
           <Text style={styles.text}>{contentQuestion + ' ' + '______'}</Text>
         )}
       </TouchableOpacity>
-      {/* <View style={styles.divider} /> */}
     </>
   );
 };

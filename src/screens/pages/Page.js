@@ -15,22 +15,30 @@ import {formatDate} from '../../helpers/date';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
-const Page = ({prompt}) => {
+const Page = ({prompt, scrollToContent}) => {
   const navigation = useNavigation();
   const {deleteSubmission} = useSubmissionStore();
   const isDedicationPage = prompt.id === 'intro_dedicate';
+  const adjustScrollPosition = () => {
+    scrollToContent(prompt);
+  };
   const handlePress = () => {
     if (isDedicationPage) {
       navigation.navigate('Dedicate', {isEdit: true});
       return;
     }
-    navigation.navigate('Note', {prompt, isEdit: true});
+    navigation.navigate('Note', {
+      prompt,
+      isEdit: true,
+      scrollToContent: adjustScrollPosition,
+    });
     triggerHaptic();
     analytics().logEvent('button_push', {
       name: 'tap to edit',
     });
   };
-  const dateString = prompt.date ? formatDate(prompt.date) : null;
+  let dateString = prompt.date ? formatDate(prompt.date) : null;
+  dateString = dateString === 'Today' ? null : dateString;
   const promptAnswer = prompt.answer;
   if (isDedicationPage) {
     return (

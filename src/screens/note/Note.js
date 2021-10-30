@@ -37,7 +37,7 @@ const Note = ({navigation, route}) => {
 
   const inputRef = useRef();
   const totalPages = submission.length + 1;
-  const {prompt, scrollToTop, isEdit} = route.params;
+  const {prompt, isEdit, scrollToContent} = route.params;
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer;
 
@@ -88,7 +88,6 @@ const Note = ({navigation, route}) => {
   };
 
   const handleSubmit = () => {
-    scrollToTop();
     submitAnswer();
     goBack();
     setLastSubmit();
@@ -108,6 +107,7 @@ const Note = ({navigation, route}) => {
     triggerHaptic();
     editAnswer();
     goBack();
+    setTimeout(scrollToContent, 400);
   };
 
   const resetCursor = () => {

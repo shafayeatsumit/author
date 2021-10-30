@@ -4,9 +4,11 @@ import moment from 'moment';
 
 let userStore = set => ({
   lastVisit: null,
+  id: null,
   lastSubmit: null,
   firstVisit: null,
   finishedIntro: false,
+  setUserId: id => set(() => ({id: id})),
   setLastSubmit: () => set(() => ({lastSubmit: moment()})),
   setLastVisit: () => set(() => ({lastVisit: moment()})),
   setFirstVisit: () => set(() => ({firstVisit: moment()})),
