@@ -12,6 +12,7 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {DailyTitles} from '../../helpers/contentsData';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useUserStore, useSubmissionStore} from '../../store';
 import _ from 'lodash';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
@@ -19,7 +20,8 @@ import analytics from '@react-native-firebase/analytics';
 const Prompt = ({item, updateContent}) => {
   const navigation = useNavigation();
   const [selectedPrompt, setSelectedPrompt] = useState('');
-
+  const {submission, deleteSubmission} = useSubmissionStore();
+  const totalPages = submission.length;
   const handlePress = () => {
     goToNote();
   };
@@ -53,6 +55,7 @@ const Prompt = ({item, updateContent}) => {
         {contentQuestion && (
           <Text style={styles.text}>{contentQuestion + ' ' + '______'}</Text>
         )}
+        <Text style={styles.footerText}>{totalPages}</Text>
       </TouchableOpacity>
     </>
   );
@@ -97,6 +100,18 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.4)',
     textAlign: 'center',
     fontFamily: 'Montserrat-Regular',
+  },
+  footerText: {
+    fontSize: RFValue(15),
+    color: 'rgba(255,255,255,0.92)',
+    position: 'absolute',
+    bottom: 0,
+    right: 20,
+    paddingBottom: ScreenHeight / 5.5,
+    fontFamily: 'Montserrat-Regular',
+    paddingTop: 4,
+    letterSpacing: 0,
+    paddingHorizontal: 25,
   },
   text: {
     lineHeight: 44.8,
