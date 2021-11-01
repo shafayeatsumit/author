@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -22,26 +22,12 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
 TextInput.defaultProps.selectionColor = 'white';
 
-const progressive_prompts = [
-  'backstory',
-  'flashforward',
-  'narrator',
-  'Plot Twist',
-];
-
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
-  const {decNextAvailable} = usePromptStore();
-  const {
-    setSubmission,
-
-    deleteSubmission,
-    updateSubmission,
-    submission,
-  } = useSubmissionStore();
+  const {setSubmission, deleteSubmission, updateSubmission} =
+    useSubmissionStore();
 
   const inputRef = useRef();
-  const totalPages = submission.length + 1;
   const {prompt, isEdit, scrollToPrompt, scrollToContent} = route.params;
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer;
@@ -54,7 +40,7 @@ const Note = ({navigation, route}) => {
 
   const answerPart = isEdit ? getAnswer() : '';
   const defaultText = promptQuestion + ' ' + answerPart;
-  const [text, onChangeText] = React.useState(defaultText);
+  const [text, onChangeText] = useState(defaultText);
   const dateString = isEdit ? formatDate(prompt.date) : 'Today';
 
   const sharedInputValue = sharedStart([promptQuestion, text]);
@@ -103,9 +89,6 @@ const Note = ({navigation, route}) => {
   const handleDelete = () => {
     triggerHaptic();
     deleteSubmission(prompt.uid);
-    if (prompt.type === 'progressive') {
-      progressive_prompts.map(item => decNextAvailable(item));
-    }
     goBack();
   };
 
@@ -125,8 +108,10 @@ const Note = ({navigation, route}) => {
     });
   };
 
-  const findIndex = () =>
-    submission.findIndex(item => item.id === prompt.id) + 1;
+  const handleChangeText = txt => {
+    triggerHaptic();
+    onChangeText(txt);
+  };
 
   const setCursor = () => {
     inputRef.current.focus();
@@ -146,7 +131,7 @@ const Note = ({navigation, route}) => {
   }, []);
 
   const buttonDisabled = text === defaultText;
-  const footerPageNumber = isEdit ? findIndex() : totalPages;
+
   return (
     <KeyboardAvoidingView
       {...(Platform.OS === 'ios'
@@ -160,7 +145,7 @@ const Note = ({navigation, route}) => {
             onSubmitEditing={handleSubmit}
             style={styles.input}
             multiline={true}
-            onChangeText={onChangeText}
+            onChangeText={handleChangeText}
             spellCheck={false}
             textAlignVertical="top"
             selectionColor={'white'}

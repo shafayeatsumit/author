@@ -55,7 +55,9 @@ const Prompt = ({item, updateContent}) => {
         {contentQuestion && (
           <Text style={styles.text}>{contentQuestion + ' ' + '______'}</Text>
         )}
-        <Text style={styles.footerText}>{totalPages}</Text>
+        {totalPages ? (
+          <Text style={styles.footerText}>{totalPages}</Text>
+        ) : null}
       </TouchableOpacity>
     </>
   );
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 20,
-    paddingBottom: ScreenHeight / 5.5,
+    paddingBottom: ScreenHeight / 6,
     fontFamily: 'Montserrat-Regular',
     paddingTop: 4,
     letterSpacing: 0,
