@@ -26,6 +26,7 @@ const Prompt = ({item, updateContent}) => {
 
   const contentQuestion = item.question;
   const updatePrompts = () => {
+    console.log('update daily prompt');
     updateContent(item);
   };
 
@@ -34,7 +35,7 @@ const Prompt = ({item, updateContent}) => {
     //TODO: add here.
     navigation.navigate('Note', {
       prompt: item,
-      scrollToTop: updatePrompts,
+      scrollToPrompt: updatePrompts,
     });
     analytics().logEvent('button_push', {
       name: contentQuestion,

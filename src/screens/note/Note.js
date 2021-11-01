@@ -32,12 +32,17 @@ const progressive_prompts = [
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
   const {decNextAvailable} = usePromptStore();
-  const {setSubmission, deleteSubmission, updateSubmission, submission} =
-    useSubmissionStore();
+  const {
+    setSubmission,
+
+    deleteSubmission,
+    updateSubmission,
+    submission,
+  } = useSubmissionStore();
 
   const inputRef = useRef();
   const totalPages = submission.length + 1;
-  const {prompt, isEdit, scrollToContent} = route.params;
+  const {prompt, isEdit, scrollToPrompt, scrollToContent} = route.params;
   const promptQuestion = prompt.question;
   const promptAnswer = prompt.answer;
 
@@ -67,6 +72,7 @@ const Note = ({navigation, route}) => {
       date: new Date(),
       day,
     });
+    scrollToPrompt();
     analytics().logEvent('button_push', {
       name: 'add page',
       length: unsharedInputValue.length,
@@ -107,7 +113,7 @@ const Note = ({navigation, route}) => {
     triggerHaptic();
     editAnswer();
     goBack();
-    setTimeout(scrollToContent, 400);
+    setTimeout(scrollToContent, 250);
   };
 
   const resetCursor = () => {

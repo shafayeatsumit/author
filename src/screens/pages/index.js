@@ -39,12 +39,14 @@ const Pages = ({navigation}) => {
 
   const pullRandomPrompts = () => {
     const newPrompt = allPrompts[0];
+
     setPrompt(newPrompt);
     updatePrompts();
   };
 
   const pullOneRandomPrompt = () => {
     pullRandomPrompts();
+    console.log('pulling one random');
     setTimeout(scrollToMiddle, 300);
   };
 
