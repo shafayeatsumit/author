@@ -11,7 +11,7 @@ const NoteHeader = ({date, title, goBack}) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.dateText}>{date}</Text>
+      <Text style={styles.dateText}>{undefined}</Text>
       <TouchableOpacity onPress={handleBack} style={styles.xoutContainer}>
         <Image
           style={styles.xout}
@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
     // backgroundColor: 'yellow',
   },
   xout: {
-    height: 16,
-    width: 16,
+    height: 20,
+    width: 20,
     // resizeMode: 'contain',
-    tintColor: 'rgba(255,255,255,0.4)',
+    tintColor: 'rgba(255, 255, 255, 1)',
   },
 });

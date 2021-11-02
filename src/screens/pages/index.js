@@ -113,7 +113,6 @@ const Pages = ({navigation}) => {
         contentContainerStyle={styles.containerStyle}
         ref={flatlistRef}
         data={data}
-        ListHeaderComponent={<PromptHeader />}
         renderItem={renderPage}
         showsVerticalScrollIndicator={false}
         keyExtractor={keyExtractor}

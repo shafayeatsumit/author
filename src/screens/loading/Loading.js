@@ -12,7 +12,7 @@ const Loading = ({navigation}) => {
 
   const {initPrompts} = usePromptStore();
   const finishedIntroRef = useRef(null);
-  console.log('user id', id);
+
   const navigate = () => {
     if (finishedIntroRef.current) {
       navigation.replace('Home');
@@ -21,7 +21,7 @@ const Loading = ({navigation}) => {
       const userId = uuid.v4();
       initPrompts();
       !id && setUserId(userId);
-      navigation.replace('Start');
+      navigation.replace('Home');
     }
   };
 

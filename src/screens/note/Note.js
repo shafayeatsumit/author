@@ -29,7 +29,9 @@ const Note = ({navigation, route}) => {
 
   const inputRef = useRef();
   const {prompt, isEdit, scrollToPrompt, scrollToContent} = route.params;
-  const promptQuestion = prompt.question;
+  const question = prompt.question;
+  const cursorIndex = question.indexOf('________');
+  const promptQuestion = question.replace('________', ' ');
   const promptAnswer = prompt.answer;
 
   const getAnswer = () => {
@@ -115,12 +117,15 @@ const Note = ({navigation, route}) => {
 
   const setCursor = () => {
     inputRef.current.focus();
-    inputRef.current.setNativeProps({
-      selection: {
-        start: text.length,
-        end: text.length,
-      },
-    });
+    if (!isEdit) {
+      inputRef.current.setNativeProps({
+        selection: {
+          start: cursorIndex,
+          end: cursorIndex,
+        },
+      });
+    }
+
     if (Platform.OS === 'android') {
       setTimeout(resetCursor, 100);
     }
@@ -149,12 +154,9 @@ const Note = ({navigation, route}) => {
             spellCheck={false}
             textAlignVertical="top"
             selectionColor={'white'}
-            ref={inputRef}>
-            <Text style={styles.boldInput}>
-              {sharedInputValue}
-              {unsharedInputValue}
-            </Text>
-          </TextInput>
+            value={text}
+            ref={inputRef}
+          />
         </View>
         <View style={styles.buttonContainer}>
           {isEdit ? (

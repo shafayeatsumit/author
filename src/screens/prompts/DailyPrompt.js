@@ -45,21 +45,15 @@ const Prompt = ({item, updateContent}) => {
   };
 
   return (
-    <>
-      <TouchableOpacity
-        activeOpacity={1}
-        delayPressIn={50}
-        key={selectedPrompt.id}
-        style={styles.itemPrompt}
-        onPress={handlePress}>
-        {contentQuestion && (
-          <Text style={styles.text}>{contentQuestion + ' ' + '______'}</Text>
-        )}
-        {totalPages ? (
-          <Text style={styles.footerText}>{totalPages}</Text>
-        ) : null}
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity
+      activeOpacity={1}
+      delayPressIn={50}
+      key={selectedPrompt.id}
+      style={styles.itemPrompt}
+      onPress={handlePress}>
+      {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
+      {totalPages ? <Text style={styles.footerText}>{totalPages}</Text> : null}
+    </TouchableOpacity>
   );
 };
 export default Prompt;

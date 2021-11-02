@@ -36,7 +36,7 @@ const Prompt = ({item}) => {
     goToNote();
   };
 
-  const contentQuestion = selectedPrompt.question + ' ' + '______';
+  const contentQuestion = selectedPrompt.question;
 
   const capitalizedTitle = _.upperFirst(selectedPrompt.title);
 
@@ -91,7 +91,6 @@ const Prompt = ({item}) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      // disabled={isDisabled}
       key={selectedPrompt.id}
       style={styles.itemPrompt}
       onPress={handlePress}>
