@@ -131,8 +131,5 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flexGrow: 1,
-    paddingTop: 50,
-    // justifyContent: 'flex-end',
-    paddingBottom: ScreenHeight / 10,
   },
 });

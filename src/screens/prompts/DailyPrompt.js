@@ -75,9 +75,8 @@ const styles = StyleSheet.create({
   itemPrompt: {
     height: ScreenHeight,
     width: ScreenWidth,
-    paddingBottom: ScreenHeight / 3.0,
+    // backgroundColor: 'red',
     justifyContent: 'center',
-    paddingVertical: 72,
     paddingHorizontal: 15,
   },
   titleHolder: {
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 20,
-    paddingBottom: ScreenHeight / 6,
+    paddingBottom: 40,
     fontFamily: 'Montserrat-Regular',
     paddingTop: 4,
     letterSpacing: 0,

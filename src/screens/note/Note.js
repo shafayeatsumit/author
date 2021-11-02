@@ -16,7 +16,7 @@ import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
 import {formatDate} from '../../helpers/date';
 import NoteHeader from './NoteHeader';
-import {triggerHaptic} from '../../helpers/haptics';
+import {triggerHaptic, saveHaptic} from '../../helpers/haptics';
 const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 import analytics from '@react-native-firebase/analytics';
@@ -85,17 +85,17 @@ const Note = ({navigation, route}) => {
     submitAnswer();
     goBack();
     setLastSubmit();
-    triggerHaptic();
+    saveHaptic();
   };
 
   const handleDelete = () => {
-    triggerHaptic();
+    saveHaptic();
     deleteSubmission(prompt.uid);
     goBack();
   };
 
   const handleEdit = () => {
-    triggerHaptic();
+    saveHaptic();
     editAnswer();
     goBack();
     setTimeout(scrollToContent, 250);
