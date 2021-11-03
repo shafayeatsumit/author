@@ -8,7 +8,8 @@ import analytics from '@react-native-firebase/analytics';
 // AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
-  const {finishedIntro, setLastVisit, setUserId, id} = useUserStore();
+  const {finishedIntro, setFinishedIntro, setLastVisit, setUserId, id} =
+    useUserStore();
 
   const {initPrompts} = usePromptStore();
   const finishedIntroRef = useRef(null);
@@ -20,6 +21,7 @@ const Loading = ({navigation}) => {
     } else {
       const userId = uuid.v4();
       initPrompts();
+      setFinishedIntro();
       !id && setUserId(userId);
       navigation.replace('Home');
     }

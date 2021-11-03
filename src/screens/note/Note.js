@@ -117,6 +117,7 @@ const Note = ({navigation, route}) => {
 
   const setCursor = () => {
     inputRef.current.focus();
+
     if (!isEdit) {
       inputRef.current.setNativeProps({
         selection: {
@@ -127,6 +128,15 @@ const Note = ({navigation, route}) => {
     }
 
     if (Platform.OS === 'android') {
+      if (isEdit) {
+        const cursorPosition = prompt.answer.length;
+        inputRef.current.setNativeProps({
+          selection: {
+            start: cursorPosition,
+            end: cursorPosition,
+          },
+        });
+      }
       setTimeout(resetCursor, 100);
     }
   };

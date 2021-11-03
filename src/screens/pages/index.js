@@ -59,8 +59,8 @@ const Pages = ({navigation}) => {
         appState.current.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
-        const notServedToday = !checkIfToday(lastVisit);
-        notServedToday && pullRandomPrompts();
+        // const notServedToday = !checkIfToday(lastVisit);
+        // notServedToday && pullRandomPrompts();
         setLastVisit();
         console.log('App has come to the foreground!');
         analytics().logEvent('app_foreground');
