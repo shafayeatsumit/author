@@ -18,11 +18,17 @@ const Loading = ({navigation}) => {
     if (finishedIntroRef.current) {
       navigation.replace('Home');
       analytics().setUserId(id);
+      console.log('user id first time', id);
     } else {
       const userId = uuid.v4();
       initPrompts();
       setFinishedIntro();
-      !id && setUserId(userId);
+
+      if (!id) {
+        setUserId(userId);
+        console.log('user id first time', userId);
+        analytics().setUserId(userId);
+      }
       navigation.replace('Home');
     }
   };

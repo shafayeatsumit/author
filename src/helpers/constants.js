@@ -2,6 +2,10 @@ import moment from 'moment';
 
 export const allPrompts = [
   {
+    id: 'All I have to do is fill in the ________',
+    question: 'All I have to do is fill in the ________',
+  },
+  {
     id: "A positive aspect of my life that isn't top of mind is ________",
     question: "A positive aspect of my life that isn't top of mind is ________",
   },
