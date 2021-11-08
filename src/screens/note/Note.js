@@ -83,7 +83,7 @@ const Note = ({navigation, route}) => {
 
   const handleSubmit = () => {
     submitAnswer();
-    goBack();
+    navigation.goBack();
     setLastSubmit();
     saveHaptic();
   };
@@ -91,13 +91,13 @@ const Note = ({navigation, route}) => {
   const handleDelete = () => {
     saveHaptic();
     deleteSubmission(prompt.uid);
-    goBack();
+    navigation.goBack();
   };
 
   const handleEdit = () => {
     saveHaptic();
     editAnswer();
-    goBack();
+    navigation.goBack();
     setTimeout(scrollToContent, 250);
   };
 
