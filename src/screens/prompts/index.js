@@ -44,10 +44,11 @@ const Prompts = () => {
         nextAppState === 'active'
       ) {
         // App has come to the foreground!
-        console.log('app has come to fore ground!!!!');
+        console.log('app has come to fore ground!!!!++');
         scrollToTop();
         analytics().logEvent('app_foreground');
       }
+      console.log('nextAppState', nextAppState);
       appState.current = nextAppState;
     });
   }, []);

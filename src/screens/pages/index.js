@@ -63,8 +63,12 @@ const Pages = ({navigation}) => {
         // notServedToday && pullRandomPrompts();
         setLastVisit();
         console.log('App has come to the foreground!');
-        analytics().logEvent('app_foreground');
+        analytics().logEvent('app_foregrounded');
       }
+      if (nextAppState === 'background') {
+        analytics().logEvent('app_backgrounded');
+      }
+
       appState.current = nextAppState;
     });
   }, []);
@@ -100,7 +104,7 @@ const Pages = ({navigation}) => {
     return item;
   });
 
-  const data = [prompt, ...submissionDateAdjusted];
+  const data = [...submissionDateAdjusted, prompt];
 
   const scrollToContent = activePrompt => {
     const index = data.findIndex(item => item.id === activePrompt.id);

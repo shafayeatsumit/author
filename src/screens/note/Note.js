@@ -47,7 +47,6 @@ const Note = ({navigation, route}) => {
 
   const sharedInputValue = sharedStart([promptQuestion, text]);
   const unsharedInputValue = text.replace(sharedInputValue, '');
-
   const submitAnswer = () => {
     const date = moment();
     const day = date.format('YYYY-MM-DD');
@@ -61,6 +60,7 @@ const Note = ({navigation, route}) => {
       day,
     });
     scrollToPrompt();
+    console.log('unshared value length', unsharedInputValue.length);
     analytics().logEvent('button_push', {
       name: 'add page',
       length: unsharedInputValue.length,
