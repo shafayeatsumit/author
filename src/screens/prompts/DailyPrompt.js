@@ -6,14 +6,10 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import {checkTodayAfterFive} from '../../helpers/date';
-import {usePromptStore} from '../../store';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
-import {DailyTitles} from '../../helpers/contentsData';
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {useUserStore, useSubmissionStore} from '../../store';
-import _ from 'lodash';
+import {useSubmissionStore} from '../../store';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
@@ -28,7 +24,6 @@ const Prompt = ({item, updateContent}) => {
 
   const contentQuestion = item.question;
   const updatePrompts = () => {
-    console.log('update daily prompt');
     updateContent(item);
   };
 
@@ -66,23 +61,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    // flex: 1,
-    height: ScreenHeight,
-    width: ScreenWidth,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   itemPrompt: {
-    height: ScreenHeight,
-    width: ScreenWidth,
-    // backgroundColor: 'red',
     justifyContent: 'center',
     paddingHorizontal: 15,
+    paddingBottom: 70,
   },
   titleHolder: {
     flexDirection: 'row',
     marginLeft: 25,
-    // backgroundColor: 'tomato',
   },
   divider: {
     height: 1,

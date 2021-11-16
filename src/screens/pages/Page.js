@@ -17,16 +17,11 @@ import analytics from '@react-native-firebase/analytics';
 
 const Page = ({prompt, scrollToContent}) => {
   const navigation = useNavigation();
-  const {deleteSubmission} = useSubmissionStore();
-  const isDedicationPage = prompt.id === 'intro_dedicate';
+
   const adjustScrollPosition = () => {
     scrollToContent(prompt);
   };
   const handlePress = () => {
-    if (isDedicationPage) {
-      navigation.navigate('Dedicate', {isEdit: true});
-      return;
-    }
     navigation.navigate('Note', {
       prompt,
       isEdit: true,
@@ -37,35 +32,19 @@ const Page = ({prompt, scrollToContent}) => {
       name: 'tap to edit',
     });
   };
+
   let dateString = prompt.date ? formatDate(prompt.date) : null;
-  dateString = dateString === 'Today' ? null : dateString;
   const promptAnswer = prompt.answer;
-  if (isDedicationPage) {
-    return (
-      <>
-        <TouchableOpacity
-          delayPressIn={50}
-          onPress={handlePress}
-          activeOpacity={1}
-          style={styles.dedicattionPage}>
-          <Text style={styles.dateText}>{dateString}</Text>
-          <Text style={styles.answer}>I dedicate this to {promptAnswer}</Text>
-        </TouchableOpacity>
-      </>
-    );
-  }
+
   return (
-    <>
-      {/* <View style={styles.divider} /> */}
-      <TouchableOpacity
-        delayPressIn={50}
-        onPress={handlePress}
-        activeOpacity={1}
-        style={styles.container}>
-        <Text style={styles.dateText}>{dateString}</Text>
-        <Text style={styles.answer}>{promptAnswer}</Text>
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity
+      delayPressIn={50}
+      onPress={handlePress}
+      activeOpacity={1}
+      style={styles.container}>
+      <Text style={styles.dateText}>{dateString}</Text>
+      <Text style={styles.answer}>{promptAnswer}</Text>
+    </TouchableOpacity>
   );
 };
 export default Page;
@@ -80,10 +59,10 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',
-    textAlign: 'center',
-    fontSize: RFValue(18),
+    textAlign: 'left',
+    fontSize: RFValue(15),
     // paddingRight: 10,
-    paddingBottom: 25,
+    paddingBottom: 5,
     color: 'rgba(255,255,255,0.37)',
   },
   answer: {

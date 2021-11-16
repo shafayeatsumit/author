@@ -60,7 +60,6 @@ const Note = ({navigation, route}) => {
       day,
     });
     scrollToPrompt();
-    console.log('unshared value length', unsharedInputValue.length);
     analytics().logEvent('button_push', {
       name: 'add page',
       length: unsharedInputValue.length,

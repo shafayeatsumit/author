@@ -21,6 +21,8 @@ import _ from 'lodash';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Pages = ({navigation}) => {
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const [prompt, setPrompt] = useState({id: null, question: null});
   const {lastVisit, setLastVisit, finishedIntro} = useUserStore();
   const {allPrompts, updatePrompts} = usePromptStore();
@@ -44,10 +46,21 @@ const Pages = ({navigation}) => {
     updatePrompts();
   };
 
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    pullRandomPrompts();
+    wait(500).then(() => {
+      setRefreshing(false);
+    });
+  };
+
   const pullOneRandomPrompt = () => {
     pullRandomPrompts();
-    console.log('pulling one random');
-    setTimeout(scrollToMiddle, 300);
+    setTimeout(scrollToIndexZero, 300);
   };
 
   useEffect(() => {
@@ -77,19 +90,14 @@ const Pages = ({navigation}) => {
     analytics().logEvent('scrolling');
   };
 
-  const scrollToMiddle = () => {
-    flatlistRef.current &&
-      flatlistRef.current.scrollToIndex({animated: false, index: 0});
-  };
-
-  const scrollToTop = () => {
+  const scrollToIndexZero = () => {
     flatlistRef.current &&
       flatlistRef.current.scrollToIndex({animated: false, index: 0});
   };
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      scrollToTop();
+      scrollToIndexZero();
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -97,20 +105,21 @@ const Pages = ({navigation}) => {
   }, [navigation]);
   const submissionReverse = [...submission].reverse();
   const submissionDateAdjusted = submissionReverse.map((item, index) => {
-    const previousValue = submissionReverse[index - 1];
+    const previousValue = submissionReverse[index + 1];
     if (previousValue && previousValue.day === item.day) {
       return {...item, date: null};
     }
     return item;
   });
 
-  const data = [...submissionDateAdjusted, prompt];
+  const data = [prompt, ...submissionDateAdjusted];
 
   const scrollToContent = activePrompt => {
     const index = data.findIndex(item => item.id === activePrompt.id);
     flatlistRef.current &&
       flatlistRef.current.scrollToIndex({animated: false, index});
   };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -122,6 +131,15 @@ const Pages = ({navigation}) => {
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
         onMomentumScrollEnd={handleScrollEnd}
+        inverted
+        refreshControl={
+          <RefreshControl
+            tintColor={'white'}
+            colors={['black', 'white']}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       />
     </View>
   );
