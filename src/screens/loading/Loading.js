@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import analytics from '@react-native-firebase/analytics';
 
-AsyncStorage.clear();
+// AsyncStorage.clear();
 
 const Loading = ({navigation}) => {
   const {finishedIntro, setLastVisit, id} = useUserStore();

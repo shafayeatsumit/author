@@ -18,6 +18,7 @@ const Prompt = ({item, updateContent}) => {
   const [selectedPrompt, setSelectedPrompt] = useState('');
   const {submission, deleteSubmission} = useSubmissionStore();
   const totalPages = submission.length + 1;
+
   const handlePress = () => {
     goToNote();
   };
@@ -46,6 +47,12 @@ const Prompt = ({item, updateContent}) => {
       key={selectedPrompt.id}
       style={styles.itemPrompt}
       onPress={handlePress}>
+      {totalPages === 2 && (
+        <Text style={styles.text}>
+          Great! I can also swipe up to switch the prompt whenever I want {'\n'}
+          {'\n'}
+        </Text>
+      )}
       {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
       {totalPages ? <Text style={styles.footerText}>{totalPages}</Text> : null}
     </TouchableOpacity>
