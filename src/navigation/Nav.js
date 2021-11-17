@@ -14,7 +14,7 @@ import NoteScreen from '../screens/note/Note';
 import IntroScreen from '../screens/intro/Start';
 import IntroNoteScreen from '../screens/home/IntroNote';
 import StartScreen from '../screens/intro/Start';
-
+import SwipeStartScreen from '../screens/intro/Swipe';
 import PromptScreen from '../screens/prompts';
 import PageScreen from '../screens/pages';
 
@@ -56,6 +56,7 @@ class Nav extends Component {
             <Stack.Screen name="Title" component={TitleScreen} />
             <Stack.Screen name="IntroNote" component={IntroNoteScreen} />
             <Stack.Screen name="Note" component={NoteScreen} />
+            <Stack.Screen name="SwipeStart" component={SwipeStartScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

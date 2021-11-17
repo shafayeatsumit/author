@@ -18,7 +18,8 @@ const IntroStart = ({navigation}) => {
     setUserId(userId);
     analytics().setUserId(userId);
     console.log('new user id set', userId);
-    navigation.replace('Home');
+    navigation.replace('SwipeStart');
+
     analytics().logEvent('button_push', {
       name: 'Get Started',
     });

@@ -95,14 +95,6 @@ const Pages = ({navigation}) => {
       flatlistRef.current.scrollToIndex({animated: false, index: 0});
   };
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      scrollToIndexZero();
-    });
-
-    // Return the function to unsubscribe from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [navigation]);
   const submissionReverse = [...submission].reverse();
   const submissionDateAdjusted = submissionReverse.map((item, index) => {
     const previousValue = submissionReverse[index + 1];
