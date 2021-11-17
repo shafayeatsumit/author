@@ -1,25 +1,32 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useUserStore} from '../../store';
+import {useUserStore, usePromptStore} from '../../store';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
+import uuid from 'react-native-uuid';
 
 const IntroStart = ({navigation}) => {
-  const {setFinishedIntro} = useUserStore();
+  const {setFinishedIntro, setUserId} = useUserStore();
+  const {initPrompts} = usePromptStore();
+  const setIntro = () => {
+    const userId = uuid.v4();
+    initPrompts();
+
+    setFinishedIntro();
+    triggerHaptic();
+    setUserId(userId);
+    analytics().setUserId(userId);
+    console.log('new user id set', userId);
+    navigation.replace('Home');
+    analytics().logEvent('button_push', {
+      name: 'Get Started',
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Compose</Text>
-      <TouchableOpacity
-        onPress={() => {
-          triggerHaptic();
-          setFinishedIntro();
-          navigation.replace('Home');
-          analytics().logEvent('button_push', {
-            name: 'Get Started',
-          });
-        }}
-        style={styles.button}>
+      <TouchableOpacity onPress={setIntro} style={styles.button}>
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>
     </View>

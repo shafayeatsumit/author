@@ -17,7 +17,7 @@ const Prompt = ({item, updateContent}) => {
   const navigation = useNavigation();
   const [selectedPrompt, setSelectedPrompt] = useState('');
   const {submission, deleteSubmission} = useSubmissionStore();
-  const totalPages = submission.length;
+  const totalPages = submission.length + 1;
   const handlePress = () => {
     goToNote();
   };
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   itemPrompt: {
     justifyContent: 'center',
     paddingHorizontal: 15,
-    paddingBottom: 70,
+    paddingBottom: 100,
   },
   titleHolder: {
     flexDirection: 'row',
