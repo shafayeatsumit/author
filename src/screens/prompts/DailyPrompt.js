@@ -30,7 +30,6 @@ const Prompt = ({item, updateContent}) => {
 
   const goToNote = () => {
     triggerHaptic();
-    //TODO: add here.
     navigation.navigate('Note', {
       prompt: item,
       scrollToPrompt: updatePrompts,
@@ -41,21 +40,25 @@ const Prompt = ({item, updateContent}) => {
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      delayPressIn={50}
-      key={selectedPrompt.id}
-      style={styles.itemPrompt}
-      onPress={handlePress}>
+    <View style={styles.itemPrompt}>
       {totalPages === 2 && (
         <Text style={styles.text}>
           Great! I can also swipe up to switch the prompt whenever I want {'\n'}
           {'\n'}
         </Text>
       )}
-      {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
-      {totalPages ? <Text style={styles.footerText}>{totalPages}</Text> : null}
-    </TouchableOpacity>
+      <TouchableOpacity
+        activeOpacity={1}
+        delayPressIn={50}
+        key={selectedPrompt.id}
+        style={[styles.itemPrompt, {paddingBottom: 20}]}
+        onPress={handlePress}>
+        {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
+        {totalPages ? (
+          <Text style={styles.footerText}>{totalPages}</Text>
+        ) : null}
+      </TouchableOpacity>
+    </View>
   );
 };
 export default Prompt;
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
   itemPrompt: {
     justifyContent: 'center',
     paddingHorizontal: 15,
-    paddingBottom: 100,
+    paddingBottom: 40,
   },
   titleHolder: {
     flexDirection: 'row',

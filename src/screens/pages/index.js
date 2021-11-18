@@ -51,6 +51,10 @@ const Pages = ({navigation}) => {
   };
 
   const onRefresh = () => {
+    analytics().logEvent('refresh', {
+      name: prompt.id,
+    });
+
     setRefreshing(true);
     pullRandomPrompts();
     wait(500).then(() => {
@@ -111,6 +115,7 @@ const Pages = ({navigation}) => {
     flatlistRef.current &&
       flatlistRef.current.scrollToIndex({animated: false, index});
   };
+  const isFirstPrompt = prompt.id === 'intro_prompt';
 
   return (
     <View style={styles.container}>
@@ -125,12 +130,14 @@ const Pages = ({navigation}) => {
         onMomentumScrollEnd={handleScrollEnd}
         inverted
         refreshControl={
-          <RefreshControl
-            tintColor={'white'}
-            colors={['black', 'white']}
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          isFirstPrompt ? null : (
+            <RefreshControl
+              tintColor={'white'}
+              colors={['black', 'white']}
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          )
         }
       />
     </View>

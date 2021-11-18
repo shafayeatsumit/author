@@ -2,7 +2,7 @@ import moment from 'moment';
 
 export const allPrompts = [
   {
-    id: 'All I have to do is fill in the ________',
+    id: 'intro_prompt',
     question: 'All I have to do is fill in the ________',
   },
   {
