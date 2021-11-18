@@ -6,6 +6,11 @@ export const allPrompts = [
     question: 'All I have to do is fill in the ________',
   },
   {
+    id: 'instruction',
+    question:
+      'Great! Next I scroll up to refresh when I don’t want to fill in ________',
+  },
+  {
     id: "A positive aspect of my life that isn't top of mind is ________",
     question: "A positive aspect of my life that isn't top of mind is ________",
   },

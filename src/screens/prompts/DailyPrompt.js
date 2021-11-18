@@ -38,27 +38,18 @@ const Prompt = ({item, updateContent}) => {
       name: contentQuestion,
     });
   };
-
+  const isDisable = item.id === 'instruction';
   return (
-    <View style={styles.itemPrompt}>
-      {totalPages === 2 && (
-        <Text style={styles.text}>
-          Great! I can also swipe up to switch the prompt whenever I want {'\n'}
-          {'\n'}
-        </Text>
-      )}
-      <TouchableOpacity
-        activeOpacity={1}
-        delayPressIn={50}
-        key={selectedPrompt.id}
-        style={[styles.itemPrompt, {paddingBottom: 20}]}
-        onPress={handlePress}>
-        {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
-        {totalPages ? (
-          <Text style={styles.footerText}>{totalPages}</Text>
-        ) : null}
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      activeOpacity={1}
+      delayPressIn={50}
+      disabled={isDisable}
+      key={selectedPrompt.id}
+      style={styles.itemPrompt}
+      onPress={handlePress}>
+      {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
+      {totalPages ? <Text style={styles.footerText}>{totalPages}</Text> : null}
+    </TouchableOpacity>
   );
 };
 export default Prompt;
@@ -78,7 +69,7 @@ const styles = StyleSheet.create({
   itemPrompt: {
     justifyContent: 'center',
     paddingHorizontal: 15,
-    paddingBottom: 40,
+    paddingBottom: 120,
   },
   titleHolder: {
     flexDirection: 'row',
