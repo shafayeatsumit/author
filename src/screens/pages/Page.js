@@ -15,7 +15,7 @@ import {formatDate} from '../../helpers/date';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
-const Page = ({prompt, scrollToContent}) => {
+const Page = ({prompt, instructionVisible, scrollToContent}) => {
   const navigation = useNavigation();
 
   const adjustScrollPosition = () => {
@@ -41,7 +41,7 @@ const Page = ({prompt, scrollToContent}) => {
       delayPressIn={50}
       onPress={handlePress}
       activeOpacity={1}
-      style={styles.container}>
+      style={[styles.container, instructionVisible && styles.intro]}>
       <Text style={styles.dateText}>{dateString}</Text>
       <Text style={styles.answer}>{promptAnswer}</Text>
     </TouchableOpacity>
@@ -51,11 +51,17 @@ export default Page;
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: ScreenHeight / 2.7,
+    minHeight: ScreenHeight / 3,
+    marginVertical: 4,
+    // height: ScreenHeight,
     width: ScreenWidth,
-    justifyContent: 'center',
     paddingHorizontal: 35,
     paddingVertical: 72,
+  },
+  intro: {
+    height: ScreenHeight,
+    width: ScreenWidth,
+    justifyContent: 'flex-end',
   },
   dateText: {
     fontFamily: 'Montserrat-Regular',

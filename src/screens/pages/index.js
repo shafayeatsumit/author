@@ -22,7 +22,8 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Pages = ({navigation}) => {
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const [loading, setLoading] = React.useState(false);
+  const [instructionVisible, setInstructionVisible] = React.useState(true);
   const [prompt, setPrompt] = useState({id: null, question: null});
   const {lastVisit, setLastVisit, finishedIntro} = useUserStore();
   const {allPrompts, updatePrompts} = usePromptStore();
@@ -30,11 +31,28 @@ const Pages = ({navigation}) => {
   const {submission, deleteSubmission} = useSubmissionStore();
   const flatlistRef = useRef();
 
+  const finishNoteTaking = () => {
+    pullOneRandomPrompt();
+    if (prompt.id === 'intro_prompt') {
+      setLoading(true);
+      setTimeout(() => {
+        flatlistRef.current.scrollToEnd({animated: false});
+        setLoading(false);
+      }, 400);
+    }
+  };
+
   const renderPage = ({item, index}) => {
     if (item.uid) {
-      return <Page prompt={item} scrollToContent={scrollToContent} />;
+      return (
+        <Page
+          instructionVisible={instructionVisible}
+          prompt={item}
+          scrollToContent={scrollToContent}
+        />
+      );
     }
-    return <DailyPrompt item={item} updateContent={pullOneRandomPrompt} />;
+    return <DailyPrompt item={item} updateContent={finishNoteTaking} />;
   };
 
   const keyExtractor = item => (item.uid ? item.uid : item.id);
@@ -54,7 +72,9 @@ const Pages = ({navigation}) => {
     analytics().logEvent('refresh', {
       name: prompt.id,
     });
-
+    if (prompt.id === 'instruction') {
+      setInstructionVisible(false);
+    }
     setRefreshing(true);
     pullRandomPrompts();
     wait(500).then(() => {
@@ -119,6 +139,7 @@ const Pages = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      {loading && <View style={styles.loading} />}
       <FlatList
         contentContainerStyle={styles.containerStyle}
         ref={flatlistRef}
@@ -152,5 +173,16 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flexGrow: 1,
+  },
+  loading: {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    position: 'absolute',
+    height: ScreenHeight,
+    width: ScreenWidth,
+    backgroundColor: 'black',
+    zIndex: 5,
   },
 });
