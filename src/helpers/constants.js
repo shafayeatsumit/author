@@ -3,12 +3,12 @@ import moment from 'moment';
 export const allPrompts = [
   {
     id: 'intro_prompt',
-    question: 'All I have to do is fill in the ________',
+    question: 'For each prompt, I just need to fill in the ________',
   },
   {
     id: 'instruction',
     question:
-      'Great! Next I scroll up to refresh when I don’t want to fill in ________',
+      "Great! Got it. Next I figure out that I swipe up when I don't like the prompt or don't want to fill in the ________",
   },
   {
     id: "A positive aspect of my life that isn't top of mind is ________",

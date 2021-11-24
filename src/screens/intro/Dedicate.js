@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Montserrat-SemiBold',
   },
   buttonHolder: {
     flexDirection: 'row',

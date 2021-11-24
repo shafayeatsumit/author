@@ -1,42 +1,64 @@
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-
-import Swiper from 'react-native-swiper';
+import React, {useRef} from 'react';
+import {
+  StyleSheet,
+  Animated,
+  Dimensions,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
+import {useSwipe} from '../../helpers/swipeGesture';
+const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 
 const SwipeStart = ({navigation}) => {
+  const fadeAnim = useRef(new Animated.Value(1)).current;
   const goHome = () => {
     navigation.navigate('Home');
   };
+
+  const fadeOut = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(goHome);
+  };
+
+  const onSwipeUp = () => {
+    fadeOut();
+  };
+
+  const onSwipeDown = () => {
+    console.log('swipe down');
+  };
+
+  const {onTouchStart, onTouchEnd} = useSwipe(onSwipeUp, onSwipeDown, 8);
+
   return (
-    <Swiper
-      horizontal={false}
-      style={styles.wrapper}
-      showsButtons={false}
-      showsPagination={false}
-      onMomentumScrollEnd={goHome}>
-      <View style={styles.slide1}>
+    <ScrollView
+      scrollEnabled={false}
+      style={styles.container}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}>
+      <Animated.View style={[styles.slide, {opacity: fadeAnim}]}>
         <Text style={styles.text}>Swipe up to{'\n'}start</Text>
-      </View>
-      <View style={styles.slide2} />
-    </Swiper>
+      </Animated.View>
+    </ScrollView>
   );
 };
 export default SwipeStart;
 
 const styles = StyleSheet.create({
-  wrapper: {},
-  slide1: {
-    flex: 1,
+  container: {
+    flexGrow: 1,
+  },
+  slide: {
+    height: ScreenHeight,
+    width: ScreenWidth,
     justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'black',
     paddingBottom: 120,
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
   },
 
   text: {

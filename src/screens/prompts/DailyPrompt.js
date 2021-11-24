@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
   itemPrompt: {
     justifyContent: 'center',
     paddingHorizontal: 15,
+    paddingTop: 35,
     paddingBottom: 120,
   },
   titleHolder: {
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(32),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Montserrat-SemiBold',
     paddingTop: 4,
     letterSpacing: -2,
     paddingHorizontal: 25,

@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
 class Nav extends Component {
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#343D4C'}}>
+      <View style={{flex: 1, backgroundColor: 'black'}}>
         <NavigationContainer>
           <StatusBar translucent hidden />
           <Stack.Navigator

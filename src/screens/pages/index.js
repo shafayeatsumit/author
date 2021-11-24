@@ -14,6 +14,7 @@ import Page from './Page';
 import PromptHeader from './PageHeader';
 import DailyPrompt from '../../screens/prompts/DailyPrompt';
 import analytics from '@react-native-firebase/analytics';
+import {useSwipe} from '../../helpers/swipeGesture';
 
 import {checkIfToday} from '../../helpers/date';
 import _ from 'lodash';
@@ -23,7 +24,6 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 const Pages = ({navigation}) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [instructionVisible, setInstructionVisible] = React.useState(true);
   const [prompt, setPrompt] = useState({id: null, question: null});
   const {lastVisit, setLastVisit, finishedIntro} = useUserStore();
   const {allPrompts, updatePrompts} = usePromptStore();
@@ -33,24 +33,20 @@ const Pages = ({navigation}) => {
 
   const finishNoteTaking = () => {
     pullOneRandomPrompt();
-    if (prompt.id === 'intro_prompt') {
-      setLoading(true);
-      setTimeout(() => {
-        flatlistRef.current.scrollToEnd({animated: false});
-        setLoading(false);
-      }, 400);
-    }
   };
 
+  const onSwipeUp = () => {
+    analytics().logEvent('scrollingup');
+  };
+
+  const onSwipeDown = () => {
+    analytics().logEvent('scrollingdown');
+  };
+
+  const {onTouchStart, onTouchEnd} = useSwipe(onSwipeUp, onSwipeDown, 8);
   const renderPage = ({item, index}) => {
     if (item.uid) {
-      return (
-        <Page
-          instructionVisible={instructionVisible}
-          prompt={item}
-          scrollToContent={scrollToContent}
-        />
-      );
+      return <Page prompt={item} scrollToContent={scrollToContent} />;
     }
     return <DailyPrompt item={item} updateContent={finishNoteTaking} />;
   };
@@ -72,9 +68,6 @@ const Pages = ({navigation}) => {
     analytics().logEvent('refresh', {
       name: prompt.id,
     });
-    if (prompt.id === 'instruction') {
-      setInstructionVisible(false);
-    }
     setRefreshing(true);
     pullRandomPrompts();
     wait(500).then(() => {
@@ -110,10 +103,6 @@ const Pages = ({navigation}) => {
     });
   }, []);
 
-  const handleScrollEnd = () => {
-    analytics().logEvent('scrolling');
-  };
-
   const scrollToIndexZero = () => {
     flatlistRef.current &&
       flatlistRef.current.scrollToIndex({animated: false, index: 0});
@@ -144,11 +133,12 @@ const Pages = ({navigation}) => {
         contentContainerStyle={styles.containerStyle}
         ref={flatlistRef}
         data={data}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
         renderItem={renderPage}
         showsVerticalScrollIndicator={false}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
-        onMomentumScrollEnd={handleScrollEnd}
         inverted
         refreshControl={
           isFirstPrompt ? null : (
@@ -173,6 +163,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flexGrow: 1,
+    paddingBottom: 35,
   },
   loading: {
     top: 0,

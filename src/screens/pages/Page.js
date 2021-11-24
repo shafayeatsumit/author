@@ -15,7 +15,7 @@ import {formatDate} from '../../helpers/date';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 
-const Page = ({prompt, instructionVisible, scrollToContent}) => {
+const Page = ({prompt, scrollToContent}) => {
   const navigation = useNavigation();
 
   const adjustScrollPosition = () => {
@@ -41,7 +41,7 @@ const Page = ({prompt, instructionVisible, scrollToContent}) => {
       delayPressIn={50}
       onPress={handlePress}
       activeOpacity={1}
-      style={[styles.container, instructionVisible && styles.intro]}>
+      style={styles.container}>
       <Text style={styles.dateText}>{dateString}</Text>
       <Text style={styles.answer}>{promptAnswer}</Text>
     </TouchableOpacity>
@@ -51,12 +51,11 @@ export default Page;
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: ScreenHeight / 3,
+    // minHeight: ScreenHeight / 3,
     marginVertical: 4,
-    // height: ScreenHeight,
     width: ScreenWidth,
     paddingHorizontal: 35,
-    paddingVertical: 72,
+    paddingVertical: 35,
   },
   intro: {
     height: ScreenHeight,
@@ -64,18 +63,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   dateText: {
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Montserrat-SemiBold',
     textAlign: 'left',
     fontSize: RFValue(15),
-    // paddingRight: 10,
     paddingBottom: 5,
-    color: 'rgba(255,255,255,0.37)',
+    color: 'rgba(255,255,255,0.7)',
   },
   answer: {
     fontSize: RFValue(32),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Montserrat-SemiBold',
     lineHeight: 44.8,
     letterSpacing: -2,
     paddingTop: 4,
