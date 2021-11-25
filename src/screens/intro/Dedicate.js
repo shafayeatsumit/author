@@ -76,11 +76,13 @@ const Note = ({navigation, route}) => {
   const handleFutureMe = () => {
     triggerHaptic();
     onChangeText('I dedicate all the following writing to future me');
+    updateCursor();
   };
 
   const handleFamily = () => {
     triggerHaptic();
     onChangeText('I dedicate all the following writing to family');
+    updateCursor();
   };
 
   const goBack = () => {
@@ -115,6 +117,16 @@ const Note = ({navigation, route}) => {
       selection: {
         start: undefined,
         end: undefined,
+      },
+    });
+  };
+
+  const updateCursor = () => {
+    const cursorPosition = text.length;
+    inputRef.current.setNativeProps({
+      selection: {
+        start: cursorPosition,
+        end: cursorPosition,
       },
     });
   };
