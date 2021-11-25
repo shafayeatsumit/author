@@ -109,9 +109,6 @@ const Dedicate = ({route}) => {
         : {behavior: 'height'})}
       style={styles.container}>
       <View style={styles.container} colors={['#343D4C', '#131E25']}>
-        <TouchableOpacity onPress={skip} style={styles.skipButton}>
-          <Text style={styles.skipText}>Skip for now</Text>
-        </TouchableOpacity>
         <View style={styles.inputContainer}>
           <TextInput
             style={[styles.input]}

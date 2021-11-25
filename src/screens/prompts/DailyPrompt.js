@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15,
     paddingTop: 35,
-    paddingBottom: 120,
+    paddingBottom: 180,
   },
   titleHolder: {
     flexDirection: 'row',
