@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {useRef, useState, useEffect} from 'react';
 import {
   View,
@@ -7,33 +8,106 @@ import {
   TouchableOpacity,
   Platform,
   Dimensions,
+  Image,
   StyleSheet,
 } from 'react-native';
-import {useHeaderHeight} from '@react-navigation/stack';
-import {useSubmissionStore} from '../../store';
-import {triggerHaptic} from '../../helpers/haptics';
+import {useSubmissionStore, usePromptStore, useUserStore} from '../../store';
+import uuid from 'react-native-uuid';
 import {sharedStart} from '../../helpers/utils';
-import {useNavigation} from '@react-navigation/native';
+import {formatDate} from '../../helpers/date';
+import NoteHeader from '../note/NoteHeader';
+import {triggerHaptic, saveHaptic} from '../../helpers/haptics';
+const {height: ScreenHeight, width: ScreenWidth} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
-import LinearGradient from 'react-native-linear-gradient';
 import analytics from '@react-native-firebase/analytics';
-
-const {height: ScreenHeight} = Dimensions.get('window');
 TextInput.defaultProps.selectionColor = 'white';
 
-const Dedicate = ({route}) => {
-  const navigation = useNavigation();
-  const {isEdit} = route.params;
-  const {updateSubmission, submission} = useSubmissionStore();
-  const prompt = submission[0];
-  const promptQuestion = prompt.question;
-  const promptAnswer = prompt.answer ? ' ' + prompt.answer : ' ';
-  const defaultText = promptQuestion + promptAnswer;
-  const inputRef = useRef();
-  const [text, onChangeText] = useState(defaultText);
+const Note = ({navigation, route}) => {
+  const {setLastSubmit} = useUserStore();
+  const {setSubmission, deleteSubmission, updateSubmission} =
+    useSubmissionStore();
 
-  const goToTitle = () => {
-    isEdit ? navigation.navigate('Home') : navigation.navigate('Title');
+  const inputRef = useRef();
+  const {prompt, isEdit, scrollToPrompt, scrollToContent} = route.params;
+  const question = prompt.question;
+  const cursorIndex = question.indexOf('________');
+  const promptQuestion = question.replace('________', ' ');
+  const promptAnswer = prompt.answer;
+
+  const getAnswer = () => {
+    const firstHalf = sharedStart([promptQuestion, promptAnswer]);
+    const secondHalf = promptAnswer.replace(firstHalf, '');
+    return secondHalf + ' ';
+  };
+
+  const answerPart = isEdit ? getAnswer() : '';
+  const defaultText = promptQuestion + ' ' + answerPart;
+  const [text, onChangeText] = useState(defaultText);
+  const dateString = isEdit ? formatDate(prompt.date) : 'Today';
+
+  const sharedInputValue = sharedStart([promptQuestion, text]);
+  const unsharedInputValue = text.replace(sharedInputValue, '');
+  const submitAnswer = () => {
+    const date = moment();
+    const day = date.format('YYYY-MM-DD');
+    setSubmission({
+      ...prompt,
+      uid: uuid.v4(),
+      answer: text,
+      id: prompt.id,
+      type: prompt.type,
+      date: new Date(),
+      day,
+    });
+    scrollToPrompt();
+    analytics().logEvent('button_push', {
+      name: 'add page',
+      length: unsharedInputValue.length,
+    });
+  };
+
+  const editAnswer = () => {
+    updateSubmission(prompt.id, text);
+    analytics().logEvent('button_push', {
+      name: 'update page',
+    });
+  };
+
+  const handleFutureMe = () => {
+    triggerHaptic();
+    onChangeText('I dedicate all the following writing to future me');
+  };
+
+  const handleFamily = () => {
+    triggerHaptic();
+    onChangeText('I dedicate all the following writing to family');
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+    analytics().logEvent('button_push', {
+      name: 'pressed exit',
+    });
+  };
+
+  const handleSubmit = () => {
+    submitAnswer();
+    navigation.goBack();
+    setLastSubmit();
+    saveHaptic();
+  };
+
+  const handleDelete = () => {
+    saveHaptic();
+    deleteSubmission(prompt.uid);
+    navigation.goBack();
+  };
+
+  const handleEdit = () => {
+    saveHaptic();
+    editAnswer();
+    navigation.goBack();
+    setTimeout(scrollToContent, 250);
   };
 
   const resetCursor = () => {
@@ -45,86 +119,77 @@ const Dedicate = ({route}) => {
     });
   };
 
+  const handleChangeText = txt => {
+    triggerHaptic();
+    onChangeText(txt);
+  };
+
   const setCursor = () => {
     inputRef.current.focus();
-    inputRef.current.setNativeProps({
-      selection: {
-        start: text.length,
-        end: text.length,
-      },
-    });
+
+    if (!isEdit) {
+      inputRef.current.setNativeProps({
+        selection: {
+          start: cursorIndex,
+          end: cursorIndex,
+        },
+      });
+    }
+
     if (Platform.OS === 'android') {
-      setTimeout(resetCursor, 200);
+      if (isEdit) {
+        const cursorPosition = prompt.answer.length;
+        inputRef.current.setNativeProps({
+          selection: {
+            start: cursorPosition,
+            end: cursorPosition,
+          },
+        });
+      }
+      setTimeout(resetCursor, 100);
     }
-  };
-
-  const skip = () => {
-    triggerHaptic();
-    goToTitle();
-    analytics().logEvent('button_push', {
-      name: 'skipped dedication',
-    });
-  };
-
-  const handleKeyPress = ({nativeEvent}) => {
-    const disable = nativeEvent.key === 'Backspace';
-    if (disable) {
-      console.log('backspace');
-    }
-  };
-
-  const handleFutureMe = () => {
-    triggerHaptic();
-    onChangeText('I dedicate this story to future me');
-  };
-
-  const handleFamily = () => {
-    triggerHaptic();
-    onChangeText('I dedicate this story to family');
-  };
-
-  const sharedInputValue = sharedStart([promptQuestion, text]);
-  const unsharedInputValue = text.replace(sharedInputValue, '');
-  const inputValue = promptQuestion + unsharedInputValue;
-  const buttonDisabled = !unsharedInputValue.trim();
-
-  const handleAdd = () => {
-    updateSubmission(prompt.id, unsharedInputValue);
-    triggerHaptic();
-    goToTitle();
-    analytics().logEvent('button_push', {
-      name: 'add dedication',
-    });
   };
 
   useEffect(() => {
-    setTimeout(setCursor, 400);
+    setTimeout(setCursor, 500);
   }, []);
+
+  const buttonDisabled = text === defaultText;
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={useHeaderHeight()}
       {...(Platform.OS === 'ios'
         ? {behavior: 'padding'}
         : {behavior: 'height'})}
       style={styles.container}>
-      <View style={styles.container} colors={['#343D4C', '#131E25']}>
+      <View style={styles.container}>
+        <NoteHeader title={prompt.title} date={dateString} goBack={goBack} />
         <View style={styles.inputContainer}>
           <TextInput
-            style={[styles.input]}
-            onChangeText={onChangeText}
+            onSubmitEditing={handleSubmit}
+            style={styles.input}
+            multiline={true}
+            onChangeText={handleChangeText}
             spellCheck={false}
-            onKeyPress={handleKeyPress}
             textAlignVertical="top"
             selectionColor={'white'}
-            disable={false}
+            value={text}
             ref={inputRef}
-            value={inputValue}
-            multiline={true}
-            maxLength={promptQuestion.length + 20}
           />
         </View>
-        <View style={styles.buttonHolder}>
+        <View style={styles.buttonContainer}>
+          {isEdit ? (
+            <TouchableOpacity
+              style={styles.deleteConainer}
+              onPress={handleDelete}>
+              <Image
+                style={styles.delete}
+                source={require('../../../assets/ff.png')}
+              />
+            </TouchableOpacity>
+          ) : (
+            <View />
+          )}
           <TouchableOpacity
             onPress={handleFutureMe}
             style={[styles.button, styles.buttonLight]}>
@@ -138,68 +203,84 @@ const Dedicate = ({route}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={handleAdd}
             disabled={buttonDisabled}
-            style={[styles.button, buttonDisabled && styles.disableButton]}>
-            <Text style={styles.buttonText}>Add</Text>
+            onPress={isEdit ? handleEdit : handleSubmit}
+            style={[
+              styles.button,
+              buttonDisabled && {backgroundColor: '#1E4686'},
+            ]}>
+            <Text
+              style={[styles.buttonText, buttonDisabled && styles.disableText]}>
+              {isEdit ? 'Update' : 'Add page'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
   );
 };
-export default Dedicate;
+export default Note;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
   },
-  disableButton: {
-    backgroundColor: '#1E4686',
-  },
-  skipButton: {
-    position: 'absolute',
-    top: 60,
-    right: 15,
-    height: 35,
-    width: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 5,
-  },
-  skipText: {
-    fontSize: RFValue(18),
-    color: 'rgba(255,255,255,0.38)',
-    lineHeight: 22,
-    fontFamily: 'Montserrat-Regular',
+  questionContainer: {
+    height: 120,
+    width: ScreenWidth - 72,
+    alignSelf: 'center',
+    marginTop: 90, // HeaderHeight
   },
   inputContainer: {
-    height: ScreenHeight / 3.0,
+    paddingHorizontal: 25,
     marginTop: 100,
+    height: ScreenHeight / 2.9,
+  },
+  disableText: {
+    color: 'rgba(255, 255, 255, 0.38)',
+  },
+  deleteConainer: {
+    height: 40,
+    width: 40,
+    marginLeft: 35,
+    paddingTop: 20,
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  delete: {
+    height: 25,
+    width: 25,
+    resizeMode: 'contain',
+    tintColor: 'rgba(255,255,255,0.7)',
   },
   input: {
     flex: 1,
+    alignSelf: 'flex-start',
+    marginHorizontal: 2,
     letterSpacing: -1,
     borderWidth: 0,
-    paddingHorizontal: 25,
     lineHeight: 41.6,
     fontSize: RFValue(30),
     color: 'rgba(255,255,255,0.92)',
     fontFamily: 'Montserrat-SemiBold',
   },
-  buttonHolder: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    ...Platform.select({
-      ios: {
-        paddingBottom: 15,
-      },
-      android: {
-        paddingBottom: 50,
-      },
-    }),
+  boldInput: {
+    lineHeight: 41.6,
+    fontSize: RFValue(30),
+    letterSpacing: -2,
+    color: 'rgba(255,255,255,0.92)',
+    fontFamily: 'Montserrat-Regular',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 30,
+    // backgroundColor: 'orange',
+  },
+
   button: {
     alignSelf: 'flex-end',
     marginRight: 20,
@@ -212,19 +293,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonLight: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-  },
-  charLimit: {
-    position: 'relative',
-    right: 20,
-    fontSize: RFValue(14),
-    marginTop: 40,
-    color: 'rgba(255, 255, 255, 0.38)',
-    fontFamily: 'Montserrat-Regular',
-  },
   buttonText: {
-    fontSize: RFValue(26),
+    fontSize: RFValue(14),
     color: 'white',
     fontFamily: 'Montserrat-Bold',
   },
@@ -232,5 +302,15 @@ const styles = StyleSheet.create({
     fontSize: RFValue(13.5),
     color: 'white',
     fontFamily: 'Montserrat-Regular',
+  },
+  buttonLight: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  pageNo: {
+    fontSize: RFValue(14),
+    lineHeight: 14,
+    color: 'rgba(255, 255, 255, 0.38)',
+    // paddingRight: 24,
+    paddingTop: 45,
   },
 });

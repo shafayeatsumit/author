@@ -30,7 +30,8 @@ const Prompt = ({item, updateContent}) => {
 
   const goToNote = () => {
     triggerHaptic();
-    navigation.navigate('Note', {
+    const navPath = item.id === 'dedicate' ? 'Dedicate' : 'Note';
+    navigation.navigate(navPath, {
       prompt: item,
       scrollToPrompt: updatePrompts,
     });

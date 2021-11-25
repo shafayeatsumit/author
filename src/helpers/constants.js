@@ -11,19 +11,20 @@ export const allPrompts = [
       "Great! Got it. Next I figure out that I swipe up when I don't like the prompt or don't want to fill in the ________",
   },
   {
-    id: "A positive aspect of my life that isn't top of mind is ________",
-    question: "A positive aspect of my life that isn't top of mind is ________",
-  },
-  {
-    id: 'I dedicate all the following writing to ________',
+    id: 'dedicate',
     question: 'I dedicate all the following writing to ________',
   },
-  {id: 'Today takes place ________', question: 'Today takes place ________'},
   {
-    id: "If today was a chapter in my life's story, I'd title it ________",
+    id: "If today was a chapter in my life's story, I'd title it",
     question:
       "If today was a chapter in my life's story, I'd title it ________",
   },
+  {id: 'Today takes place ________', question: 'Today takes place ________'},
+  {
+    id: "A positive aspect of my life that isn't top of mind is ________",
+    question: "A positive aspect of my life that isn't top of mind is ________",
+  },
+
   {
     id: 'I want tomorrow to start with ________',
     question: 'I want tomorrow to start with ________',
