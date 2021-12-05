@@ -1,13 +1,48 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {allPrompts} from '../helpers/constants';
+import {
+  allPrompts,
+  PlanPrompts,
+  AppreciatePrompts,
+  ReflectPrompts,
+  ComposePrompts,
+  BlankPrompts,
+} from '../helpers/constants';
 
 let promptStore = set => ({
-  allPrompts: [],
+  plan: [],
+  appreciate: [],
+  reflect: [],
+  compose: [],
+  blank: [],
+  promptsList: [
+    {
+      name: 'plan',
+      active: true,
+    },
+    {name: 'appreciate', active: true},
+    {name: 'reflect', active: true},
+    {name: 'compose', active: true},
+    {name: 'blank', active: true},
+  ],
   initPrompts: () =>
     set(state => ({
-      allPrompts: allPrompts,
+      plan: PlanPrompts,
+      appreciate: AppreciatePrompts,
+      reflect: ReflectPrompts,
+      compose: ComposePrompts,
+      blank: BlankPrompts,
     })),
+
+  nextPrompt: promptName =>
+    set(state => {
+      const promptsCopy = [...state[promptName]];
+      promptsCopy.push(promptsCopy.shift());
+      return {
+        [promptName]: promptsCopy,
+      };
+    }),
+
   updatePrompts: () =>
     set(state => {
       const promptsCopy = [...state.allPrompts];

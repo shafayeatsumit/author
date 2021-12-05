@@ -24,11 +24,12 @@ TextInput.defaultProps.selectionColor = 'white';
 
 const Note = ({navigation, route}) => {
   const {setLastSubmit} = useUserStore();
+  const {nextPrompt} = usePromptStore();
   const {setSubmission, deleteSubmission, updateSubmission} =
     useSubmissionStore();
 
   const inputRef = useRef();
-  const {prompt, isEdit, scrollToPrompt, scrollToContent} = route.params;
+  const {prompt, isEdit, scrollToContent} = route.params;
   const question = prompt.question;
   const cursorIndex = question.indexOf('________');
   const promptQuestion = question.replace('________', ' ');
@@ -55,11 +56,11 @@ const Note = ({navigation, route}) => {
       uid: uuid.v4(),
       answer: text,
       id: prompt.id,
-      type: prompt.type,
+      title: prompt.title,
       date: new Date(),
       day,
     });
-    scrollToPrompt();
+    nextPrompt(prompt.title);
     analytics().logEvent('button_push', {
       name: 'add page',
       length: unsharedInputValue.length,

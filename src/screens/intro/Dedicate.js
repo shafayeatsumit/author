@@ -59,7 +59,7 @@ const Note = ({navigation, route}) => {
       date: new Date(),
       day,
     });
-    scrollToPrompt();
+
     analytics().logEvent('button_push', {
       name: 'add page',
       length: unsharedInputValue.length,

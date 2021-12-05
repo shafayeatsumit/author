@@ -14,6 +14,7 @@ import {useUserStore, useSubmissionStore} from '../../store';
 import {formatDate} from '../../helpers/date';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
+import _ from 'lodash';
 
 const Page = ({prompt, scrollToContent}) => {
   const navigation = useNavigation();
@@ -35,14 +36,17 @@ const Page = ({prompt, scrollToContent}) => {
 
   let dateString = prompt.date ? formatDate(prompt.date) : null;
   const promptAnswer = prompt.answer;
-
+  const promptTitle = _.upperFirst(prompt.title);
   return (
     <TouchableOpacity
       delayPressIn={50}
       onPress={handlePress}
       activeOpacity={1}
       style={styles.container}>
-      <Text style={styles.dateText}>{dateString}</Text>
+      <View style={styles.titleHolder}>
+        <Text style={styles.title}>{promptTitle}</Text>
+        <Text style={styles.dateText}>{dateString}</Text>
+      </View>
       <Text style={styles.answer}>{promptAnswer}</Text>
     </TouchableOpacity>
   );
@@ -55,29 +59,41 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     width: ScreenWidth,
     paddingHorizontal: 35,
-    paddingVertical: 35,
+    paddingVertical: 15,
   },
   intro: {
     height: ScreenHeight,
     width: ScreenWidth,
     justifyContent: 'flex-end',
   },
-  dateText: {
+  titleHolder: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between',
+    // backgroundColor: 'red',
+  },
+  title: {
     fontFamily: 'Montserrat-SemiBold',
     textAlign: 'left',
     fontSize: RFValue(15),
-    paddingBottom: 5,
+    color: '#FFFFA6',
+  },
+  dateText: {
+    fontFamily: 'Montserrat-SemiBold',
+    textAlign: 'right',
+    fontSize: RFValue(15),
+    paddingBottom: 6,
     color: 'rgba(255,255,255,0.7)',
   },
   answer: {
-    fontSize: RFValue(32),
+    fontSize: RFValue(18),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
-    fontFamily: 'Montserrat-SemiBold',
-    lineHeight: 44.8,
+    fontFamily: 'Montserrat-Regular',
+    // lineHeight: 44.8,
     letterSpacing: -2,
     paddingTop: 4,
-    paddingBottom: 24,
+    paddingBottom: 5,
   },
   divider: {
     height: 1,

@@ -21,19 +21,13 @@ import _ from 'lodash';
 
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
-const Pages = ({navigation}) => {
+const Pages = () => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [prompt, setPrompt] = useState({id: null, question: null});
   const {lastVisit, setLastVisit, finishedIntro} = useUserStore();
-  const {allPrompts, updatePrompts} = usePromptStore();
   const appState = useRef(AppState.currentState);
   const {submission, deleteSubmission} = useSubmissionStore();
   const flatlistRef = useRef();
-
-  const finishNoteTaking = () => {
-    pullOneRandomPrompt();
-  };
 
   const onSwipeUp = () => {
     analytics().logEvent('scrollingup');
@@ -48,17 +42,10 @@ const Pages = ({navigation}) => {
     if (item.uid) {
       return <Page prompt={item} scrollToContent={scrollToContent} />;
     }
-    return <DailyPrompt item={item} updateContent={finishNoteTaking} />;
+    return <DailyPrompt item={item} />;
   };
 
   const keyExtractor = item => (item.uid ? item.uid : item.id);
-
-  const pullRandomPrompts = () => {
-    const newPrompt = allPrompts[0];
-
-    setPrompt(newPrompt);
-    updatePrompts();
-  };
 
   const wait = timeout => {
     return new Promise(resolve => setTimeout(resolve, timeout));
@@ -69,28 +56,18 @@ const Pages = ({navigation}) => {
       name: prompt.id,
     });
     setRefreshing(true);
-    pullRandomPrompts();
+
     wait(500).then(() => {
       setRefreshing(false);
     });
   };
 
-  const pullOneRandomPrompt = () => {
-    pullRandomPrompts();
-    setTimeout(scrollToIndexZero, 300);
-  };
-
   useEffect(() => {
-    pullRandomPrompts();
-    setLastVisit();
-
     const subscription = AppState.addEventListener('change', nextAppState => {
       if (
         appState.current.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
-        // const notServedToday = !checkIfToday(lastVisit);
-        // notServedToday && pullRandomPrompts();
         setLastVisit();
         console.log('App has come to the foreground!');
         analytics().logEvent('app_foregrounded');
@@ -124,11 +101,9 @@ const Pages = ({navigation}) => {
     flatlistRef.current &&
       flatlistRef.current.scrollToIndex({animated: false, index});
   };
-  const isFirstPrompt = prompt.id === 'intro_prompt';
 
   return (
     <View style={styles.container}>
-      {loading && <View style={styles.loading} />}
       <FlatList
         contentContainerStyle={styles.containerStyle}
         ref={flatlistRef}
@@ -141,14 +116,12 @@ const Pages = ({navigation}) => {
         showsHorizontalScrollIndicator={false}
         inverted
         refreshControl={
-          isFirstPrompt ? null : (
-            <RefreshControl
-              tintColor={'white'}
-              colors={['black', 'white']}
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-            />
-          )
+          <RefreshControl
+            tintColor={'white'}
+            colors={['black', 'white']}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         }
       />
     </View>
@@ -164,16 +137,5 @@ const styles = StyleSheet.create({
   containerStyle: {
     flexGrow: 1,
     paddingBottom: 35,
-  },
-  loading: {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    position: 'absolute',
-    height: ScreenHeight,
-    width: ScreenWidth,
-    backgroundColor: 'black',
-    zIndex: 5,
   },
 });

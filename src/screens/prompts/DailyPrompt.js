@@ -6,56 +6,75 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import _ from 'lodash';
 const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {useSubmissionStore} from '../../store';
+import {useSubmissionStore, usePromptStore} from '../../store';
 import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
+import Swiper from 'react-native-swiper';
 
-const Prompt = ({item, updateContent}) => {
+const Prompt = ({item}) => {
   const navigation = useNavigation();
-  const [selectedPrompt, setSelectedPrompt] = useState('');
-  const {submission, deleteSubmission} = useSubmissionStore();
-  const totalPages = submission.length + 1;
+  const prompts = usePromptStore();
 
-  const handlePress = () => {
-    goToNote();
-  };
-
-  const contentQuestion = item.question;
-  const updatePrompts = () => {
-    updateContent(item);
-  };
-
-  const goToNote = () => {
+  const handlePress = selectedPrompt => {
     triggerHaptic();
-    const navPath = item.id === 'dedicate' ? 'Dedicate' : 'Note';
+    const navPath = 'Note';
     navigation.navigate(navPath, {
-      prompt: item,
-      scrollToPrompt: updatePrompts,
+      prompt: selectedPrompt,
     });
     analytics().logEvent('button_push', {
       name: contentQuestion,
     });
   };
+
+  const contentQuestion = item.question;
+
   const isDisable = item.id === 'instruction';
+  const activePrompts = prompts.promptsList.filter(p => p.active);
+
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      delayPressIn={50}
-      disabled={isDisable}
-      key={selectedPrompt.id}
-      style={styles.itemPrompt}
-      onPress={handlePress}>
-      {contentQuestion && <Text style={styles.text}>{contentQuestion}</Text>}
-      {totalPages ? <Text style={styles.footerText}>{totalPages}</Text> : null}
-    </TouchableOpacity>
+    <Swiper
+      style={styles.wrapper}
+      showsButtons={false}
+      activeDotColor="rgba(255, 255, 255, 0.9)"
+      dotColor="rgba(255, 255, 255, 0.3)">
+      {activePrompts.map(prompt => {
+        const currentPrompt = prompts[prompt.name][0];
+        const promptName = _.upperFirst(prompt.name);
+        const promptQuestion =
+          promptName === 'Blank' ? '__________' : currentPrompt.question;
+        return (
+          <TouchableOpacity
+            activeOpacity={1}
+            delayPressIn={50}
+            disabled={isDisable}
+            key={prompt}
+            style={styles.slide1}
+            onPress={() => handlePress(currentPrompt)}>
+            <Text style={styles.title}>{promptName}</Text>
+            <Text style={styles.text}>{promptQuestion}</Text>
+          </TouchableOpacity>
+        );
+      })}
+    </Swiper>
   );
 };
 export default Prompt;
 
 const styles = StyleSheet.create({
+  wrapper: {
+    // flex: 0.3,
+    maxHeight: 350,
+    // backgroundColor: 'yellow',
+  },
+  slide1: {
+    minHeight: 200,
+    paddingVertical: 50,
+    paddingHorizontal: 20,
+  },
   loading: {
     height: ScreenHeight,
     width: ScreenWidth,
@@ -85,9 +104,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: RFValue(18),
-    color: 'rgba(255,255,255,0.4)',
-    textAlign: 'center',
-    fontFamily: 'Montserrat-Regular',
+    color: 'rgba(255,255,255,0.8)',
+    marginLeft: 25,
+    marginBottom: 10,
+    fontFamily: 'Montserrat-SemiBold',
   },
   footerText: {
     fontSize: RFValue(15),
