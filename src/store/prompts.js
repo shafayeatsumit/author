@@ -1,12 +1,13 @@
 import {persist} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  allPrompts,
   PlanPrompts,
   AppreciatePrompts,
   ReflectPrompts,
   ComposePrompts,
   BlankPrompts,
+  RelaxPrompts,
+  CreatePrompts,
 } from '../helpers/constants';
 
 let promptStore = set => ({
@@ -14,15 +15,20 @@ let promptStore = set => ({
   appreciate: [],
   reflect: [],
   compose: [],
+  relax: [],
+  create: [],
   blank: [],
+
   promptsList: [
     {
       name: 'plan',
       active: true,
     },
+    {name: 'compose', active: true},
     {name: 'appreciate', active: true},
     {name: 'reflect', active: true},
-    {name: 'compose', active: true},
+    {name: 'relax', active: true},
+    {name: 'create', active: true},
     {name: 'blank', active: true},
   ],
   initPrompts: () =>
@@ -31,6 +37,8 @@ let promptStore = set => ({
       appreciate: AppreciatePrompts,
       reflect: ReflectPrompts,
       compose: ComposePrompts,
+      relax: RelaxPrompts,
+      create: CreatePrompts,
       blank: BlankPrompts,
     })),
 

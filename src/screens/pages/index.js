@@ -23,8 +23,9 @@ const {width: ScreenWidth, height: ScreenHeight} = Dimensions.get('window');
 
 const Pages = () => {
   const [refreshing, setRefreshing] = React.useState(false);
-  const [prompt, setPrompt] = useState({id: null, question: null});
+  const [activePrompt, setActivePrompt] = React.useState('plan');
   const {lastVisit, setLastVisit, finishedIntro} = useUserStore();
+  const {nextPrompt} = usePromptStore();
   const appState = useRef(AppState.currentState);
   const {submission, deleteSubmission} = useSubmissionStore();
   const flatlistRef = useRef();
@@ -42,7 +43,7 @@ const Pages = () => {
     if (item.uid) {
       return <Page prompt={item} scrollToContent={scrollToContent} />;
     }
-    return <DailyPrompt item={item} />;
+    return <DailyPrompt item={item} setActivePrompt={setActivePrompt} />;
   };
 
   const keyExtractor = item => (item.uid ? item.uid : item.id);
@@ -53,10 +54,10 @@ const Pages = () => {
 
   const onRefresh = () => {
     analytics().logEvent('refresh', {
-      name: prompt.id,
+      name: activePrompt,
     });
     setRefreshing(true);
-
+    nextPrompt(activePrompt);
     wait(500).then(() => {
       setRefreshing(false);
     });
@@ -94,10 +95,10 @@ const Pages = () => {
     return item;
   });
 
-  const data = [prompt, ...submissionDateAdjusted];
+  const data = [{name: 'prompt', id: 'prompt'}, ...submissionDateAdjusted];
 
-  const scrollToContent = activePrompt => {
-    const index = data.findIndex(item => item.id === activePrompt.id);
+  const scrollToContent = content => {
+    const index = data.findIndex(item => item.id === content.id);
     flatlistRef.current &&
       flatlistRef.current.scrollToIndex({animated: false, index});
   };

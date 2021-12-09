@@ -15,7 +15,7 @@ import {triggerHaptic} from '../../helpers/haptics';
 import analytics from '@react-native-firebase/analytics';
 import Swiper from 'react-native-swiper';
 
-const Prompt = ({item}) => {
+const Prompt = ({item, setActivePrompt}) => {
   const navigation = useNavigation();
   const prompts = usePromptStore();
 
@@ -32,25 +32,27 @@ const Prompt = ({item}) => {
 
   const contentQuestion = item.question;
 
-  const isDisable = item.id === 'instruction';
-  const activePrompts = prompts.promptsList.filter(p => p.active);
+  const activePrompts = prompts.promptsList
+    .filter(p => p.active)
+    .map(activePrompt => activePrompt.name);
 
   return (
     <Swiper
       style={styles.wrapper}
       showsButtons={false}
+      loop={false}
+      onIndexChanged={index => setActivePrompt(activePrompts[index])}
       activeDotColor="rgba(255, 255, 255, 0.9)"
       dotColor="rgba(255, 255, 255, 0.3)">
       {activePrompts.map(prompt => {
-        const currentPrompt = prompts[prompt.name][0];
-        const promptName = _.upperFirst(prompt.name);
+        const currentPrompt = prompts[prompt][0];
+        const promptName = _.upperFirst(prompt);
         const promptQuestion =
           promptName === 'Blank' ? '__________' : currentPrompt.question;
         return (
           <TouchableOpacity
             activeOpacity={1}
             delayPressIn={50}
-            disabled={isDisable}
             key={prompt}
             style={styles.slide1}
             onPress={() => handlePress(currentPrompt)}>
@@ -122,8 +124,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   text: {
-    lineHeight: 44.8,
-    fontSize: RFValue(32),
+    lineHeight: 35.8,
+    fontSize: RFValue(26),
     color: 'rgba(255,255,255,0.92)',
     textAlign: 'left',
     fontFamily: 'Montserrat-SemiBold',
